@@ -1,0 +1,13 @@
+{
+    "first_name": "Anh",
+    "last_name": "Le",
+    "email": "ahtle@stanford.edu",
+    "address":{
+        "street": "1000 Welch Rd",
+        "city": "Palo Alto",
+        "state": "CA",
+        "zipcode": "95001",
+        "country": "USA"
+    },
+    "books": [1,2]
+}

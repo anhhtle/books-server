@@ -1,0 +1,22 @@
+{
+    "_id": "1",
+    "google_id": "ilc0DwAAQBAJ",
+    "title": "Harry Potter - A Journey Through A History of Magic",
+    "authors": [
+        "British Library"
+    ],
+    "image": "http://books.google.com/books/content?id=ilc0DwAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
+    "ratings": 3.5,
+    "available_for_share": false
+}
+{
+    "_id": "2",
+    "google_id": "wrOQLV6xB-wC",
+    "title": "Harry Potter and the Sorcerer's Stone",
+    "authors": [
+        "J.K. Rowling"
+    ],
+    "image": "http://books.google.com/books/content?id=wrOQLV6xB-wC&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
+    "ratings": 4.5,
+    "available_for_share": true
+}
