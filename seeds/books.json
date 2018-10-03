@@ -1,5 +1,5 @@
 {
-    "_id": "1",
+    "book_id": "1",
     "google_id": "ilc0DwAAQBAJ",
     "title": "Harry Potter - A Journey Through A History of Magic",
     "authors": [
@@ -10,7 +10,7 @@
     "available_for_share": false
 }
 {
-    "_id": "2",
+    "book_id": "2",
     "google_id": "wrOQLV6xB-wC",
     "title": "Harry Potter and the Sorcerer's Stone",
     "authors": [
