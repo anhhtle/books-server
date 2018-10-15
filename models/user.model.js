@@ -10,11 +10,7 @@ const userSchema = mongoose.Schema({
         state: String,
         zipcode: String,
         country: String
-    },
-    books: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Book'
-    }]
+    }
 });
 
 module.exports = mongoose.model('User', userSchema);

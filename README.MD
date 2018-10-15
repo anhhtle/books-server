@@ -16,11 +16,24 @@
 
 #seed
 run in command line from root directory: 
-    "mongoimport --db books-app --collection books --drop --file ./seeds/books.json"
     "mongoimport --db books-app --collection users --drop --file ./seeds/users.json"
+    "mongoimport --db books-app --collection booksMaster --drop --file ./seeds/bookMaster.json"
+    "mongoimport --db books-app --collection booksVariant --drop --file ./seeds/bookVariant.json"
 
 #endpoint
 https://books-app-server.herokuapp.com/api/v1/
+
+get all user
+/users/
+
+get specific user
+/users/:userId
+
+get all book variants
+/books/
+
+get all book variants belonging to a user
+/books/users/:userId
 
 
 
@@ -28,5 +41,6 @@ https://books-app-server.herokuapp.com/api/v1/
 1) Connect to mLab mongodb with command line: mongo ds121163.mlab.com:21163/books-app -u dbusername -p password
 2) run seed command on another terminal
     "mongoimport -h ds121163.mlab.com:21163 -d books-app -c books --drop -u <user> -p <password> --file <input file>"
+    "mongoimport -h ds121163.mlab.com:21163 -d books-app -c bookVariants --drop -u <user> -p <password> --file <input file>"
     "mongoimport -h ds121163.mlab.com:21163 -d books-app -c users --drop -u <user> -p <password> --file <input file>"
     careful with the "--drop" as it will drop the database first instead of inserting

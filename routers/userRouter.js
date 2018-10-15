@@ -11,7 +11,18 @@ router.use(bodyParser.json());
 
 // get all users
 router.get('/', (req, res) => {
-    User.find().populate('books').exec()
+    User.find().exec()
+        .then(users => {
+            res.status(200).json(users);
+        }).catch(err => {
+            console.error(err);
+            res.status(500).json({error: 'something went wrong'});
+        })
+});
+
+// get a user
+router.get('/:userId', (req, res) => {
+    User.findById(req.params.userId).exec()
         .then(users => {
             res.status(200).json(users);
         }).catch(err => {

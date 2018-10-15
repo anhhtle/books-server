@@ -1,4 +1,7 @@
 {
+    "_id": {
+        "$oid": "5bc39d60f6fc0cd8ae6fd6a4"
+    },
     "first_name": "Anh",
     "last_name": "Le",
     "email": "ahtle@stanford.edu",
@@ -8,6 +11,5 @@
         "state": "CA",
         "zipcode": "95001",
         "country": "USA"
-    },
-    "books": [1,2]
+    }
 }

@@ -1,0 +1,24 @@
+{
+    "_id": {
+        "$oid": "5bc399b6f6fc0cd8ae6fb122"
+    },
+    "book": {
+        "$oid": "5bc39965f6fc0cd8ae6fad29"
+    },
+    "user": {
+        "$oid": "5bc39d60f6fc0cd8ae6fd6a4"
+    },
+    "available_for_share": true
+}
+{
+    "_id": {
+        "$oid": "5bc399b6f6fc0cd8ae6fb123"
+    },
+    "book": {
+        "$oid": "5bc39965f6fc0cd8ae6fad30"
+    },
+    "user": {
+        "$oid": "5bc39d60f6fc0cd8ae6fd6a4"
+    },
+    "available_for_share": false
+}
