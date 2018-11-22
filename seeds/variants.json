@@ -5,6 +5,9 @@
     "user": {
         "$oid": "5bc39d60f6fc0cd8ae6fd6a4"
     },
+    "book": {
+        "$oid": "5bc39965f6fc0cd8ae6fad29"
+    },
     "status": "Reading",
     "Progress": 90,
     "user_rating": 4,
@@ -18,6 +21,9 @@
     },
     "user": {
         "$oid": "5bc39d60f6fc0cd8ae6fd6a4"
+    },
+    "book": {
+        "$oid": "5bc39965f6fc0cd8ae6fad30"
     },
     "status": "Not started",
     "Progress": 90,
@@ -33,6 +39,9 @@
     "user": {
         "$oid": "5bc39d60f6fc0cd8ae6fd6a5"
     },
+    "book": {
+        "$oid": "5bc39965f6fc0cd8ae6fad29"
+    },
     "status": "Reading",
     "Progress": 90,
     "user_rating": 4,
@@ -46,6 +55,9 @@
     },
     "user": {
         "$oid": "5bc39d60f6fc0cd8ae6fd6a5"
+    },
+    "book": {
+        "$oid": "5bc39965f6fc0cd8ae6fad30"
     },
     "status": "Recommended",
     "Progress": 90,

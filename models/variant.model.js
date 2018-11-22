@@ -5,6 +5,10 @@ const variantSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
+    book: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Book'
+    },
     status: {type: String, required: true},
     Progress: {type: Number, required: true},
     user_rating: {type: Number, required: true},

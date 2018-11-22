@@ -1,7 +1,7 @@
 'use strict'
 
 const express = require('express');
-var mongoose = require ('mongoose');
+const mongoose = require ('mongoose');
 const router = express.Router();
 const bodyParser = require('body-parser');
 const Variant = require('../models/variant.model');
@@ -11,11 +11,13 @@ router.use(bodyParser.json());
 
 //*********** API ****************/
 
-// get all book variants
+// get all book
 router.get('/', (req, res) => {
-    Variant.find().populate(['book', 'user']).exec()
-        .then(books => {
-            res.status(200).json(books);
+    Variant.find()
+        .populate(['user', 'book'])
+        .exec()
+        .then(variants => {
+            res.status(200).json(variants);
         }).catch(err => {
             console.error(err);
             res.status(500).json({error: 'something went wrong'});
@@ -24,13 +26,13 @@ router.get('/', (req, res) => {
 
 // get all book variants belonging to a user
 router.get('/user/:userId', (req, res) => {
-    var userId = new mongoose.Types.ObjectId("5bc39d60f6fc0cd8ae6fd6a4");
+    const userId = new mongoose.Types.ObjectId("5bc39d60f6fc0cd8ae6fd6a4");
 
     Variant.find({user: userId})
-    .populate(['user', 'book'])
-    .exec()
-        .then(books => {
-            res.status(200).json(books);
+        .populate(['user', 'book'])
+        .exec()
+        .then(variants => {
+            res.status(200).json(variants);
         }).catch(err => {
             console.error(err);
             res.status(500).json({error: 'something went wrong'});

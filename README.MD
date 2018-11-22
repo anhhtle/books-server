@@ -20,8 +20,16 @@ run in command line from root directory:
     "mongoimport --db books-app --collection booksMaster --drop --file ./seeds/bookMaster.json"
     "mongoimport --db books-app --collection booksVariant --drop --file ./seeds/bookVariant.json"
 
+
+
+
+#Heroku deployment
+1) in terminal: heroku create
+2) git push heroku master
+3) heroku ps:scale web=1
+
 #endpoint
-https://books-app-server.herokuapp.com/api/v1/
+https://books-app-server-dev.herokuapp.com/api/v1/
 
 get all user
 /users/
