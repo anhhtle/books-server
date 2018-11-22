@@ -5,9 +5,28 @@
     "first_name": "Anh",
     "last_name": "Le",
     "email": "ahtle@stanford.edu",
+    "alias": "Jamie Lannister",
+    "job": "King's Guard",
     "address":{
         "street": "1000 Welch Rd",
         "city": "Palo Alto",
+        "state": "CA",
+        "zipcode": "95001",
+        "country": "USA"
+    }
+}
+{
+    "_id": {
+        "$oid": "5bc39d60f6fc0cd8ae6fd6a5"
+    },
+    "first_name": "Edd",
+    "last_name": "Lee",
+    "email": "anh.ht.le@gmail.com",
+    "alias": "Hodor",
+    "job": "Holding doors",
+    "address":{
+        "street": "1234 ABC Rd",
+        "city": "Star City",
         "state": "CA",
         "zipcode": "95001",
         "country": "USA"
