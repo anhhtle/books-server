@@ -1,29 +1,33 @@
 'use strict';
 
-require('dotenv').config()
+require('dotenv').config();
+require('./config/passport');
 
-const express = require('express');
-const mongoose = require('mongoose');
-const userRouter = require('./routers/userRouter');
-const bookRouter = require('./routers/bookRouter');
 // env
 const PORT = process.env.PORT;
 const DATABASE_URL = process.env.DATABASE_URL;
 
-const app = express();
-mongoose.Promise = global.Promise;
+// middlewares
+const express = require('express');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 
-// route
+// routers
+const userRouter = require('./routers/userRouter');
+const bookRouter = require('./routers/bookRouter');
+
+mongoose.Promise = global.Promise;
+const app = express();
+app.use(bodyParser.json());
+
+// routes
 app.get('/', (req, res) => {
     res.send('Hello World')
 });
 
-app.use('/api/v1/users', userRouter);
+app.use('/api/v1/user', userRouter);
 app.use('/api/v1/books', bookRouter);
 
-
-// closeServer needs access to a server object, but that only gets created when `runServer` runs, 
-// so we declare `server` here and then assign a value to it in run
 let server;
 
 function runServer(databaseUrl, port=PORT) {

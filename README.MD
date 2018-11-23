@@ -27,6 +27,16 @@ run in command line from root directory:
 1) in terminal: heroku create
 2) git push heroku master
 3) heroku ps:scale web=1
+4) In heroku dashboard, add DATABASE_URL env variable
+
+#Production
+1) Connect to mLab mongodb with command line: mongo ds121163.mlab.com:21163/books-app -u dbusername -p password
+2) run seed command on another terminal
+    "mongoimport -h ds121163.mlab.com:21163 -d books-app -c books --drop -u <user> -p <password> --file <input file>"
+    "mongoimport -h ds121163.mlab.com:21163 -d books-app -c bookVariants --drop -u <user> -p <password> --file <input file>"
+    "mongoimport -h ds121163.mlab.com:21163 -d books-app -c users --drop -u <user> -p <password> --file <input file>"
+    careful with the "--drop" as it will drop the database first instead of inserting
+
 
 #endpoint
 https://books-app-server-dev.herokuapp.com/api/v1/
@@ -43,12 +53,3 @@ get all book variants
 get all book variants belonging to a user
 /books/users/:userId
 
-
-
-#Production
-1) Connect to mLab mongodb with command line: mongo ds121163.mlab.com:21163/books-app -u dbusername -p password
-2) run seed command on another terminal
-    "mongoimport -h ds121163.mlab.com:21163 -d books-app -c books --drop -u <user> -p <password> --file <input file>"
-    "mongoimport -h ds121163.mlab.com:21163 -d books-app -c bookVariants --drop -u <user> -p <password> --file <input file>"
-    "mongoimport -h ds121163.mlab.com:21163 -d books-app -c users --drop -u <user> -p <password> --file <input file>"
-    careful with the "--drop" as it will drop the database first instead of inserting
