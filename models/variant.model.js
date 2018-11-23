@@ -9,15 +9,16 @@ const variantSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Book'
     },
-    status: {type: String, required: true},
-    Progress: {type: Number, required: true},
-    user_rating: {type: Number, required: true},
+    status: {type: String, default: 'Not started'},
+    Progress: {type: Number, default: 0},
+    user_rating: {type: Number, default: null},
     friend: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'User',
+        default: null
     },
-    book_condition: {type: String, required: true},
-    available_for_share: {type: Boolean, required: true},
+    book_condition: {type: String, default: null},
+    available_for_share: {type: Boolean, default: false},
 });
 
 module.exports = mongoose.model('Variant', variantSchema);

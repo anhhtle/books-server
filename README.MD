@@ -41,15 +41,28 @@ run in command line from root directory:
 #endpoint
 https://books-app-server-dev.herokuapp.com/api/v1/
 
-get all user
-/users/
+##create new user
+POST /users/
+{
+    user: {
+        email,
+        password
+    }
+}
 
-get specific user
-/users/:userId
+##login user
+POST /user/login
+{
+    user: {
+        email,
+        password
+    }
+}
 
-get all book variants
-/books/
+##get current user
+GET /user/current
+header: Authorization - Token (get from login user)
 
-get all book variants belonging to a user
+## get all book variants belonging to a user
 /books/users/:userId
 
