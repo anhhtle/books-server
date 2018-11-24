@@ -32,9 +32,10 @@ run in command line from root directory:
 #Production
 1) Connect to mLab mongodb with command line: mongo ds121163.mlab.com:21163/books-app -u dbusername -p password
 2) run seed command on another terminal
-    "mongoimport -h ds121163.mlab.com:21163 -d books-app -c books --drop -u <user> -p <password> --file <input file>"
-    "mongoimport -h ds121163.mlab.com:21163 -d books-app -c bookVariants --drop -u <user> -p <password> --file <input file>"
-    "mongoimport -h ds121163.mlab.com:21163 -d books-app -c users --drop -u <user> -p <password> --file <input file>"
+    "mongoimport -h ds121163.mlab.com:21163 -d books-app -c avatars --drop -u <user> -p <password> --file ./seeds/avatars.json"
+    "mongoimport -h ds121163.mlab.com:21163 -d books-app -c users --drop -u <user> -p <password> --file ./seeds/users.json"
+    "mongoimport -h ds121163.mlab.com:21163 -d books-app -c books --drop -u <user> -p <password> --file ./seeds/books.json"
+    "mongoimport -h ds121163.mlab.com:21163 -d books-app -c variants --drop -u <user> -p <password> --file ./seeds/variants.json"
     careful with the "--drop" as it will drop the database first instead of inserting
 
 

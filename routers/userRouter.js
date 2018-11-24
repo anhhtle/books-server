@@ -1,14 +1,25 @@
 'use strict'
 
 const express = require('express');
+const mongoose = require ('mongoose');
 const router = express.Router();
 const passport = require('passport');
 const auth = require('./auth');
 
 const User = require('../models/user.model');
 
-
 //*********** API ****************/
+
+// GET all user
+router.get('/', auth.optional, (req, res, next) => {
+    User.find()
+        .populate('avatar')
+        .then(user => {
+            res.status(200).json(user);
+        })
+        .catch(err => res.status(500).json(err));
+});
+
 
 //POST new user route (optional, everyone has access)
 router.post('/', auth.optional, (req, res, next) => {
@@ -35,8 +46,7 @@ router.post('/', auth.optional, (req, res, next) => {
     finalUser.setPassword(user.password);
   
     return finalUser.save()
-        .then(() => res.json({ user: finalUser.toAuthJSON() }));
-
+        .then(() => res.json({ token: finalUser.toAuthJSON() }));
 });
   
 
@@ -68,9 +78,9 @@ router.post('/login', auth.optional, (req, res, next) => {
 
         if(passportUser) {
             const user = passportUser;
-            user.token = passportUser.generateJWT();
+            // user.token = passportUser.generateJWT();
 
-            return res.json({ user: user.toAuthJSON() });
+            return res.status(200).json({token: user.toAuthJSON()});
         }
 
         return status(400).info;
@@ -82,15 +92,15 @@ router.post('/login', auth.optional, (req, res, next) => {
 router.get('/current', auth.required, (req, res, next) => {
     const { payload: { id } } = req;
 
-    return User.findById(id)
-        .then((user) => {
-        if(!user) {
-            return res.sendStatus(400);
-        }
+    const updateObj = {last_signed_in: new Date()}
 
-        return res.json({ user: user.toAuthJSON() });
-        });
+    User.findOneAndUpdate({_id: id}, updateObj, {new: true})
+        .populate('avatar')
+        .exec()
+        .then(user => {
+            res.status(200).json({user, token: user.toAuthJSON()});
+        })
+        .catch(err => res.status(500).json(err));
 });
-
 
 module.exports = router;

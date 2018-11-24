@@ -1,12 +1,18 @@
 {
     "_id": {
-        "$oid": "5bc39d60f6fc0cd8ae6fd6a4"
+        "$oid": "6b9b152211dcb30675659e05"
     },
     "first_name": "Anh",
     "last_name": "Le",
     "email": "ahtle@stanford.edu",
     "alias": "Jamie Lannister",
     "job": "King's Guard",
+    "avatar": {
+        "$oid": "86660871101f2c0e771df8f8"
+    },
+    "avatars_unlocked": [
+        "86660871101f2c0e771df8f8", "c367851d914237495b576e01", "f26923e2fa2a74a4ff8a6063"
+    ],
     "address":{
         "street": "1000 Welch Rd",
         "city": "Palo Alto",
@@ -17,13 +23,19 @@
 }
 {
     "_id": {
-        "$oid": "5bc39d60f6fc0cd8ae6fd6a5"
+        "$oid": "a22bcba0fbc61672285a2e59"
     },
     "first_name": "Edd",
     "last_name": "Lee",
     "email": "anh.ht.le@gmail.com",
     "alias": "Hodor",
     "job": "Holding doors",
+    "avatar": {
+        "$oid": "c367851d914237495b576e01"
+    },
+    "avatars_unlocked": [
+        "86660871101f2c0e771df8f8", "c367851d914237495b576e01", "f26923e2fa2a74a4ff8a6063"
+    ],
     "address":{
         "street": "1234 ABC Rd",
         "city": "Star City",

@@ -15,10 +15,14 @@ const bodyParser = require('body-parser');
 // routers
 const userRouter = require('./routers/userRouter');
 const bookRouter = require('./routers/bookRouter');
+const avatarRouter = require('./routers/avatarRouter');
 
 mongoose.Promise = global.Promise;
 const app = express();
 app.use(bodyParser.json());
+
+// ignoring a DeprecationWarning
+mongoose.set('useFindAndModify', false);
 
 // routes
 app.get('/', (req, res) => {
@@ -27,6 +31,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/v1/user', userRouter);
 app.use('/api/v1/books', bookRouter);
+app.use('/api/v1/avatars', avatarRouter);
 
 let server;
 

@@ -1,0 +1,55 @@
+{
+    "_id": {
+        "$oid": "86660871101f2c0e771df8f8"
+    },
+    "name": "The King",
+    "image": "https://i.pinimg.com/originals/9a/d7/95/9ad79563b7fc172d847a0ddfbd9b2fcc.jpg",
+    "quote": "The bravest people are the ones who don’t mind looking like cowards.",
+    "quote_author": "T. H. White",
+    "lock": "",
+    "unlocked": "For being brave"
+}
+{
+    "_id": {
+        "$oid": "c367851d914237495b576e01"
+    },
+    "name": "The Knight",
+    "image": "https://i.pinimg.com/originals/9a/d7/95/9ad79563b7fc172d847a0ddfbd9b2fcc.jpg",
+    "quote": "A reader lives a thousand lives before he dies, said Jojen. The man who never reads lives only one.",
+    "quote_author": "George R.R. Martin",
+    "lock": "",
+    "unlocked": "For being a reader"
+}
+{
+    "_id": {
+        "$oid": "f26923e2fa2a74a4ff8a6063"
+    },
+    "name": "The Wizard",
+    "image": "https://i.pinimg.com/originals/9a/d7/95/9ad79563b7fc172d847a0ddfbd9b2fcc.jpg",
+    "quote": "Of course it is happening inside your head, Harry, but why on earth should that mean that it is not real?",
+    "quote_author": "J. K. Rowling",
+    "lock": "",
+    "unlocked": "For being creative"
+}
+{
+    "_id": {
+        "$oid": "50e9c24bb89e18e943c51239"
+    },
+    "name": "The Giver",
+    "image": "https://i.pinimg.com/originals/9a/d7/95/9ad79563b7fc172d847a0ddfbd9b2fcc.jpg",
+    "quote": "The worst part of holding the memories is not the pain. It's the loneliness of it. Memories need to be shared.",
+    "quote_author": "Lois Lowry",
+    "lock": "Give one book to community",
+    "unlocked": "Gave one book to community"
+}
+{
+    "_id": {
+        "$oid": "18a4af4927a1fbfeefaf846b"
+    },
+    "name": "The Fellowship",
+    "image": "https://i.pinimg.com/originals/9a/d7/95/9ad79563b7fc172d847a0ddfbd9b2fcc.jpg",
+    "quote": "Not all those who wander are lost.",
+    "quote_author": "J.R.R. Tolkien",
+    "lock": "Add seven friends",
+    "unlocked": "Added seven friends"
+}

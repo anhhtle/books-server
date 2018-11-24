@@ -3,8 +3,8 @@ const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 
 const userSchema = mongoose.Schema({
-    first_name: {type: String , required: true},
-    last_name: {type: String , required: true},
+    first_name: {type: String, required: true},
+    last_name: {type: String, required: true},
     email: {type: String, required: true},
     alias: {type: String, default: null},
     job: {type: String, default: null},
@@ -15,6 +15,17 @@ const userSchema = mongoose.Schema({
         zipcode: {type: String, default: null},
         country: {type: String, default: null},
     },
+    avatar: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Avatar',
+        default: '86660871101f2c0e771df8f8'
+    },
+    avatars_unlocked: {
+        type: [String], 
+        default: ["86660871101f2c0e771df8f8", "c367851d914237495b576e01", "f26923e2fa2a74a4ff8a6063"]
+    },
+    created_at: {type: Date, default: Date.now},
+    last_signed_in: {type: Date, default: Date.now},
     hash: String,
     salt: String,
 });
@@ -42,16 +53,7 @@ userSchema.methods.generateJWT = function() {
 }
   
 userSchema.methods.toAuthJSON = function() {
-    return {
-        _id: this._id,
-        first_name: this.first_name,
-        last_name: this.last_name,
-        email: this.email,
-        alias: this.alias,
-        job: this.job,
-        address: this.address,
-        token: this.generateJWT(),
-    };
+    return this.generateJWT()
 };
 
 module.exports = mongoose.model('User', userSchema);

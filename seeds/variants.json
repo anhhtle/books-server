@@ -3,10 +3,10 @@
         "$oid": "5bc399b6f6fc0cd8ae6fb122"
     },
     "user": {
-        "$oid": "5bc39d60f6fc0cd8ae6fd6a4"
+        "$oid": "6b9b152211dcb30675659e05"
     },
     "book": {
-        "$oid": "5bc39965f6fc0cd8ae6fad29"
+        "$oid": "0fb726d4ee34e9315653dfc8"
     },
     "status": "Reading",
     "Progress": 90,
@@ -20,10 +20,10 @@
         "$oid": "5bc399b6f6fc0cd8ae6fb123"
     },
     "user": {
-        "$oid": "5bc39d60f6fc0cd8ae6fd6a4"
+        "$oid": "6b9b152211dcb30675659e05"
     },
     "book": {
-        "$oid": "5bc39965f6fc0cd8ae6fad30"
+        "$oid": "0fbccd824b6f746b997ff453"
     },
     "status": "Not started",
     "Progress": 90,
@@ -37,10 +37,10 @@
         "$oid": "5bc399b6f6fc0cd8ae6fb124"
     },
     "user": {
-        "$oid": "5bc39d60f6fc0cd8ae6fd6a5"
+        "$oid": "a22bcba0fbc61672285a2e59"
     },
     "book": {
-        "$oid": "5bc39965f6fc0cd8ae6fad29"
+        "$oid": "0fb726d4ee34e9315653dfc8"
     },
     "status": "Reading",
     "Progress": 90,
@@ -54,16 +54,16 @@
         "$oid": "5bc399b6f6fc0cd8ae6fb125"
     },
     "user": {
-        "$oid": "5bc39d60f6fc0cd8ae6fd6a5"
+        "$oid": "a22bcba0fbc61672285a2e59"
     },
     "book": {
-        "$oid": "5bc39965f6fc0cd8ae6fad30"
+        "$oid": "0fbccd824b6f746b997ff453"
     },
     "status": "Recommended",
     "Progress": 90,
     "user_rating": 4,
     "friend": {
-        "$oid": "5bc39d60f6fc0cd8ae6fd6a4"
+        "$oid": "6b9b152211dcb30675659e05"
     },
     "book_condition": "Fair",
     "available_for_share": false

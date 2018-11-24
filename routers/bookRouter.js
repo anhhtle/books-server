@@ -11,11 +11,10 @@ const Book = require('../models/book.model');
 //*********** API ****************/
 
 // get all book variants belonging to a user
-router.get('/user/:userId', auth.required, (req, res) => {
-    // const userId = new mongoose.Types.ObjectId("5bc39d60f6fc0cd8ae6fd6a5");
-    const userId = new mongoose.Types.ObjectId(req.params.userId);
+router.get('/user/', auth.required, (req, res) => {
+    const { payload: { id } } = req;
 
-    Variant.find({user: userId})
+    Variant.find({user: id})
         .populate('book')
         .populate({
             path: 'friend',
@@ -32,9 +31,9 @@ router.get('/user/:userId', auth.required, (req, res) => {
 });
 
 // user add new book
-router.post('/user/:userId', auth.required, (req, res) => {
-    const { body: { book } } = req;
-    const userId = new mongoose.Types.ObjectId(req.params.userId);
+router.post('/user', auth.required, (req, res) => {
+    const {payload: {id}, body: { book } } = req;
+    // const userId = new mongoose.Types.ObjectId(user._id);
 
     // check if book exists
     Book.findOne({google_id: book.google_id})
@@ -42,7 +41,7 @@ router.post('/user/:userId', auth.required, (req, res) => {
         .then(bookDB => {
             if (bookDB !== null) {
                 const newVariant = {
-                    user: userId,
+                    user: id,
                     book: new mongoose.Types.ObjectId(bookDB._id)
                 }
 
@@ -55,7 +54,7 @@ router.post('/user/:userId', auth.required, (req, res) => {
                 // if book is not found, create new book...
                 return Book.create(newBook).then(book => {
                     const newVariant = {
-                        user: userId,
+                        user: id,
                         book: new mongoose.Types.ObjectId(book._id)
                     }
 
