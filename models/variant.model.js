@@ -19,6 +19,8 @@ const variantSchema = mongoose.Schema({
     },
     book_condition: {type: String, default: null},
     available_for_share: {type: Boolean, default: false},
+    share_requested: {type: Boolean, default: false},
+    created_at: {type: Date, default: new Date()},
 });
 
 module.exports = mongoose.model('Variant', variantSchema);

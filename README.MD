@@ -17,8 +17,8 @@
 # Seed
 run in command line from root directory: 
     "mongoimport --db books-app --collection users --drop --file ./seeds/users.json"
-    "mongoimport --db books-app --collection booksMaster --drop --file ./seeds/bookMaster.json"
-    "mongoimport --db books-app --collection booksVariant --drop --file ./seeds/bookVariant.json"
+    "mongoimport --db books-app --collection books --drop --file ./seeds/books.json"
+    "mongoimport --db books-app --collection variants --drop --file ./seeds/variants.json"
 
 
 
@@ -37,6 +37,7 @@ run in command line from root directory:
     "mongoimport -h ds121163.mlab.com:21163 -d books-app -c books --drop -u <user> -p <password> --file ./seeds/books.json"
     "mongoimport -h ds121163.mlab.com:21163 -d books-app -c variants --drop -u <user> -p <password> --file ./seeds/variants.json"
     "mongoimport -h ds121163.mlab.com:21163 -d books-app -c newsfeeds --drop -u <user> -p <password> --file ./seeds/newsfeeds.json"
+    "mongoimport -h ds121163.mlab.com:21163 -d books-app -c requests --drop -u <user> -p <password> --file ./seeds/requests.json"
     careful with the "--drop" as it will drop the database first instead of inserting
 
 

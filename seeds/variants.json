@@ -1,22 +1,5 @@
 {
     "_id": {
-        "$oid": "5bc399b6f6fc0cd8ae6fb122"
-    },
-    "user": {
-        "$oid": "6b9b152211dcb30675659e05"
-    },
-    "book": {
-        "$oid": "0fb726d4ee34e9315653dfc8"
-    },
-    "status": "Reading",
-    "Progress": 90,
-    "user_rating": 4,
-    "friend": null,
-    "book_condition": "Like new",
-    "available_for_share": true
-}
-{
-    "_id": {
         "$oid": "5bc399b6f6fc0cd8ae6fb123"
     },
     "user": {
@@ -29,6 +12,25 @@
     "Progress": 90,
     "user_rating": 4,
     "friend": null,
+    "book_condition": "Fair",
+    "available_for_share": false
+}
+{
+    "_id": {
+        "$oid": "5bc399b6f6fc0cd8ae6fb125"
+    },
+    "user": {
+        "$oid": "6b9b152211dcb30675659e05"
+    },
+    "book": {
+        "$oid": "0fbccd824b6f746b997ff453"
+    },
+    "status": "Recommended",
+    "Progress": 90,
+    "user_rating": 4,
+    "friend": {
+        "$oid": "a22bcba0fbc61672285a2e59"
+    },
     "book_condition": "Fair",
     "available_for_share": false
 }
@@ -51,7 +53,25 @@
 }
 {
     "_id": {
-        "$oid": "5bc399b6f6fc0cd8ae6fb125"
+        "$oid": "5bc399b6f6fc0cd8ae6fb122"
+    },
+    "user": {
+        "$oid": "6b9b152211dcb30675659e05"
+    },
+    "book": {
+        "$oid": "0fb726d4ee34e9315653dfc8"
+    },
+    "status": "Reading",
+    "Progress": 90,
+    "user_rating": 4,
+    "friend": null,
+    "book_condition": "Like new",
+    "available_for_share": true,
+    "share_requested": true
+}
+{
+    "_id": {
+        "$oid": "3272c6b32cfa44b25718c7df"
     },
     "user": {
         "$oid": "a22bcba0fbc61672285a2e59"
@@ -59,12 +79,11 @@
     "book": {
         "$oid": "0fbccd824b6f746b997ff453"
     },
-    "status": "Recommended",
+    "status": "Read",
     "Progress": 90,
     "user_rating": 4,
-    "friend": {
-        "$oid": "6b9b152211dcb30675659e05"
-    },
-    "book_condition": "Fair",
-    "available_for_share": false
+    "friend": null,
+    "book_condition": "Like new",
+    "available_for_share": true,
+    "share_requested": true
 }

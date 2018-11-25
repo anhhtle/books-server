@@ -1,0 +1,28 @@
+{
+    "variant": {
+        "$oid": "5bc399b6f6fc0cd8ae6fb122"
+    },
+    "owner": {
+        "$oid": "6b9b152211dcb30675659e05"
+    },
+    "requester": {
+        "$oid": "a22bcba0fbc61672285a2e59"
+    },
+    "status": "Requesting",
+    "hide_request": false,
+    "thanked_owner": false
+}
+{
+    "variant": {
+        "$oid": "3272c6b32cfa44b25718c7df"
+    },
+    "owner": {
+        "$oid": "a22bcba0fbc61672285a2e59"
+    },
+    "requester": {
+        "$oid": "6b9b152211dcb30675659e05"
+    },
+    "status": "Requesting",
+    "hide_request": false,
+    "thanked_owner": false
+}

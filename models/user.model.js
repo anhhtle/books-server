@@ -21,8 +21,6 @@ const userSchema = mongoose.Schema({
         type : mongoose.Schema.Types.ObjectId, 
         ref: 'User' 
     }],
-    created_at: {type: Date, default: Date.now},
-    last_signed_in: {type: Date, default: Date.now},
     address: {
         street: {type: String, default: null},
         city: {type: String, default: null},
@@ -32,6 +30,8 @@ const userSchema = mongoose.Schema({
     },
     hash: String,
     salt: String,
+    created_at: {type: Date, default: Date.now},
+    last_signed_in: {type: Date, default: Date.now},
 });
 
 userSchema.methods.setPassword = function(password) {
