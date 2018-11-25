@@ -117,6 +117,12 @@ router.get('/current', auth.required, (req, res, next) => {
 router.put('/current/friend', auth.required, (req, res, next) => {
     const { payload: { id }, body: {friend_id}  } = req;
 
+    // add self to friend's list
+    User.findByIdAndUpdate(friend_id, { "$push": { "friends": id } }, {new: true})
+        .exec()
+        .catch(err => res.status(500).json(err));
+
+    // add friend to self's list
     User.findByIdAndUpdate(id, { "$push": { "friends": friend_id } }, {new: true})
         .exec()
         .then(user => res.status(201).json(user))
