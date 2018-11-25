@@ -73,7 +73,7 @@ router.post('/login', auth.optional, (req, res, next) => {
     return passport.authenticate('local', { session: false }, (err, passportUser, info) => {
 
         if(err) {
-            return next(err);
+            return res.status(500).json(err);
         }
 
         if(passportUser) {
@@ -96,11 +96,32 @@ router.get('/current', auth.required, (req, res, next) => {
 
     User.findOneAndUpdate({_id: id}, updateObj, {new: true})
         .populate('avatar')
+        .populate({
+            path: 'friends',
+            model: 'User',
+            select: 'first_name last_name avatar',
+            populate: {
+                path: 'avatar',
+                model: 'Avatar',
+                select: 'image'
+            }
+        })
         .exec()
         .then(user => {
             res.status(200).json({user, token: user.toAuthJSON()});
         })
         .catch(err => res.status(500).json(err));
+});
+
+// Add friend
+router.put('/current/friend', auth.required, (req, res, next) => {
+    const { payload: { id }, body: {friend_id}  } = req;
+
+    User.findByIdAndUpdate(id, { "$push": { "friends": friend_id } }, {new: true})
+        .exec()
+        .then(user => res.status(201).json(user))
+        .catch(err => res.status(500).json(err));
+
 });
 
 module.exports = router;

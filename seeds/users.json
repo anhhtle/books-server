@@ -13,6 +13,11 @@
     "avatars_unlocked": [
         "86660871101f2c0e771df8f8", "c367851d914237495b576e01", "f26923e2fa2a74a4ff8a6063"
     ],
+    "friends": [
+        {
+            "$oid": "a22bcba0fbc61672285a2e59"
+        }
+    ],
     "address":{
         "street": "1000 Welch Rd",
         "city": "Palo Alto",
@@ -35,6 +40,11 @@
     },
     "avatars_unlocked": [
         "86660871101f2c0e771df8f8", "c367851d914237495b576e01", "f26923e2fa2a74a4ff8a6063"
+    ],
+    "friends": [
+        {
+            "$oid": "a22bcba0fbc61672285a2e59"
+        }
     ],
     "address":{
         "street": "1234 ABC Rd",

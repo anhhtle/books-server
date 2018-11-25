@@ -33,7 +33,6 @@ router.get('/user/', auth.required, (req, res) => {
 // user add new book
 router.post('/user', auth.required, (req, res) => {
     const {payload: {id}, body: { book } } = req;
-    // const userId = new mongoose.Types.ObjectId(user._id);
 
     // check if book exists
     Book.findOne({google_id: book.google_id})

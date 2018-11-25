@@ -8,13 +8,6 @@ const userSchema = mongoose.Schema({
     email: {type: String, required: true},
     alias: {type: String, default: null},
     job: {type: String, default: null},
-    address: {
-        street: {type: String, default: null},
-        city: {type: String, default: null},
-        state: {type: String, default: null},
-        zipcode: {type: String, default: null},
-        country: {type: String, default: null},
-    },
     avatar: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Avatar',
@@ -24,8 +17,19 @@ const userSchema = mongoose.Schema({
         type: [String], 
         default: ["86660871101f2c0e771df8f8", "c367851d914237495b576e01", "f26923e2fa2a74a4ff8a6063"]
     },
+    friends: [{ 
+        type : mongoose.Schema.Types.ObjectId, 
+        ref: 'User' 
+    }],
     created_at: {type: Date, default: Date.now},
     last_signed_in: {type: Date, default: Date.now},
+    address: {
+        street: {type: String, default: null},
+        city: {type: String, default: null},
+        state: {type: String, default: null},
+        zipcode: {type: String, default: null},
+        country: {type: String, default: null},
+    },
     hash: String,
     salt: String,
 });

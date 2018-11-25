@@ -10,11 +10,14 @@ passport.use(new LocalStrategy({
 }, (email, password, done) => {
     User.findOne({ email })
         .then((user) => {
-        if(!user || !user.validatePassword(password)) {
-            return done(null, false, { errors: { 'email or password': 'is invalid' } });
-        }
+            if(!user) {
+                return done({error: 'User not found'}, false, { info: { 'user': 'not found' } } );
+            }
+            if(!user.validatePassword(password)) {
+                return done({error: 'Invalid email or password' }, false, { info: { 'email or password': 'is invalid' } });
+            }
 
-        return done(null, user);
+            return done(null, user);
 
-    }).catch(done);
+        }).catch(done);
 }));

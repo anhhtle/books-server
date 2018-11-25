@@ -16,6 +16,7 @@ const bodyParser = require('body-parser');
 const userRouter = require('./routers/userRouter');
 const bookRouter = require('./routers/bookRouter');
 const avatarRouter = require('./routers/avatarRouter');
+const newsfeedRouter = require('./routers/newsfeedRouter');
 
 mongoose.Promise = global.Promise;
 const app = express();
@@ -32,6 +33,7 @@ app.get('/', (req, res) => {
 app.use('/api/v1/user', userRouter);
 app.use('/api/v1/books', bookRouter);
 app.use('/api/v1/avatars', avatarRouter);
+app.use('/api/v1/newsfeeds', newsfeedRouter);
 
 let server;
 

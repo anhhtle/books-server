@@ -1,0 +1,45 @@
+{
+    "type": "Friend: new book",
+    "book": {
+        "$oid": "0fb726d4ee34e9315653dfc8"
+    },
+    "friend": {
+        "$oid": "6b9b152211dcb30675659e05"
+    }
+}
+{
+    "type": "Friend: reading",
+    "book": {
+        "$oid": "0fb726d4ee34e9315653dfc8"
+    },
+    "friend": {
+        "$oid": "6b9b152211dcb30675659e05"
+    }
+}
+{
+    "type": "Friend: sharing book",
+    "book": {
+        "$oid": "0fb726d4ee34e9315653dfc8"
+    },
+    "friend": {
+        "$oid": "6b9b152211dcb30675659e05"
+    }
+}
+{
+    "type": "Friend: received book",
+    "book": {
+        "$oid": "0fbccd824b6f746b997ff453"
+    },
+    "friend": {
+        "$oid": "6b9b152211dcb30675659e05"
+    },
+    "community_member": {
+        "$oid": "a22bcba0fbc61672285a2e59"
+    }
+}
+{
+    "type": "Friend: avatar",
+    "friend": {
+        "$oid": "6b9b152211dcb30675659e05"
+    }
+}
