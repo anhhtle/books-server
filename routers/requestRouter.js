@@ -5,6 +5,7 @@ const router = express.Router();
 const auth = require('./auth');
 
 const User = require('../models/user.model');
+const Variant = require('../models/variant.model');
 const Request = require('../models/request.model');
 
 
@@ -45,7 +46,7 @@ router.get('/', auth.required, (req, res) => {
 router.get('/user/', auth.required, (req, res) => {
     const { payload: { id } } = req;
 
-    Request.find({ $or: [{owner: id}, {requester: id}] })
+    Request.find({ $or: [{original_owner: id}, {requester: id}] })
         .populate({
             path: 'variant',
             model: 'Variant',
@@ -56,7 +57,7 @@ router.get('/user/', auth.required, (req, res) => {
             }
         })
         .populate({
-            path: 'owner',
+            path: 'original_owner',
             model: 'User',
             select: 'first_name last_name avatar address',
             populate: {
@@ -81,5 +82,57 @@ router.get('/user/', auth.required, (req, res) => {
         })
 
 })
+
+// update requests
+router.put('/user/', auth.required, (req, res) => {
+    const { body: { request_id, status, hide_request, thanked_owner } } = req;
+
+    if (hide_request) {
+        return Request.findByIdAndUpdate(request_id, {hide_request}, {new: true})
+            .exec()
+            .then(request => {
+                res.status(200).json(request)
+            })
+            .catch(err => res.status(500).json(err));
+    }
+
+    if (thanked_owner) {
+        return Request.findByIdAndUpdate(request_id, {thanked_owner}, {new: true})
+            .exec()
+            .then(request => {
+                res.status(200).json(request)
+            })
+            .catch(err => res.status(500).json(err));
+    }
+
+    const updateObj = {status: status, updated_at: new Date()}
+
+    Request.findByIdAndUpdate(request_id, updateObj, {new: true})
+        .exec()
+        .then(request => {
+
+            if (status === 'Sent') {
+                const updateVariantObj = {user: request.requester, available_for_share: false, share_requested: false, status: "Not read", progress: 0, user_rating: null, friend: null, recieved_at: new Date()}
+        
+                Variant.findByIdAndUpdate(request.variant, updateVariantObj, {new: true})
+                    .exec()
+                    .then(() => {
+                        res.status(200).json(request)
+                    })  
+            } else if (status ===  'Cancelled') {
+                const updateVariantObj = {available_for_share: false, share_requested: false}
+        
+                Variant.findByIdAndUpdate(request.variant, updateVariantObj, {new: true})
+                    .exec()
+                    .then(() => {
+                        res.status(200).json(request)
+                    })  
+            } else {
+                res.status(200).json(request)
+            }
+        })
+        .catch(err => res.status(500).json(err));
+})
+
 
 module.exports = router;

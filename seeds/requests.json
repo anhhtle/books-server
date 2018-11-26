@@ -1,8 +1,11 @@
 {
+    "_id": {
+        "$oid": "5bfb2d9ff6fc0cd8ae74f4d5"
+    },
     "variant": {
         "$oid": "5bc399b6f6fc0cd8ae6fb122"
     },
-    "owner": {
+    "original_owner": {
         "$oid": "6b9b152211dcb30675659e05"
     },
     "requester": {
@@ -13,10 +16,13 @@
     "thanked_owner": false
 }
 {
+    "_id": {
+        "$oid": "5bfb2d9ff6fc0cd8ae74f4d6"
+    },
     "variant": {
         "$oid": "3272c6b32cfa44b25718c7df"
     },
-    "owner": {
+    "original_owner": {
         "$oid": "a22bcba0fbc61672285a2e59"
     },
     "requester": {

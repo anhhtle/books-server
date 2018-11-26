@@ -8,8 +8,8 @@
     "book": {
         "$oid": "0fbccd824b6f746b997ff453"
     },
-    "status": "Not started",
-    "Progress": 90,
+    "status": "Not read",
+    "progress": 90,
     "user_rating": 4,
     "friend": null,
     "book_condition": "Fair",
@@ -26,7 +26,7 @@
         "$oid": "0fbccd824b6f746b997ff453"
     },
     "status": "Recommended",
-    "Progress": 90,
+    "progress": 90,
     "user_rating": 4,
     "friend": {
         "$oid": "a22bcba0fbc61672285a2e59"
@@ -45,7 +45,7 @@
         "$oid": "0fb726d4ee34e9315653dfc8"
     },
     "status": "Reading",
-    "Progress": 90,
+    "progress": 90,
     "user_rating": 4,
     "friend": null,
     "book_condition": "Used",
@@ -62,7 +62,7 @@
         "$oid": "0fb726d4ee34e9315653dfc8"
     },
     "status": "Reading",
-    "Progress": 90,
+    "progress": 90,
     "user_rating": 4,
     "friend": null,
     "book_condition": "Like new",
@@ -80,7 +80,7 @@
         "$oid": "0fbccd824b6f746b997ff453"
     },
     "status": "Read",
-    "Progress": 90,
+    "progress": 90,
     "user_rating": 4,
     "friend": null,
     "book_condition": "Like new",

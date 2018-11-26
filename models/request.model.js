@@ -5,7 +5,7 @@ const requestSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Variant'
     },
-    owner: {
+    original_owner: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },

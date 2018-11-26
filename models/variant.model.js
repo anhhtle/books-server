@@ -10,7 +10,7 @@ const variantSchema = mongoose.Schema({
         ref: 'Book'
     },
     status: {type: String, default: 'Not started'},
-    Progress: {type: Number, default: 0},
+    progress: {type: Number, default: 0},
     user_rating: {type: Number, default: null},
     friend: {
         type: mongoose.Schema.Types.ObjectId,
@@ -21,6 +21,7 @@ const variantSchema = mongoose.Schema({
     available_for_share: {type: Boolean, default: false},
     share_requested: {type: Boolean, default: false},
     created_at: {type: Date, default: new Date()},
+    recieved_at: {type: Date, default: new Date()},
 });
 
 module.exports = mongoose.model('Variant', variantSchema);
