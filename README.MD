@@ -43,6 +43,7 @@ run in command line from root directory:
 
 # endpoint
 https://books-app-server-dev.herokuapp.com/api/v1/
+most request requires: - header: Authorization - Token (get from login or create user)
 
 ## create new user
 POST /users/
@@ -64,14 +65,29 @@ POST /user/login
 
 ## get current user
 GET /user/current
-header: Authorization - Token (get from login or create user)
 
 ## get current user's books
-/books/user/
-header: Authorization - Token (get from login or create user)
+GET /books/user/
 
 ## Get all avatars
-/avatars/
+GET /avatars/
 
 ## Get current user's newsfeed
-/newsfeeds/user
+GET /newsfeeds/user
+
+## Get current user's requests
+GET /requests/user
+
+## Create new request for current user
+POST /requests/user
+{
+    variant_id
+}
+
+## Update a request
+{
+	request_id (string id),
+	status (string),
+	hide_request (boolean),
+	thanked_owner (boolean)
+}

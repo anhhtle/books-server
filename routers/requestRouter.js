@@ -83,6 +83,36 @@ router.get('/user/', auth.required, (req, res) => {
 
 })
 
+// create request
+router.post('/user/', auth.required, (req, res) => {
+    const { payload: {id}, body: {variant_id} } = req;
+
+    Variant.findById(variant_id).exec()
+        .then(variant => {
+            if (!variant.available_for_share || variant.share_requested ) {
+                res.status(501).json({message: 'Book is no longer available'})
+            }
+            else {
+
+                variant.share_requested = true;
+                variant.save()
+                    .then(() => {
+                        let createObj = {
+                            variant: variant_id,
+                            original_owner: variant.user,
+                            requester: id
+                        }
+        
+                        let request = new Request(createObj);
+                        request.save()
+                            .then(newRequest => res.status(201).json(newRequest));
+                    })
+
+            }
+        })
+        .catch(res => res.status(500).json(err));
+});
+
 // update requests
 router.put('/user/', auth.required, (req, res) => {
     const { body: { request_id, status, hide_request, thanked_owner } } = req;
