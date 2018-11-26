@@ -30,7 +30,7 @@ router.get('/user/', auth.required, (req, res) => {
         })
 });
 
-// user add new book
+// add new book for current user
 router.post('/user', auth.required, (req, res) => {
     const {payload: {id}, body: { book } } = req;
 
@@ -39,6 +39,7 @@ router.post('/user', auth.required, (req, res) => {
         .exec()
         .then(bookDB => {
             if (bookDB !== null) {
+                // book exists.. just need to create variant for user
                 const newVariant = {
                     user: id,
                     book: new mongoose.Types.ObjectId(bookDB._id)
@@ -62,12 +63,32 @@ router.post('/user', auth.required, (req, res) => {
                         res.status(201).json(variant);
                     })
                 })
-                .catch(err => {
-                    console.error(err);
-                    res.status(500).json({error: 'something went wrong'});
-                });
             }
         })
+        .catch(err => {
+            console.error(err);
+            res.status(500).json({error: 'something went wrong'});
+        });
 })
+
+// update a varaint
+router.put('/user', auth.required, (req, res) => {
+    const { body: { variant_id, update } } = req;
+
+    let updateObj = update;
+
+    if (update.status === 'Read' || update.progress === 100) {
+        updateObj.status = 'Read';
+        updateObj.progress = 100
+    } else if (update.status === 'Not read' || update.progress === 0) {
+        updateObj.status = 'Not read';
+        updateObj.progress = 0
+    }
+
+    Variant.findByIdAndUpdate(variant_id, updateObj, {new: true})
+        .exec()
+        .then(variant => res.status(200).json(variant))
+        .catch(err => res.status(500).json(err));
+});
 
 module.exports = router;

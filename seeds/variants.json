@@ -9,8 +9,8 @@
         "$oid": "0fbccd824b6f746b997ff453"
     },
     "status": "Not read",
-    "progress": 90,
-    "user_rating": 4,
+    "progress": 0,
+    "user_rating": null,
     "friend": null,
     "book_condition": "Fair",
     "available_for_share": false

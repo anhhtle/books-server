@@ -63,11 +63,38 @@ POST /user/login
     }
 }
 
-## get current user
+## Get current user
 GET /user/current
 
-## get current user's books
+## Get current user's books
 GET /books/user/
+
+## Create new book and variant
+POST /books/user/
+{
+	book: {
+		google_id,
+		title,
+		authors: [],
+        categories (optional): []
+        description (optional),
+        image (optional)
+	}
+}
+
+## Update a variant
+{
+	variant_id,
+	update (optional): {
+		status,
+		progress,
+        user_rating,
+        friend,
+        book_condition,
+        available_for_share,
+        share_requested
+	}
+}
 
 ## Get all avatars
 GET /avatars/

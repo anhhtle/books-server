@@ -46,7 +46,7 @@ router.post('/', auth.optional, (req, res, next) => {
     finalUser.setPassword(user.password);
   
     return finalUser.save()
-        .then(() => res.json({ token: finalUser.toAuthJSON() }));
+        .then(() => res.status(201).json({ token: finalUser.toAuthJSON() }));
 });
   
 
