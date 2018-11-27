@@ -38,6 +38,7 @@ run in command line from root directory:
     "mongoimport -h ds121163.mlab.com:21163 -d books-app -c variants --drop -u <user> -p <password> --file ./seeds/variants.json"
     "mongoimport -h ds121163.mlab.com:21163 -d books-app -c newsfeeds --drop -u <user> -p <password> --file ./seeds/newsfeeds.json"
     "mongoimport -h ds121163.mlab.com:21163 -d books-app -c requests --drop -u <user> -p <password> --file ./seeds/requests.json"
+    "mongoimport -h ds121163.mlab.com:21163 -d books-app -c settings --drop -u <user> -p <password> --file ./seeds/settings.json"
     careful with the "--drop" as it will drop the database first instead of inserting
 
 

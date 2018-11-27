@@ -1,0 +1,28 @@
+{
+    "_id": {
+        "$oid": "5bfd02d79892d111045c2ebd"
+    },
+    "push_notifications": {
+        "book_requests": true,
+        "friend_requests": true,
+        "book_recommendations": true
+    },
+    "email_notifications": {
+        "book_requests": true,
+        "news": true
+    }
+}
+{
+    "_id": {
+        "$oid": "bac776e947fa89124614d147"
+    },
+    "push_notifications": {
+        "book_requests": true,
+        "friend_requests": true,
+        "book_recommendations": true
+    },
+    "email_notifications": {
+        "book_requests": true,
+        "news": true
+    }
+}

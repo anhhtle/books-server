@@ -7,13 +7,13 @@ const passport = require('passport');
 const auth = require('./auth');
 
 const User = require('../models/user.model');
+const Setting = require('../models/setting.model');
 
 //*********** API ****************/
 
 // GET all user
 router.get('/', auth.optional, (req, res, next) => {
     User.find()
-        .populate('avatar')
         .then(user => {
             res.status(200).json(user);
         })
@@ -21,32 +21,34 @@ router.get('/', auth.optional, (req, res, next) => {
 });
 
 
-//POST new user route (optional, everyone has access)
+// Create new user route (optional, everyone has access)
 router.post('/', auth.optional, (req, res, next) => {
     const { body: { user } } = req;
   
     if(!user.email) {
-        return res.status(422).json({
-            errors: {
-                email: 'is required',
-            },
-        });
+        return res.status(422).json({error: 'email is required'});
     }
   
     if(!user.password) {
-        return res.status(422).json({
-            errors: {
-                password: 'is required',
-            },
-        });
+        return res.status(422).json({error: 'password is required'});
     }
-  
+
+    // check if user exists
+    User.findOne({email: user.email})
+        .then(user => {
+            if (user) {
+                return res.status(422).json({error: 'This email is already registered'});
+            } 
+        })
+
     const finalUser = new User(user);
-  
+    finalUser.createSetting();
     finalUser.setPassword(user.password);
-  
+
     return finalUser.save()
-        .then(() => res.status(201).json({ token: finalUser.toAuthJSON() }));
+        .then(() => {
+            res.status(201).json({ token: finalUser.toAuthJSON() })          
+        });
 });
   
 
@@ -92,10 +94,8 @@ router.post('/login', auth.optional, (req, res, next) => {
 router.get('/current', auth.required, (req, res, next) => {
     const { payload: { id } } = req;
 
-    const updateObj = {last_signed_in: new Date()}
-
-    User.findOneAndUpdate({_id: id}, updateObj, {new: true})
-        .populate('avatar')
+    User.findById(id)
+        .populate(['avatar', 'setting'])
         .populate({
             path: 'friends',
             model: 'User',
@@ -106,9 +106,10 @@ router.get('/current', auth.required, (req, res, next) => {
                 select: 'image'
             }
         })
+        .select('-salt -hash')
         .exec()
         .then(user => {
-            res.status(200).json({user, token: user.toAuthJSON()});
+            res.status(200).json(user);
         })
         .catch(err => res.status(500).json(err));
 });

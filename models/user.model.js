@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 
+const Setting = require('./setting.model');
+
 const userSchema = mongoose.Schema({
     first_name: {type: String, required: true},
     last_name: {type: String, required: true},
@@ -28,11 +30,13 @@ const userSchema = mongoose.Schema({
         zipcode: {type: String, default: null},
         country: {type: String, default: null},
     },
+    setting: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Setting'
+    },
     hash: String,
-    salt: String,
-    created_at: {type: Date, default: Date.now},
-    last_signed_in: {type: Date, default: Date.now},
-});
+    salt: String
+}, {timestamps: true} );
 
 userSchema.methods.setPassword = function(password) {
     this.salt = crypto.randomBytes(16).toString('hex');
@@ -54,6 +58,12 @@ userSchema.methods.generateJWT = function() {
         id: this._id,
         exp: parseInt(expirationDate.getTime() / 1000, 10),
     }, 'secret');
+}
+
+userSchema.methods.createSetting = function() {
+    const newSetting = new Setting();
+    newSetting.save();
+    this.setting = newSetting._id
 }
   
 userSchema.methods.toAuthJSON = function() {
