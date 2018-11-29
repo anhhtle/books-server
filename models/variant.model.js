@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const mongoose_delete = require('mongoose-delete');
 
 const variantSchema = mongoose.Schema({
     user: {
@@ -20,8 +21,12 @@ const variantSchema = mongoose.Schema({
     book_condition: {type: String, default: null},
     available_for_share: {type: Boolean, default: false},
     share_requested: {type: Boolean, default: false},
-    created_at: {type: Date, default: new Date()},
     recieved_at: {type: Date, default: new Date()},
-});
+}, {timestamps: true});
+
+// soft delete with .delete() function
+variantSchema.plugin(mongoose_delete, { deletedAt : true });
+// router methods won't return soft deleted rows
+variantSchema.plugin(mongoose_delete, { overrideMethods: true });
 
 module.exports = mongoose.model('Variant', variantSchema);

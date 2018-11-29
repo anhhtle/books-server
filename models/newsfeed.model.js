@@ -17,7 +17,6 @@ const newsfeedSchema = mongoose.Schema({
         ref: 'User',
         default: null
     },
-    created_at: {type: Date, default: Date.now},
-});
+} , {timestamps: true});
 
 module.exports = mongoose.model('Newsfeed', newsfeedSchema);

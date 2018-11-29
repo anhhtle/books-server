@@ -13,7 +13,14 @@
     "user_rating": null,
     "friend": null,
     "book_condition": "Fair",
-    "available_for_share": false
+    "available_for_share": false,
+    "deleted": false,
+    "createdAt": {
+        "$date": "2018-11-29T09:36:10.175Z"
+    },
+    "updatedAt": {
+        "$date": "2018-11-29T09:36:10.175Z"
+    }
 }
 {
     "_id": {
@@ -32,7 +39,14 @@
         "$oid": "a22bcba0fbc61672285a2e59"
     },
     "book_condition": "Fair",
-    "available_for_share": false
+    "available_for_share": false,
+    "deleted": false,
+    "createdAt": {
+        "$date": "2018-11-29T09:36:10.175Z"
+    },
+    "updatedAt": {
+        "$date": "2018-11-29T09:36:10.175Z"
+    }
 }
 {
     "_id": {
@@ -49,7 +63,14 @@
     "user_rating": 4,
     "friend": null,
     "book_condition": "Used",
-    "available_for_share": false
+    "available_for_share": false,
+    "deleted": false,
+    "createdAt": {
+        "$date": "2018-11-29T09:36:10.175Z"
+    },
+    "updatedAt": {
+        "$date": "2018-11-29T09:36:10.175Z"
+    }
 }
 {
     "_id": {
@@ -67,7 +88,14 @@
     "friend": null,
     "book_condition": "Like new",
     "available_for_share": true,
-    "share_requested": true
+    "share_requested": true,
+    "deleted": false,
+    "createdAt": {
+        "$date": "2018-11-29T09:36:10.175Z"
+    },
+    "updatedAt": {
+        "$date": "2018-11-29T09:36:10.175Z"
+    }
 }
 {
     "_id": {
@@ -85,5 +113,12 @@
     "friend": null,
     "book_condition": "Like new",
     "available_for_share": true,
-    "share_requested": true
+    "share_requested": true,
+    "deleted": false,
+    "createdAt": {
+        "$date": "2018-11-29T09:36:10.175Z"
+    },
+    "updatedAt": {
+        "$date": "2018-11-29T09:36:10.175Z"
+    }
 }

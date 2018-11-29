@@ -7,7 +7,9 @@ const passport = require('passport');
 const auth = require('./auth');
 
 const User = require('../models/user.model');
+const Variant = require('../models/variant.model');
 const Setting = require('../models/setting.model');
+const FriendRequest = require('../models/friendRequest.model');
 
 //*********** API ****************/
 
@@ -19,7 +21,6 @@ router.get('/', auth.optional, (req, res, next) => {
         })
         .catch(err => res.status(500).json(err));
 });
-
 
 // Create new user route (optional, everyone has access)
 router.post('/', auth.optional, (req, res, next) => {
@@ -51,7 +52,6 @@ router.post('/', auth.optional, (req, res, next) => {
         });
 });
   
-
 //POST login route (optional, everyone has access)
 router.post('/login', auth.optional, (req, res, next) => {
     const { body: { user } } = req;
@@ -114,21 +114,98 @@ router.get('/current', auth.required, (req, res, next) => {
         .catch(err => res.status(500).json(err));
 });
 
-// Add friend
-router.put('/current/friend', auth.required, (req, res, next) => {
-    const { payload: { id }, body: {friend_id}  } = req;
 
-    // add self to friend's list
-    User.findByIdAndUpdate(friend_id, { "$push": { "friends": id } }, {new: true})
-        .exec()
+// delete current user
+router.delete('/current', auth.required, (req, res) => {
+    const { payload: { id } } = req;
+
+    User.findById(id)
+        .then(user => {
+
+            // delete user's setting relation
+            Setting.findById(user.setting)
+                .then(setting => setting.delete());
+
+            // delete all of user's variants
+            let variant = Variant;
+            variant.delete({user: id}).exec();
+
+            user.delete()
+                .then(deletedUser => {
+                    res.status(200).json(deletedUser) 
+                });
+        })
         .catch(err => res.status(500).json(err));
+});
 
-    // add friend to self's list
-    User.findByIdAndUpdate(id, { "$push": { "friends": friend_id } }, {new: true})
-        .exec()
-        .then(user => res.status(201).json(user))
+
+// ********************* friends *******************************
+
+// get user's friend requests
+router.get('/current/friend-requests', auth.required, (req, res) => {
+    const { payload: { id } } = req;
+
+    FriendRequest.find({requestee: id})
+        .populate({
+            path: 'requester',
+            model: 'User',
+            select: 'first_name last_name avatar',
+            populate: {
+                path: 'avatar',
+                model: 'Avatar'
+            }
+        })
+        .then(requests => {
+            res.status(200).json(requests)
+        })
         .catch(err => res.status(500).json(err));
+});
 
+// create friend request
+router.post('/current/friend-requests', auth.required, (req, res) => {
+    const { payload: { id }, body: { friend_id } } = req;
+
+    // check if there's an existing request
+    FriendRequest.findOne({requester: id, requestee: friend_id}).exec()
+        .then(user => {
+            if (user) {
+                res.status(409).json({message: 'Already sent friend request to this user'})
+            } else {
+                const createObj = {
+                    requester: id,
+                    requestee: friend_id
+                }
+            
+                FriendRequest.create(createObj, function (err, request) {
+                    if (err) return handleError(err);
+                    
+                    // saved!
+                    res.status(201).json(request)
+                  });
+            }
+        })
+        .catch(err => res.status(500).json(err));
+});
+
+// accept friend-request
+router.put('/current/friend-requests/accept', auth.required, (req, res, next) => {
+    const { payload: { id }, body: {request_id}  } = req;
+
+    FriendRequest.findByIdAndUpdate(request_id, {status: 'Accepted'}, {new: true}).exec()
+        .then(request => {
+
+            // add self to friend's list
+            User.findByIdAndUpdate(request.requester, { "$push": { "friends": id } }, {new: true})
+                .exec();
+
+            // add friend to self's list
+            User.findByIdAndUpdate(id, { "$push": { "friends": request.requester } }, {new: true})
+                .exec();
+
+            request.delete()
+                .then(requestDeleted => res.status(201).json(requestDeleted))
+        })
+        .catch(err => res.status(500).json(err));
 });
 
 module.exports = router;

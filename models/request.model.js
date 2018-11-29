@@ -15,9 +15,7 @@ const requestSchema = mongoose.Schema({
     },
     status: {type: String, default: 'Requesting'},
     hide_request: {type: Boolean, default: false},
-    thanked_owner: {type: Boolean, default: false},
-    created_at: {type: Date, default: new Date()},
-    updated_at: {type: Date, default: new Date()},
-});
+    thanked_owner: {type: Boolean, default: false}
+}, {timestamps: true} );
 
 module.exports = mongoose.model('Request', requestSchema);

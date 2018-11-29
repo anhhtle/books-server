@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const mongoose_delete = require('mongoose-delete');
 
 const settingSchema = mongoose.Schema({
     push_notifications: {
@@ -10,6 +11,9 @@ const settingSchema = mongoose.Schema({
         book_requests: {type: Boolean, default: true},
         news: {type: Boolean, default: true}
     }
-});
+}, {timestamps: true} );
+
+// soft delete with .delete() function
+settingSchema.plugin(mongoose_delete, { deletedAt : true });
 
 module.exports = mongoose.model('Setting', settingSchema);

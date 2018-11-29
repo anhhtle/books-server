@@ -7,8 +7,7 @@ const bookSchema = mongoose.Schema({
     categories: [{type: String, default: null}],
     description: {type: String, default: null},
     image: {type: String, default: null},
-    ratings: {type: Number, default: null},
-    created_at: {type: Date, default: Date.now},
-});
+    ratings: {type: Number, default: null}
+}, {timestamps: true} );
 
 module.exports = mongoose.model('Book', bookSchema);

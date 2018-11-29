@@ -13,7 +13,13 @@
     },
     "status": "Requesting",
     "hide_request": false,
-    "thanked_owner": false
+    "thanked_owner": false,
+    "createdAt": {
+        "$date": "2018-11-29T09:36:10.175Z"
+    },
+    "updatedAt": {
+        "$date": "2018-11-29T09:36:10.175Z"
+    }
 }
 {
     "_id": {
@@ -30,5 +36,11 @@
     },
     "status": "Requesting",
     "hide_request": false,
-    "thanked_owner": false
+    "thanked_owner": false,
+    "createdAt": {
+        "$date": "2018-11-29T09:36:10.175Z"
+    },
+    "updatedAt": {
+        "$date": "2018-11-29T09:36:10.175Z"
+    }
 }

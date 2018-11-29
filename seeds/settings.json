@@ -10,6 +10,13 @@
     "email_notifications": {
         "book_requests": true,
         "news": true
+    },
+    "deleted": false,
+    "createdAt": {
+        "$date": "2018-11-29T09:36:10.175Z"
+    },
+    "updatedAt": {
+        "$date": "2018-11-29T09:36:10.175Z"
     }
 }
 {
@@ -24,5 +31,12 @@
     "email_notifications": {
         "book_requests": true,
         "news": true
+    },
+    "deleted": false,
+    "createdAt": {
+        "$date": "2018-11-29T09:36:10.175Z"
+    },
+    "updatedAt": {
+        "$date": "2018-11-29T09:36:10.175Z"
     }
 }

@@ -19,7 +19,11 @@ router.get('/user/', auth.required, (req, res) => {
         .populate({
             path: 'friend',
             model: 'User',
-            select: '-address'
+            select: 'first_name last_name avatar',
+            populate: {
+                path: 'avatar',
+                model: 'Avatar'
+            }
         })
         .exec()
         .then(variants => {
@@ -88,6 +92,17 @@ router.put('/user', auth.required, (req, res) => {
     Variant.findByIdAndUpdate(variant_id, updateObj, {new: true})
         .exec()
         .then(variant => res.status(200).json(variant))
+        .catch(err => res.status(500).json(err));
+});
+
+// delete a variant
+router.delete('/:id', auth.required, (req, res) => {
+
+    Variant.findById(req.params.id).exec()
+        .then(variant => {
+            variant.delete()
+                .then(deletedVar => res.status(200).json(deletedVar))
+        })
         .catch(err => res.status(500).json(err));
 });
 

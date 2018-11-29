@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
+const mongoose_delete = require('mongoose-delete');
 
 const Setting = require('./setting.model');
 
@@ -38,6 +39,11 @@ const userSchema = mongoose.Schema({
     salt: String
 }, {timestamps: true} );
 
+// soft delete with .delete() function
+userSchema.plugin(mongoose_delete, { deletedAt : true });
+// router methods won't return soft deleted rows
+userSchema.plugin(mongoose_delete, { overrideMethods: true });
+
 userSchema.methods.setPassword = function(password) {
     this.salt = crypto.randomBytes(16).toString('hex');
     this.hash = crypto.pbkdf2Sync(password, this.salt, 10000, 512, 'sha512').toString('hex');
@@ -60,12 +66,18 @@ userSchema.methods.generateJWT = function() {
     }, 'secret');
 }
 
+// create setting for a new user
 userSchema.methods.createSetting = function() {
     const newSetting = new Setting();
     newSetting.save();
     this.setting = newSetting._id
 }
   
+// delete all of the user's book
+userSchema.methods.deleteVariants = function() {
+    
+}
+
 userSchema.methods.toAuthJSON = function() {
     return this.generateJWT()
 };
