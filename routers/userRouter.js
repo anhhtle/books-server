@@ -141,6 +141,24 @@ router.delete('/current', auth.required, (req, res) => {
 
 // ********************* friends *******************************
 
+// find friend by email
+router.post('/friend/search', auth.required, (req, res) => {
+    const { payload: {id}, body: { query } } = req;
+
+    User.find({ 
+            email: { $regex: query, $options: 'i' },
+            _id: {$ne: id} // exclude user from search
+        })
+        .select('-address -friends -hash -salt -avatars_unlocked')
+        .limit(8)
+        .exec()
+        .then(user => {
+            res.status(200).json(user);
+        })
+        .catch(err => res.status(500).json(err));
+
+});
+
 // get user's friend requests
 router.get('/current/friend-requests', auth.required, (req, res) => {
     const { payload: { id } } = req;
@@ -156,7 +174,7 @@ router.get('/current/friend-requests', auth.required, (req, res) => {
             }
         })
         .then(requests => {
-            res.status(200).json(requests)
+            res.status(200).json(requests);
         })
         .catch(err => res.status(500).json(err));
 });

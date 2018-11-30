@@ -4,7 +4,7 @@
     },
     "first_name": "Anh",
     "last_name": "Le",
-    "email": "ahtle@stanford.edu",
+    "email": "anh.ht.le@stanford.edu",
     "alias": "Jamie Lannister",
     "job": "King's Guard",
     "avatar": {
@@ -16,10 +16,10 @@
     "friends": [
     ],
     "address":{
-        "street": "1000 Welch Rd",
+        "street": "415  Coelho St",
         "city": "Palo Alto",
-        "state": "CA",
-        "zipcode": "95001",
+        "state": "Milpitas",
+        "zipcode": "95035",
         "country": "USA"
     },
     "setting": {
@@ -41,7 +41,7 @@
     },
     "first_name": "Edd",
     "last_name": "Lee",
-    "email": "anh.ht.le@gmail.com",
+    "email": "ahtle@stanford.edu",
     "alias": "Hodor",
     "job": "Holding doors",
     "avatar": {
