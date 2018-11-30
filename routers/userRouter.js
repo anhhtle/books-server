@@ -226,4 +226,25 @@ router.put('/current/friend-requests/accept', auth.required, (req, res, next) =>
         .catch(err => res.status(500).json(err));
 });
 
+// get a user's public profile
+router.get('/:id', auth.optional, (req, res, next) => {
+
+    User.findById(req.params.id)
+        .populate('avatars')
+        .select('-address -hash -salt')
+        .exec()
+        .then(user => {
+
+            // get user's books
+            Variant.find({user: req.params.id, status: {$ne: 'Recommended'}})
+                .populate('book')
+                .exec()
+                .then(variants => {
+                    res.status(200).json({user, variants});
+                })
+
+        })
+        .catch(err => res.status(500).json(err));
+})
+
 module.exports = router;
