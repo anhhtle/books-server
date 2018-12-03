@@ -141,15 +141,20 @@ router.delete('/current', auth.required, (req, res) => {
 
 // ********************* friends *******************************
 
-// find friend by email
+// find friend
 router.post('/friend/search', auth.required, (req, res) => {
     const { payload: {id}, body: { query } } = req;
 
     User.find({ 
-            email: { $regex: query, $options: 'i' },
+            $or: [ 
+                {email: { $regex: query, $options: 'i' }},
+                {first_name: { $regex: query, $options: 'i' }},
+                {last_name: { $regex: query, $options: 'i' }},
+            ],
             _id: {$ne: id} // exclude user from search
         })
-        .select('-address -friends -hash -salt -avatars_unlocked')
+        .populate('avatar')
+        .select('first_name last_name email alias job avatar')
         .limit(8)
         .exec()
         .then(user => {
