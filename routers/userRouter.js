@@ -168,20 +168,35 @@ router.post('/friend/search', auth.required, (req, res) => {
 router.get('/current/friend-requests', auth.required, (req, res) => {
     const { payload: { id } } = req;
 
-    FriendRequest.find({requestee: id})
-        .populate({
-            path: 'requester',
-            model: 'User',
-            select: 'first_name last_name avatar',
-            populate: {
-                path: 'avatar',
-                model: 'Avatar'
-            }
-        })
-        .then(requests => {
-            res.status(200).json(requests);
-        })
-        .catch(err => res.status(500).json(err));
+    FriendRequest.find({
+        $or: [
+            {requestee: id},
+            {requester: id}
+        ],
+
+    })
+    .populate({
+        path: 'requester',
+        model: 'User',
+        select: 'first_name last_name avatar alias job',
+        populate: {
+            path: 'avatar',
+            model: 'Avatar'
+        }
+    })
+    .populate({
+        path: 'requestee',
+        model: 'User',
+        select: 'first_name last_name avatar alias job',
+        populate: {
+            path: 'avatar',
+            model: 'Avatar'
+        }
+    })
+    .then(requests => {
+        res.status(200).json(requests);
+    })
+    .catch(err => res.status(500).json(err));
 });
 
 // create friend request
