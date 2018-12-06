@@ -71,7 +71,7 @@ router.post('/', auth.required, (req, res) => {
 
                         // create notification
                         const createNotificationObj = {
-                            type: 'New friend',
+                            type: 'Friend request',
                             user: id,
                             friend: friend_id
                         }
@@ -100,6 +100,17 @@ router.put('/accept', auth.required, (req, res, next) => {
             // add friend to self's list
             User.findByIdAndUpdate(id, { "$push": { "friends": request.requester } }, {new: true})
                 .exec();
+
+            // create notification
+            const createNotificationObj = {
+                type: 'New friend',
+                user: id,
+                friend: friend_id
+            }
+
+            Notification.create(createNotificationObj).then(() => {
+                res.status(201).json(request)       
+            })
 
             request.delete()
                 .then(requestDeleted => res.status(201).json(requestDeleted))
