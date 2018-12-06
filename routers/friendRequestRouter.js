@@ -67,17 +67,42 @@ router.post('/', auth.required, (req, res) => {
                 const newFriendRequest = new FriendRequest(createObj);
 
                 newFriendRequest.save()
-                    .then((request) => {
+                    .then(() => {
 
+                        
                         // create notification
                         const createNotificationObj = {
                             type: 'Friend request',
                             user: id,
                             friend: friend_id
                         }
-
+                        
                         Notification.create(createNotificationObj).then(() => {
-                            res.status(201).json(request)       
+                            FriendRequest.findById(newFriendRequest._id)
+                                .populate({
+                                    path: 'requester',
+                                    model: 'User',
+                                    select: 'first_name last_name avatar alias job',
+                                    populate: {
+                                        path: 'avatar',
+                                        model: 'Avatar',
+                                        select: 'image'
+                                    }
+                                })
+                                .populate({
+                                    path: 'requestee',
+                                    model: 'User',
+                                    select: 'first_name last_name avatar alias job',
+                                    populate: {
+                                        path: 'avatar',
+                                        model: 'Avatar',
+                                        select: 'image'
+                                    }
+                                })
+                                .exec()
+                                .then((newFriendRequestPopulated) => {
+                                    res.status(201).json(newFriendRequestPopulated)       
+                                })
                         })
 
                     });
