@@ -68,6 +68,10 @@ POST /user/login
 ## Get current user
 GET /user/current
 
+## Get a user's public profile
+GET /user/:id
+
+
 ## Get current user's books
 GET /books/user/
 
@@ -104,7 +108,7 @@ GET /avatars/
 ## Get current user's newsfeed
 GET /newsfeeds/user
 
-## Get current user's requests
+## Get current user's book requests
 GET /requests/user
 
 ## Create new request for current user
@@ -120,3 +124,22 @@ POST /requests/user
 	hide_request (boolean),
 	thanked_owner (boolean)
 }
+
+## find user
+POST /user/search
+{ query }
+
+## Get user's friend requests
+GET /friend-requests/
+
+## Create friend request
+POST /friend-requests/
+{ friend_id }
+
+## Accept friend request
+PUT /friend-requests/accept
+{ request_id }
+
+### NOTIFICATIONS
+## Get user's notifications
+GET /notifications

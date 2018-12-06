@@ -16,7 +16,9 @@ const bodyParser = require('body-parser');
 const userRouter = require('./routers/userRouter');
 const bookRouter = require('./routers/bookRouter');
 const avatarRouter = require('./routers/avatarRouter');
+const friendRequestRouter = require('./routers/friendRequestRouter');
 const newsfeedRouter = require('./routers/newsfeedRouter');
+const notificationRouter = require('./routers/notificationRouter');
 const requestRouter = require('./routers/requestRouter');
 
 mongoose.Promise = global.Promise;
@@ -35,7 +37,10 @@ app.use('/api/v1/user', userRouter);
 app.use('/api/v1/books', bookRouter);
 app.use('/api/v1/avatars', avatarRouter);
 app.use('/api/v1/newsfeeds', newsfeedRouter);
+app.use('/api/v1/notifications', notificationRouter);
 app.use('/api/v1/requests', requestRouter);
+app.use('/api/v1/friend-requests', friendRequestRouter);
+app.use('/api/v1/notifications', friendRequestRouter);
 
 let server;
 

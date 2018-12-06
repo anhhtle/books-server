@@ -138,11 +138,8 @@ router.delete('/current', auth.required, (req, res) => {
         .catch(err => res.status(500).json(err));
 });
 
-
-// ********************* friends *******************************
-
-// find friend
-router.post('/friend/search', auth.required, (req, res) => {
+// find user
+router.post('/search', auth.optional, (req, res) => {
     const { payload: {id}, body: { query } } = req;
 
     User.find({ 
@@ -162,88 +159,6 @@ router.post('/friend/search', auth.required, (req, res) => {
         })
         .catch(err => res.status(500).json(err));
 
-});
-
-// get user's friend requests
-router.get('/current/friend-requests', auth.required, (req, res) => {
-    const { payload: { id } } = req;
-
-    FriendRequest.find({
-        $or: [
-            {requestee: id},
-            {requester: id}
-        ],
-
-    })
-    .populate({
-        path: 'requester',
-        model: 'User',
-        select: 'first_name last_name avatar alias job',
-        populate: {
-            path: 'avatar',
-            model: 'Avatar'
-        }
-    })
-    .populate({
-        path: 'requestee',
-        model: 'User',
-        select: 'first_name last_name avatar alias job',
-        populate: {
-            path: 'avatar',
-            model: 'Avatar'
-        }
-    })
-    .then(requests => {
-        res.status(200).json(requests);
-    })
-    .catch(err => res.status(500).json(err));
-});
-
-// create friend request
-router.post('/current/friend-requests', auth.required, (req, res) => {
-    const { payload: { id }, body: { friend_id } } = req;
-
-    // check if there's an existing request
-    FriendRequest.findOne({requester: id, requestee: friend_id}).exec()
-        .then(user => {
-            if (user) {
-                res.status(409).json({message: 'Already sent friend request to this user'})
-            } else {
-                const createObj = {
-                    requester: id,
-                    requestee: friend_id
-                }
-            
-                FriendRequest.create(createObj, function (err, request) {
-                    if (err) return handleError(err);
-                    
-                    // saved!
-                    res.status(201).json(request)
-                  });
-            }
-        })
-        .catch(err => res.status(500).json(err));
-});
-
-// accept friend-request
-router.put('/current/friend-requests/accept', auth.required, (req, res, next) => {
-    const { payload: { id }, body: {request_id}  } = req;
-
-    FriendRequest.findByIdAndUpdate(request_id, {status: 'Accepted'}, {new: true}).exec()
-        .then(request => {
-
-            // add self to friend's list
-            User.findByIdAndUpdate(request.requester, { "$push": { "friends": id } }, {new: true})
-                .exec();
-
-            // add friend to self's list
-            User.findByIdAndUpdate(id, { "$push": { "friends": request.requester } }, {new: true})
-                .exec();
-
-            request.delete()
-                .then(requestDeleted => res.status(201).json(requestDeleted))
-        })
-        .catch(err => res.status(500).json(err));
 });
 
 // get a user's public profile
