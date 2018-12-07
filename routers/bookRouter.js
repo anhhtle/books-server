@@ -11,7 +11,7 @@ const Book = require('../models/book.model');
 //*********** API ****************/
 
 // get all book variants belonging to a user
-router.get('/user/', auth.required, (req, res) => {
+router.get('/', auth.required, (req, res) => {
     const { payload: { id } } = req;
 
     Variant.find({user: id})
@@ -35,7 +35,7 @@ router.get('/user/', auth.required, (req, res) => {
 });
 
 // add new book for current user
-router.post('/user', auth.required, (req, res) => {
+router.post('/', auth.required, (req, res) => {
     const {payload: {id}, body: { book } } = req;
 
     // check if book exists
@@ -76,7 +76,7 @@ router.post('/user', auth.required, (req, res) => {
 })
 
 // update a varaint
-router.put('/user', auth.required, (req, res) => {
+router.put('/', auth.required, (req, res) => {
     const { body: { variant_id, update } } = req;
 
     let updateObj = update;

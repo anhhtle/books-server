@@ -4,11 +4,13 @@ const mongoose_delete = require('mongoose-delete');
 const friendRequestSchema = mongoose.Schema({
     requester: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'User',
+        required: true
     },
     requestee: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'User',
+        required: true
     },
     status: {type: String, default: 'Requesting'}
 }, { timestamps: true, collection: 'friend-requests' } );

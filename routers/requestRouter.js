@@ -10,40 +10,8 @@ const Request = require('../models/request.model');
 
 
 //*********** API ****************/
-
-// get all requests
-router.get('/', auth.required, (req, res) => {
-    Request.find()
-        .populate({
-            path: 'variant',
-            model: 'Variant',
-            populate: {
-                path: 'book',
-                model: 'Book'
-            }
-        })
-        .populate({
-            path: 'requester',
-            model: 'User',
-            select: 'first_name last_name avatar address',
-            populate: {
-                path: 'avatar',
-                model: 'Avatar',
-                select: 'image'
-            }
-        })
-        .exec()
-        .then(requests => {
-            res.status(200).json(requests);
-        }).catch(err => {
-            console.error(err);
-            res.status(500).json({error: 'something went wrong'});
-        })
-
-});
-
 // get current user's requests
-router.get('/user/', auth.required, (req, res) => {
+router.get('/', auth.required, (req, res) => {
     const { payload: { id } } = req;
 
     Request.find({ $or: [{original_owner: id}, {requester: id}] })
@@ -84,7 +52,7 @@ router.get('/user/', auth.required, (req, res) => {
 })
 
 // create request
-router.post('/user/', auth.required, (req, res) => {
+router.post('/', auth.required, (req, res) => {
     const { payload: {id}, body: {variant_id} } = req;
 
     Variant.findById(variant_id).exec()
@@ -114,7 +82,7 @@ router.post('/user/', auth.required, (req, res) => {
 });
 
 // update requests
-router.put('/user/', auth.required, (req, res) => {
+router.put('/', auth.required, (req, res) => {
     const { body: { request_id, status, hide_request, thanked_owner } } = req;
 
     if (hide_request) {

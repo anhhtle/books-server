@@ -73,10 +73,10 @@ GET /user/:id
 
 
 ## Get current user's books
-GET /books/user/
+GET /books/
 
 ## Create new book and variant
-POST /books/user/
+POST /books/
 {
 	book: {
 		google_id,
@@ -106,13 +106,13 @@ POST /books/user/
 GET /avatars/
 
 ## Get current user's newsfeed
-GET /newsfeeds/user
+GET /newsfeeds/
 
 ## Get current user's book requests
-GET /requests/user
+GET /requests/
 
 ## Create new request for current user
-POST /requests/user
+POST /requests/
 {
     variant_id
 }
