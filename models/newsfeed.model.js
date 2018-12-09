@@ -17,6 +17,11 @@ const newsfeedSchema = mongoose.Schema({
         ref: 'User',
         default: null
     },
+    avatar: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Avatar',
+        default: null
+    },
 } , {timestamps: true});
 
 module.exports = mongoose.model('Newsfeed', newsfeedSchema);
