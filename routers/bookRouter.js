@@ -106,4 +106,51 @@ router.delete('/:id', auth.required, (req, res) => {
         .catch(err => res.status(500).json(err));
 });
 
+// get all variants available for share
+router.get('/community', auth.optional, (req, res) => {
+    let id = null;
+    if (req.payload) {
+        id = req.payload.id;
+    }
+
+    let query;
+    if (id) {
+        query = {
+            $and: [
+                { available_for_share: true },
+                { share_requested: false },
+                { user: {$ne: id} } // exclude variants belonging to current user
+            ]
+        }
+    } else {
+        query = {
+            $and: [
+                { available_for_share: true },
+                { share_requested: false },
+            ]
+        }
+    }
+
+    Variant.find(query)
+        .populate('book')
+        .populate({
+            path: 'user',
+            model: 'User',
+            select: 'first_name last_name avatar',
+            populate: {
+                path: 'avatar',
+                model: 'Avatar'
+            }
+        })
+        .select('book user book_condition')
+        .exec()
+        .then(variants => {
+            res.status(200).json(variants);
+        }).catch(err => {
+            console.error(err);
+            res.status(500).json({error: 'something went wrong'});
+        })
+
+})
+
 module.exports = router;

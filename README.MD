@@ -71,7 +71,6 @@ GET /user/current
 ## Get a user's public profile
 GET /user/:id
 
-
 ## Get current user's books
 GET /books/
 
@@ -87,6 +86,9 @@ POST /books/
         image (optional)
 	}
 }
+
+## Get books available for share (excluding current user's)
+GET /books/community
 
 ## Update a variant
 {
