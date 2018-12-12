@@ -131,19 +131,25 @@ router.get('/community', auth.optional, (req, res) => {
         }
     }
 
-    Variant.find(query)
-        .populate('book')
-        .populate({
-            path: 'user',
-            model: 'User',
-            select: 'first_name last_name avatar',
-            populate: {
-                path: 'avatar',
-                model: 'Avatar'
+    const options = {
+        select: 'book user book_condition',
+        populate: [
+            { path: 'book', model: 'Book' },
+            {
+                path: 'user',
+                model: 'User',
+                select: 'first_name last_name avatar',
+                populate: {
+                    path: 'avatar',
+                    model: 'Avatar',
+                    select: 'image'
+                }
             }
-        })
-        .select('book user book_condition')
-        .exec()
+        ],
+        page: req.body.page
+    };
+
+    Variant.paginate(query, options)
         .then(variants => {
             res.status(200).json(variants);
         }).catch(err => {
@@ -152,5 +158,81 @@ router.get('/community', auth.optional, (req, res) => {
         })
 
 })
+
+// search variant available for share by title and author
+router.post('/community/search', auth.optional, (req, res) => {
+    const { body: { query } } = req;
+
+    let id = null;
+    if (req.payload) {
+        id = req.payload.id;
+    }
+
+    let bookArr = [];
+    Book.find({
+        $or: [
+            { title: { $regex: query, $options: 'i'}},
+            { authors: { $regex: query, $options: 'i'}},
+        ]
+    })
+    .then((books) => {
+        books.map(book => {
+            bookArr.push(book._id);
+        })
+    })
+    .then(() => {
+        let q;
+        if (id) {
+            q = {
+                $and: [
+                    { available_for_share: true },
+                    { share_requested: false },
+                    { user: {$ne: id} }, // exclude variants belonging to current user
+                    { book: {$in: bookArr}}
+                ]
+            }
+        } else {
+                q = {
+                    $and: [
+                        { available_for_share: true },
+                        { share_requested: false },
+                        {book: {$in: bookArr}}
+                    ]
+                }
+        }
+
+        const options = {
+            select: 'book user book_condition',
+            populate: [
+                { 
+                    path: 'book',
+                    model: 'Book',
+                },
+                {
+                    path: 'user',
+                    model: 'User',
+                    select: 'first_name last_name avatar',
+                    populate: {
+                        path: 'avatar',
+                        model: 'Avatar',
+                        select: 'image'
+                    }
+                }
+            ],
+            page: req.body.page
+        };
+
+        Variant.paginate(q, options)
+            .then(variants => {
+                res.status(200).json(variants);
+            })
+            .catch(err => res.status(500).json(err));
+
+    })
+
+
+
+
+});
 
 module.exports = router;

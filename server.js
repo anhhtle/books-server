@@ -2,6 +2,7 @@
 
 require('dotenv').config();
 require('./config/passport');
+require('./config/mongoosePaginate');
 
 // env
 const PORT = process.env.PORT;

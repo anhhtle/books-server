@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const mongoose_delete = require('mongoose-delete');
+const mongoosePaginate = require('mongoose-paginate');
 
 const variantSchema = mongoose.Schema({
     user: {
@@ -28,5 +29,8 @@ const variantSchema = mongoose.Schema({
 variantSchema.plugin(mongoose_delete, { deletedAt : true });
 // router methods won't return soft deleted rows
 variantSchema.plugin(mongoose_delete, { overrideMethods: true });
+
+// pagination
+variantSchema.plugin(mongoosePaginate);
 
 module.exports = mongoose.model('Variant', variantSchema);

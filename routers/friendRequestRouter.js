@@ -1,7 +1,6 @@
 'use strict'
 
 const express = require('express');
-const mongoose = require ('mongoose');
 const router = express.Router();
 const auth = require('./auth');
 
@@ -68,8 +67,7 @@ router.post('/', auth.required, (req, res) => {
 
                 newFriendRequest.save()
                     .then(() => {
-
-                        
+                      
                         // create notification
                         const createNotificationObj = {
                             type: 'Friend request',
