@@ -89,11 +89,15 @@ POST /books/
 
 ## Get books available for share (excluding current user's)
 GET /books/community
+{
+    page: 1
+}
 
 ## Search books available for share by title or author (excluding current user's)
 POST /books/community/search
 {
-    query: 'title or author'
+    query: 'title or author',
+    page: 1
 }
 
 ## Update a variant
