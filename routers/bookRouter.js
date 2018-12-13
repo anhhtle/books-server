@@ -107,7 +107,7 @@ router.delete('/:id', auth.required, (req, res) => {
 });
 
 // get all variants available for share
-router.get('/community', auth.optional, (req, res) => {
+router.post('/community', auth.optional, (req, res) => {
     let id = null;
     if (req.payload) {
         id = req.payload.id;

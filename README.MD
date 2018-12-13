@@ -88,7 +88,7 @@ POST /books/
 }
 
 ## Get books available for share (excluding current user's)
-GET /books/community
+POST /books/community
 {
     page: 1
 }
