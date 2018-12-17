@@ -79,17 +79,7 @@ router.post('/', auth.required, (req, res) => {
 router.put('/', auth.required, (req, res) => {
     const { body: { variant_id, update } } = req;
 
-    let updateObj = update;
-
-    if (update.status === 'Read' || update.progress === 100) {
-        updateObj.status = 'Read';
-        updateObj.progress = 100
-    } else if (update.status === 'Not read' || update.progress === 0) {
-        updateObj.status = 'Not read';
-        updateObj.progress = 0
-    }
-
-    Variant.findByIdAndUpdate(variant_id, updateObj, {new: true})
+    Variant.findByIdAndUpdate(variant_id, update, {new: true})
         .exec()
         .then(variant => res.status(200).json(variant))
         .catch(err => res.status(500).json(err));
