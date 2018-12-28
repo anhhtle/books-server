@@ -124,43 +124,37 @@ router.delete('/current', auth.required, (req, res) => {
     User.findById(id)
         .then(user => {
 
-            // res.status(200).json(user);
-
             // delete user's setting relation
-            // let setting = Setting;
-            // setting.deleteById(user.setting).exec();
+            let setting = Setting;
+            setting.deleteById(user.setting).exec();
 
             // delete all of user's variants
-            // let variants = Variant;
-            // variants.delete({user: id}).exec();
+            let variants = Variant;
+            variants.delete({user: id}).exec();
 
             // delete newsfeeds from user
-            // let newsfeeds = Newsfeed;
-            // newsfeeds.delete({
-            //     $or: [
-            //         {friend: id},
-            //         {community_member: id}
-            //     ]
-            // }).exec();
+            Newsfeed.find({
+                $or: [ 
+                    {community_member: id},
+                    {friend: id},
+                ],
+            })
+            .then((newsfeeds) => {
+                newsfeeds.delete();
+            });
 
             // delete notifications from user
-            // let notifications = Notification;
-            // notifications.delete({
-            //     $or: [
-            //         {user: id},
-            //         {friend: id}
-            //     ]
-            // }).exec();
+            Notification.find({
+                    $or: [ 
+                        {user: id},
+                        {friend: id},
+                    ],
+                })
+                .then((notifications) => {
+                    notifications.delete();
+                });
 
             // delete book requests
-            // let requests = Request;
-            // requests.delete({
-            //     $or: [
-            //         {original_owner: id},
-            //         {requester: id}
-            //     ]
-            // }).exec();
-
             Request.find({
                     $or: [ 
                         {original_owner: id},
@@ -168,18 +162,14 @@ router.delete('/current', auth.required, (req, res) => {
                     ],
                 })
                 .then((requests) => {
-                    // res.status(200).json(requests) 
-                    requests.map(req => {
-                        req.delete();
-                    })
-                })
-                .then(() => res.status(200).json('OK!'));
+                    requests.delete();
+                });
             
 
-            // user.delete()
-            //     .then(deletedUser => {
-            //         res.status(200).json(deletedUser) 
-            //     });
+            user.delete()
+                .then(deletedUser => {
+                    res.status(200).json(deletedUser) 
+                });
         })
         .catch(err => res.status(500).json(err));
 });
@@ -207,6 +197,45 @@ router.post('/search', auth.optional, (req, res) => {
 
 });
 
+// DELETE a friend
+router.put('/friend/delete', auth.required, (req, res) => {
+    const { payload: {id}, body: {friend_id} } = req;
+
+    // delete friend from current user
+    User.findByIdAndUpdate(id, { $pull: {friends: friend_id }}).exec()
+        .then(user => {
+            res.status(200).json(user);
+        })
+        .catch(err => res.status(500).json(err));
+
+    // delete current user from friend
+    User.findByIdAndUpdate(friend_id, { $pull: {friends: id }}).exec()
+        .then(user => {
+            res.status(200).json(user);
+        })
+        .catch(err => res.status(500).json(err));
+});
+
+// UPDATE setting
+router.put('/setting', auth.required, (req, res) => {
+    const { body: {setting_id, push_notifications, email_notifications} } = req;
+
+    Setting.findById(setting_id).exec()
+        .then(setting => {
+            setting.push_notifications = push_notifications;
+            setting.email_notifications = email_notifications;
+            setting.save();
+            return setting;
+        })
+        .then(settingUpd => {
+            res.status(200).json(settingUpd);
+        })
+        .catch(err => res.status(500).json(err));
+});
+
+
+
+
 // get a user's public profile
 router.get('/:id', auth.optional, (req, res, next) => {
 
@@ -226,6 +255,6 @@ router.get('/:id', auth.optional, (req, res, next) => {
 
         })
         .catch(err => res.status(500).json(err));
-})
+});
 
 module.exports = router;
