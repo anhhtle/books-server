@@ -9,6 +9,9 @@ const auth = require('./auth');
 const User = require('../models/user.model');
 const Variant = require('../models/variant.model');
 const Setting = require('../models/setting.model');
+const Newsfeed = require('../models/newsfeed.model');
+const Notification = require('../models/notification.model');
+const Request = require('../models/request.model');
 const FriendRequest = require('../models/friendRequest.model');
 
 //*********** API ****************/
@@ -114,26 +117,69 @@ router.get('/current', auth.required, (req, res, next) => {
         .catch(err => res.status(500).json(err));
 });
 
-
-// delete current user
+// DELETE current user
 router.delete('/current', auth.required, (req, res) => {
     const { payload: { id } } = req;
 
     User.findById(id)
         .then(user => {
 
+            // res.status(200).json(user);
+
             // delete user's setting relation
-            Setting.findById(user.setting)
-                .then(setting => setting.delete());
+            // let setting = Setting;
+            // setting.deleteById(user.setting).exec();
 
             // delete all of user's variants
-            let variant = Variant;
-            variant.delete({user: id}).exec();
+            // let variants = Variant;
+            // variants.delete({user: id}).exec();
 
-            user.delete()
-                .then(deletedUser => {
-                    res.status(200).json(deletedUser) 
-                });
+            // delete newsfeeds from user
+            // let newsfeeds = Newsfeed;
+            // newsfeeds.delete({
+            //     $or: [
+            //         {friend: id},
+            //         {community_member: id}
+            //     ]
+            // }).exec();
+
+            // delete notifications from user
+            // let notifications = Notification;
+            // notifications.delete({
+            //     $or: [
+            //         {user: id},
+            //         {friend: id}
+            //     ]
+            // }).exec();
+
+            // delete book requests
+            // let requests = Request;
+            // requests.delete({
+            //     $or: [
+            //         {original_owner: id},
+            //         {requester: id}
+            //     ]
+            // }).exec();
+
+            Request.find({
+                    $or: [ 
+                        {original_owner: id},
+                        {requester: id},
+                    ],
+                })
+                .then((requests) => {
+                    // res.status(200).json(requests) 
+                    requests.map(req => {
+                        req.delete();
+                    })
+                })
+                .then(() => res.status(200).json('OK!'));
+            
+
+            // user.delete()
+            //     .then(deletedUser => {
+            //         res.status(200).json(deletedUser) 
+            //     });
         })
         .catch(err => res.status(500).json(err));
 });

@@ -12,7 +12,8 @@ const friendRequestSchema = mongoose.Schema({
         ref: 'User',
         required: true
     },
-    status: {type: String, default: 'Requesting'}
+    status: {type: String, default: 'Requesting'},
+    new: {type: Boolean, default: true}
 }, { timestamps: true, collection: 'friend-requests' } );
 
 // soft delete with .delete() function

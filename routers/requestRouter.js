@@ -45,8 +45,8 @@ router.get('/', auth.required, (req, res) => {
             }
         })
         .exec()
-        .then(newsfeeds => {
-            res.status(200).json(newsfeeds);
+        .then(requests => {
+            res.status(200).json(requests);
         })
 
 })

@@ -35,6 +35,7 @@ const userSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Setting'
     },
+    admin: {type: Boolean, default: false},
     hash: String,
     salt: String
 }, {timestamps: true} );

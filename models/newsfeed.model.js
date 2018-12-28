@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const mongoose_delete = require('mongoose-delete');
 
 const newsfeedSchema = mongoose.Schema({
     type: {type: String, required: true},
@@ -23,5 +24,10 @@ const newsfeedSchema = mongoose.Schema({
         default: null
     },
 } , {timestamps: true});
+
+// soft delete with .delete() function
+newsfeedSchema.plugin(mongoose_delete, { deletedAt : true });
+// router methods won't return soft deleted rows
+newsfeedSchema.plugin(mongoose_delete, { overrideMethods: true });
 
 module.exports = mongoose.model('Newsfeed', newsfeedSchema);
