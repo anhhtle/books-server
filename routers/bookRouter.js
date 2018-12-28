@@ -43,31 +43,39 @@ router.post('/', auth.required, (req, res) => {
         .exec()
         .then(bookDB => {
             if (bookDB !== null) {
-                // book exists.. just need to create variant for user
+                // book exists.. update book then create variant
+                bookDB.description = book.description;
+                bookDB.ratings = book.ratings;
+                bookDB.image = book.image;
+                bookDB.categories = book.categories;
+                bookDB.save();
+
                 const newVariant = {
                     user: id,
                     book: new mongoose.Types.ObjectId(bookDB._id)
                 }
 
-                return Variant.create(newVariant).then(variant => {
+                Variant.create(newVariant).then(variant => {
                     res.status(201).json(variant);
                 })
             } else {
                 const newBook = {...book};
 
                 // if book is not found, create new book...
-                return Book.create(newBook).then(book => {
+                Book.create(newBook).then(book => {
                     const newVariant = {
                         user: id,
                         book: new mongoose.Types.ObjectId(book._id)
                     }
 
                     // create variant
-                    return Variant.create(newVariant).then(variant => {
+                    Variant.create(newVariant).then(variant => {
                         res.status(201).json(variant);
                     })
                 })
             }
+
+
         })
         .catch(err => {
             console.error(err);
