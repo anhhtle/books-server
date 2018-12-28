@@ -5,8 +5,10 @@ const mongoose = require ('mongoose');
 const router = express.Router();
 const auth = require('./auth');
 
+const User = require('../models/user.model');
 const Variant = require('../models/variant.model');
 const Book = require('../models/book.model');
+const Newsfeed = require('../models/newsfeed.model');
 
 //*********** API ****************/
 
@@ -56,6 +58,14 @@ router.post('/', auth.required, (req, res) => {
                 }
 
                 Variant.create(newVariant).then(variant => {
+                    // newsfeed
+                    const newNewsfeed = {
+                        type: 'Friend: new book',
+                        book: bookDB._id,
+                        friend: id
+                    }
+                    Newsfeed.create(newNewsfeed);
+
                     res.status(201).json(variant);
                 })
             } else {
@@ -70,6 +80,14 @@ router.post('/', auth.required, (req, res) => {
 
                     // create variant
                     Variant.create(newVariant).then(variant => {
+                        // newsfeed
+                        const newNewsfeed = {
+                            type: 'Friend: new book',
+                            book: book._id,
+                            friend: id
+                        }
+                        Newsfeed.create(newNewsfeed);
+
                         res.status(201).json(variant);
                     })
                 })
@@ -85,8 +103,35 @@ router.post('/', auth.required, (req, res) => {
 
 // update a varaint
 router.put('/', auth.required, (req, res) => {
-    const { body: { variant_id, update } } = req;
+    const { payload: {id}, body: { variant_id, update } } = req;
+    
+    
+    // handle newsfeed
+    Variant.findById(variant_id).exec()
+    .then(variant => {
+        if (variant.status !== 'Reading' && update.status === 'Reading') {
+            const newNewsfeed = {
+                type: 'Friend: reading',
+                book: variant.book,
+                friend: variant.user,
+            }
+            Newsfeed.create(newNewsfeed);
+        }
+        if (variant.available_for_share !== true && update.available_for_share === true) {
+            User.findById(id).exec()
+                .then(user => {
+                    const newNewsfeed = {
+                        type: 'Friend: sharing book',
+                        book: variant.book,
+                        friend: variant.user,
+                        admin: user.admin
+                    }
+                    Newsfeed.create(newNewsfeed);
+                })
+        }
+    })
 
+    // update
     Variant.findByIdAndUpdate(variant_id, update, {new: true})
         .exec()
         .then(variant => res.status(200).json(variant))

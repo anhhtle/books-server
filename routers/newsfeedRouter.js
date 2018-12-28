@@ -18,7 +18,12 @@ router.get('/', auth.required, (req, res) => {
         .exec()
         .then(user => {
             // get newsfeed involving user's friend
-            Newsfeed.find({ friend: { $in: user.friends } })
+            Newsfeed.find({ 
+                    $or: [
+                        {friend: { $in: user.friends } },
+                        {admin: true}
+                    ]
+                })
                 .populate('book')
                 .populate('avatar')
                 .populate({

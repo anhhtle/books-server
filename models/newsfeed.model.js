@@ -23,6 +23,7 @@ const newsfeedSchema = mongoose.Schema({
         ref: 'Avatar',
         default: null
     },
+    admin: {type: Boolean, default: false}
 } , {timestamps: true});
 
 // soft delete with .delete() function
