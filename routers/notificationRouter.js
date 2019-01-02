@@ -35,4 +35,20 @@ router.get('/', auth.required, (req, res) => {
         })
 });
 
+// seen notifications
+router.put('/seen', auth.required, (req, res) => {
+    const { payload: { id } } = req;
+
+    Notification.find({user: id}).exec()
+        .then((notifications) => {
+            notifications.map(notification => {
+                notification.new = false;
+                notification.save();
+            });
+
+            res.status(200).json(notifications);
+        })
+        .catch(err => res.status(500).json(err));
+});
+
 module.exports = router;

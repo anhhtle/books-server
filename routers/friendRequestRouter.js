@@ -110,7 +110,7 @@ router.post('/', auth.required, (req, res) => {
 });
 
 // accept friend-request
-router.put('/accept', auth.required, (req, res, next) => {
+router.put('/accept', auth.required, (req, res) => {
     const { payload: { id }, body: {request_id}  } = req;
 
     FriendRequest.findByIdAndUpdate(request_id, {status: 'Accepted'}, {new: true}).exec()
@@ -140,5 +140,33 @@ router.put('/accept', auth.required, (req, res, next) => {
         })
         .catch(err => res.status(500).json(err));
 });
+
+// delete friend request
+router.delete('/:id', auth.required, (req, res) => {
+
+    FriendRequest.findById(req.params.id).exec()
+        .then(friendReq => {
+            friendReq.delete()
+                .then(deleted => res.status(200).json(deleted))
+        })
+        .catch(err => res.status(500).json(err));
+});
+
+// seen requests
+router.put('/seen', auth.required, (req, res) => {
+    const { payload: { id } } = req;
+
+    FriendRequest.find({requestee: id}).exec()
+        .then((reqs) => {
+            reqs.map(req => {
+                req.new = false;
+                req.save();
+            });
+
+            res.status(200).json(reqs);
+        })
+        .catch(err => res.status(500).json(err));
+});
+
 
 module.exports = router;

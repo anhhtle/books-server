@@ -234,8 +234,6 @@ router.put('/setting', auth.required, (req, res) => {
 });
 
 
-
-
 // get a user's public profile
 router.get('/:id', auth.optional, (req, res, next) => {
 
