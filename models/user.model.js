@@ -30,6 +30,7 @@ const userSchema = mongoose.Schema({
         state: {type: String, default: null},
         zipcode: {type: String, default: null},
         country: {type: String, default: null},
+        additional_info: {type: String, default: null}
     },
     setting: {
         type: mongoose.Schema.Types.ObjectId,

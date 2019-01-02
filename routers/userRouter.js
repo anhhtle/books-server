@@ -216,7 +216,17 @@ router.put('/friend/delete', auth.required, (req, res) => {
         .catch(err => res.status(500).json(err));
 });
 
-// UPDATE setting
+// UPDATE user profile
+router.put('/profile', auth.required, (req, res) => {
+    const { payload: {id}, body: {updateObj} } = req;
+
+    User.findByIdAndUpdate(id, updateObj, {new: true})
+        .exec()
+        .then(user => res.status(200).json(user))
+        .catch(err => res.status(500).json(err));
+});
+
+// UPDATE notification setting
 router.put('/setting', auth.required, (req, res) => {
     const { body: {setting_id, push_notifications, email_notifications} } = req;
 
