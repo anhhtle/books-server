@@ -8,10 +8,7 @@ const bookSchema = mongoose.Schema({
     description: {type: String, default: null},
     image: {type: String, default: null},
     ratings: {type: Number, default: null},
-    industryIdentifiers: [
-        {type: String, default: null},
-        {identifier: String, default: null}
-    ],
+    industryIdentifiers: { type : Array , default: null }
 }, {timestamps: true} );
 
 module.exports = mongoose.model('Book', bookSchema);

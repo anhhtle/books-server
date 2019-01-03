@@ -38,7 +38,7 @@ router.get('/', auth.required, (req, res) => {
 
 // add new book for current user
 router.post('/', auth.required, (req, res) => {
-    const {payload: {id}, body: { book } } = req;
+    const {payload: {id}, body: { book, status } } = req;
 
     // check if book exists
     Book.findOne({google_id: book.google_id})
@@ -54,6 +54,7 @@ router.post('/', auth.required, (req, res) => {
 
                 const newVariant = {
                     user: id,
+                    status,
                     book: new mongoose.Types.ObjectId(bookDB._id)
                 }
 
@@ -71,11 +72,12 @@ router.post('/', auth.required, (req, res) => {
             } else {
                 const newBook = {...book};
 
-                // if book is not found, create new book...
-                Book.create(newBook).then(book => {
+                // // if book is not found, create new book...
+                Book.create(newBook).then(bookCreated => {
                     const newVariant = {
                         user: id,
-                        book: new mongoose.Types.ObjectId(book._id)
+                        status,
+                        book: new mongoose.Types.ObjectId(bookCreated._id)
                     }
 
                     // create variant
@@ -83,7 +85,7 @@ router.post('/', auth.required, (req, res) => {
                         // newsfeed
                         const newNewsfeed = {
                             type: 'Friend: new book',
-                            book: book._id,
+                            book: bookCreated._id,
                             friend: id
                         }
                         Newsfeed.create(newNewsfeed);
@@ -91,6 +93,10 @@ router.post('/', auth.required, (req, res) => {
                         res.status(201).json(variant);
                     })
                 })
+                .catch(err => {
+                    console.error(err);
+                    res.status(500).json({error: 'something went wrong'});
+                });
             }
 
 

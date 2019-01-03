@@ -11,7 +11,7 @@ const variantSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Book'
     },
-    status: {type: String, default: 'Not started'},
+    status: {type: String, default: 'Not read'},
     progress: {type: Number, default: 0},
     user_rating: {type: Number, default: null},
     friend: {
