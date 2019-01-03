@@ -19,7 +19,7 @@ const variantSchema = mongoose.Schema({
         ref: 'User',
         default: null
     },
-    book_condition: {type: String, default: null},
+    book_condition: {type: String, default: 'Like new'},
     available_for_share: {type: Boolean, default: false},
     share_requested: {type: Boolean, default: false},
     recieved_at: {type: Date, default: new Date()},
