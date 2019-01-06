@@ -32,6 +32,10 @@ const userSchema = mongoose.Schema({
         country: {type: String, default: null},
         additional_info: {type: String, default: null}
     },
+    bookmarks: {
+        silver: {type: Number, default: 2},
+        gold: {type: Number, default: 0}
+    },
     setting: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Setting'

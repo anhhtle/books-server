@@ -62,6 +62,17 @@ router.post('/', auth.required, (req, res) => {
             }
             else {
 
+                // remove a token from user
+                User.findById(id).exec()
+                    .then(user => {
+                        if (user.bookmarks.silver > 0) {
+                            user.bookmarks.silver = --user.bookmarks.silver;
+                        } else if (user.bookmarks.gold > 0) {
+                            user.bookmarks.gold = --user.bookmarks.gold;
+                        }
+                        user.save();
+                    })
+
                 variant.share_requested = true;
                 variant.save()
                     .then(() => {
@@ -98,12 +109,19 @@ router.put('/', auth.required, (req, res) => {
         return Request.findByIdAndUpdate(request_id, {thanked_owner}, {new: true})
             .exec()
             .then(request => {
+                // give bookowner a token
+                User.findById(request.original_owner).exec()
+                    .then(user => {
+                        user.bookmarks.gold = ++user.bookmarks.gold;
+                        user.save();
+                    });
+
                 res.status(200).json(request)
             })
             .catch(err => res.status(500).json(err));
     }
 
-    const updateObj = {status: status, updated_at: new Date()}
+    const updateObj = {status: status};
 
     Request.findByIdAndUpdate(request_id, updateObj, {new: true})
         .exec()
@@ -120,11 +138,32 @@ router.put('/', auth.required, (req, res) => {
             } else if (status ===  'Cancelled') {
                 const updateVariantObj = {available_for_share: false, share_requested: false}
         
+                // return bookmark to user
+                User.findById(request.requester).exec()
+                    .then(user => {
+                        if (user.bookmarks.silver < 2) {
+                            user.bookmarks.silver = ++user.bookmarks.silver;
+                        } else {
+                            user.bookmarks.gold = ++user.bookmarks.gold;
+                        }
+                        user.save();
+                    })
+
                 Variant.findByIdAndUpdate(request.variant, updateVariantObj, {new: true})
                     .exec()
                     .then(() => {
                         res.status(200).json(request)
-                    })  
+                    });
+            
+            } else if (status === 'Received') {
+                // give bookowner a token
+                User.findById(request.original_owner).exec()
+                    .then(user => {
+                        user.bookmarks.gold = ++user.bookmarks.gold;
+                        user.save();
+                    });
+                res.status(200).json(request);
+
             } else {
                 res.status(200).json(request)
             }
