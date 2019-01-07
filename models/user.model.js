@@ -14,11 +14,11 @@ const userSchema = mongoose.Schema({
     avatar: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Avatar',
-        default: '86660871101f2c0e771df8f8'
+        default: 'b3abab6f8eadd78c210394ef'
     },
     avatars_unlocked: {
         type: [String], 
-        default: ["86660871101f2c0e771df8f8", "c367851d914237495b576e01", "f26923e2fa2a74a4ff8a6063"]
+        default: ["b3abab6f8eadd78c210394ef", "c367851d914237495b576e01", "f26923e2fa2a74a4ff8a6063"]
     },
     friends: [{ 
         type : mongoose.Schema.Types.ObjectId, 
