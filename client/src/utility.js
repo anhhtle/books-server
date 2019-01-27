@@ -1,10 +1,11 @@
 const NODE_ENV = process.env.NODE_ENV
 
 export const getApiUrl = () => {
-    if (NODE_ENV === 'development') {
-        return 'http://localhost:8080';
+    console.log(NODE_ENV);
+    if (NODE_ENV !== 'development') {
+        return 'https://books-app-server-dev.herokuapp.com'
     }
     else {
-        return 'https://books-app-server-dev.herokuapp.com'
+        return 'http://localhost:8080';
     }
 }
