@@ -26,14 +26,17 @@ mongoose.Promise = global.Promise;
 const app = express();
 app.use(bodyParser.json());
 
+// Serve static files from the React app
+app.use(express.static(path.join(__dirname, 'client/build')));
+
 // ignoring a DeprecationWarning
 mongoose.set('useFindAndModify', false);
 
 // routes
-app.get('/', (req, res) => {
-    console.log('asdfdsa');
-    res.json({body: 'hello world'})
-});
+// app.get('/', (req, res) => {
+//     console.log('asdfdsa');
+//     res.json({body: 'hello world'})
+// });
 
 app.get('/api/v1', (req, res) => {
     console.log('api v1');
