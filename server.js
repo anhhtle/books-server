@@ -12,6 +12,7 @@ const DATABASE_URL = process.env.DATABASE_URL;
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const path = require('path');
 
 // routers
 const userRouter = require('./routers/userRouter');
@@ -51,6 +52,12 @@ app.use('/api/v1/notifications', notificationRouter);
 app.use('/api/v1/requests', requestRouter);
 app.use('/api/v1/friend-requests', friendRequestRouter);
 app.use('/api/v1/notifications', friendRequestRouter);
+
+// The "catchall" handler: for any request that doesn't
+// match one above, send back React's index.html file.
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname+'/client/build/index.html'));
+});
 
 let server;
 
