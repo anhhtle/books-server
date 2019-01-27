@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-// import axios from "axios";
 
 class Home extends Component {
     constructor(props){
@@ -22,10 +21,6 @@ class Home extends Component {
         this.getData();
     }
     getData = () => {
-        // let apiUrl = getApiUrl();
-
-        // axios(apiUrl)
-        // axios('/')
         fetch('/api/v1')
             .then(data => data.json() )
             .then(res => this.setState({text: res.body}))
