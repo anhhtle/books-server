@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import axios from "axios";
-
-import { getApiUrl } from '../../utility'
+// import axios from "axios";
 
 class Home extends Component {
     constructor(props){
@@ -16,6 +14,7 @@ class Home extends Component {
         <div className="App">
             <h1>Project Home</h1>
             <p>{this.state.text}</p>
+            <button onClick={this.getData}>get data</button>
         </div>
         );
     }
@@ -23,12 +22,13 @@ class Home extends Component {
         this.getData();
     }
     getData = () => {
-        let apiUrl = getApiUrl();
+        // let apiUrl = getApiUrl();
 
-        axios(apiUrl)
-            .then(res => {
-                this.setState({text: res.data})
-            })
+        // axios(apiUrl)
+        // axios('/')
+        fetch('/api/v1')
+            .then(data => data.json() )
+            .then(res => this.setState({text: res.body}))
             .catch(err => {
                 console.error(err);
             })

@@ -5,7 +5,7 @@ require('./config/passport');
 require('./config/mongoosePaginate');
 
 // env
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 5000;
 const DATABASE_URL = process.env.DATABASE_URL;
 
 // middlewares
@@ -31,7 +31,13 @@ mongoose.set('useFindAndModify', false);
 
 // routes
 app.get('/', (req, res) => {
-    res.send('Hello World')
+    console.log('asdfdsa');
+    res.json({body: 'hello world'})
+});
+
+app.get('/api/v1', (req, res) => {
+    console.log('api v1');
+    res.json({body: 'api v1'})
 });
 
 app.use('/api/v1/user', userRouter);
