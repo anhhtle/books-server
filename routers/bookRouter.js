@@ -284,4 +284,30 @@ router.post('/community/search', auth.optional, (req, res) => {
 
 });
 
+
+// ***************** FRIEND *********************
+
+// get all friend's variant
+router.get('/friend/:id', auth.required, (req, res) => {
+
+    Variant.find({user: req.params.id})
+        .populate('book')
+        .populate({
+            path: 'friend',
+            model: 'User',
+            select: 'first_name last_name avatar',
+            populate: {
+                path: 'avatar',
+                model: 'Avatar'
+            }
+        })
+        .exec()
+        .then(variants => {
+            res.status(200).json(variants);
+        }).catch(err => {
+            console.error(err);
+            res.status(500).json({error: 'something went wrong'});
+        })
+});
+
 module.exports = router;
