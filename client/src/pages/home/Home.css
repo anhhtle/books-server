@@ -1,0 +1,28 @@
+.banner-overlay {
+    flex: 1;
+    height: 100%;
+    background-color: #000;
+    opacity: 0.35;
+}
+.slogan-container {
+    position: absolute;
+}
+.slogan {
+    color: #fff6aa;
+    font-size: 4em;
+}
+#headline {
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#headline p {
+    font-size: 2em;
+    margin: 0 30px;
+}
+
+#headline i {
+    margin-right: 10px;
+    color: #8c1515;
+}

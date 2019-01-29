@@ -8,6 +8,8 @@ require('./config/mongoosePaginate');
 const PORT = process.env.PORT || 5000;
 const DATABASE_URL = process.env.DATABASE_URL;
 
+console.log(DATABASE_URL);
+
 // middlewares
 const express = require('express');
 const mongoose = require('mongoose');
@@ -40,7 +42,6 @@ mongoose.set('useFindAndModify', false);
 // });
 
 app.get('/api/v1', (req, res) => {
-    console.log('api v1');
     res.json({body: 'api v1'})
 });
 

@@ -1,32 +1,53 @@
 import React, { Component } from 'react';
 
+import './Home.css';
+import banner_image from '../../images/books-01.jpg';
+
+import MainHeader from '../header/main-header/';
+
 class Home extends Component {
     constructor(props){
         super(props);
         this.state = {
-            text: 'hi'
         }
       }
 
     render() {
         return (
-        <div className="App">
-            <h1>Project Home</h1>
-            <p>{this.state.text}</p>
-            <button onClick={this.getData}>get data</button>
+        <div id="App">
+            <MainHeader />
+            
+            {/* banner */}
+            <div id='banner' style={styles.banner}>
+                <div className='banner-overlay'></div>
+
+                <div className='slogan-container'>
+                    <p className='slogan'>Take a book, leave a book</p>
+                </div>
+            </div>
+
+            {/* Headline */}
+            <div id='headline'>
+                <p><i className='fa fa-bookmark'></i>Community</p>
+                <p><i className='fa fa-bookmark'></i>Sharing</p>
+                <p><i className='fa fa-bookmark'></i>Discover</p>
+            </div>
+
         </div>
         );
     }
-    componentDidMount() {
-        this.getData();
-    }
-    getData = () => {
-        fetch('/api/v1')
-            .then(data => data.json() )
-            .then(res => this.setState({text: res.body}))
-            .catch(err => {
-                console.error(err);
-            })
+}
+
+const styles = {
+    banner: {
+        position: 'relative',
+        height: '300px',
+        backgroundColor: 'grey',
+        backgroundImage: `url(${banner_image})`,
+        backgroundSize: 'cover',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
     }
 }
 
