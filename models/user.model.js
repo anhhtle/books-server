@@ -40,6 +40,7 @@ const userSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Setting'
     },
+    password_reset_key: {type: String, default: null},
     admin: {type: Boolean, default: false},
     hash: String,
     salt: String
