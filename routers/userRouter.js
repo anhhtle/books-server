@@ -273,15 +273,16 @@ router.put('/password-reset-key', auth.optional, (req, res) => {
 
     let key = Math.random().toString(36).substr(2, 7);
 
-    User.findOneAndUpdate({email}, {password_reset_key: key}, {new: true})
-        .exec()
-        .then(user => {
-            // sendPasswordResetEmail({to: email, key});
-            sendPasswordResetEmail.send();
+    // sendPasswordResetEmail({to: email, key, name: 'Anh'});
 
-            // res.status(200).json(user);
-        })
-        .catch(err => res.status(500).json(err));
+    User.findOneAndUpdate({email}, {password_reset_key: key}, {new: true})
+    .exec()
+    .then(user => {
+        sendPasswordResetEmail({to: email, key, name: user.first_name});
+
+        res.status(200).json(user);
+    })
+    .catch(err => res.status(500).json(err));
 });
 
 // UPDATE new password
