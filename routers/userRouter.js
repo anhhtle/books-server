@@ -14,6 +14,9 @@ const Notification = require('../models/notification.model');
 const Request = require('../models/request.model');
 const FriendRequest = require('../models/friendRequest.model');
 
+// email
+const {sendPasswordResetEmail} = require('../email/nodeMailer');
+
 //*********** API ****************/
 
 // GET all user
@@ -272,7 +275,12 @@ router.put('/password-reset-key', auth.optional, (req, res) => {
 
     User.findOneAndUpdate({email}, {password_reset_key: key}, {new: true})
         .exec()
-        .then(user => res.status(200).json(user))
+        .then(user => {
+            // sendPasswordResetEmail({to: email, key});
+            sendPasswordResetEmail.send();
+
+            // res.status(200).json(user);
+        })
         .catch(err => res.status(500).json(err));
 });
 
