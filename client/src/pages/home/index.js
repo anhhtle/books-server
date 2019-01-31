@@ -40,14 +40,7 @@ class Home extends Component {
 
 const styles = {
     banner: {
-        position: 'relative',
-        height: '300px',
-        backgroundColor: 'grey',
-        backgroundImage: `url(${banner_image})`,
-        backgroundSize: 'cover',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
+        backgroundImage: `url(${banner_image})`
     }
 }
 

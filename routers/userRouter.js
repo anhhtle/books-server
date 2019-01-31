@@ -246,6 +246,49 @@ router.put('/setting', auth.required, (req, res) => {
         .catch(err => res.status(500).json(err));
 });
 
+// UPDATE password reset
+router.put('/password-reset-key', auth.optional, (req, res) => {
+    const { body: {email} } = req;
+    
+    let key = Math.random().toString(36).substr(2, 7);
+    
+    // sendPasswordResetEmail({to: email, key, name: 'Anh'});
+    
+    User.findOneAndUpdate({email}, {password_reset_key: key}, {new: true})
+    .exec()
+    .then(user => {
+        sendPasswordResetEmail({to: email, key, name: user.first_name});
+        
+        res.status(200).json(user);
+    })
+    .catch(err => res.status(500).json(err));
+});
+
+// GET password reset user
+router.get('/password-reset/:key', auth.optional, (req, res, next) => {
+    
+    User.findOne({password_reset_key: req.params.key})
+        .select('first_name email')
+        .then((user) => {
+            res.status(200).json(user);
+        })
+        .catch(err => res.status(500).json(err));
+});
+
+// UPDATE new password
+router.put('/password-reset', auth.optional, (req, res) => {
+    const { body: {updateObj} } = req;
+
+    User.findOne({email: updateObj.email})
+        .then((user) => {
+            user.password_reset_key = null;
+            user.setPassword(updateObj.password);
+            user.save()
+            .then(() => res.status(200).json({success: 'Password changed'}));
+        })
+        .catch(err => res.status(500).json(err));
+});
+
 // get a user's public profile
 router.get('/:id', auth.optional, (req, res, next) => {
 
@@ -266,40 +309,5 @@ router.get('/:id', auth.optional, (req, res, next) => {
         })
         .catch(err => res.status(500).json(err));
 });
-
-// UPDATE password reset
-router.put('/password-reset-key', auth.optional, (req, res) => {
-    const { body: {email} } = req;
-
-    let key = Math.random().toString(36).substr(2, 7);
-
-    // sendPasswordResetEmail({to: email, key, name: 'Anh'});
-
-    User.findOneAndUpdate({email}, {password_reset_key: key}, {new: true})
-    .exec()
-    .then(user => {
-        sendPasswordResetEmail({to: email, key, name: user.first_name});
-
-        res.status(200).json(user);
-    })
-    .catch(err => res.status(500).json(err));
-});
-
-// UPDATE new password
-router.put('/password-reset', auth.optional, (req, res) => {
-    const { body: {updateObj} } = req;
-
-    User.findOne({email: updateObj.email})
-        .then((user) => {
-            user.password_reset_key = null;
-            user.setPassword(updateObj.password);
-            user.save()
-                .then(() => res.status(200).json({success: 'Password changed'}));
-        })
-        .catch(err => res.status(500).json(err));
-
-
-});
-
 
 module.exports = router;

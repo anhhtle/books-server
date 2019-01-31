@@ -10,7 +10,7 @@ class App extends Component {
       <div>
           <Switch>
             <Route exact path='/' component={Home}/>
-            <Route path='/password-reset/:id' component={PasswordReset}/>
+            <Route path='/password-reset/:key' component={PasswordReset}/>
           </Switch>
       </div>
     )

@@ -14,22 +14,23 @@ class PasswordResetForm extends Component {
 
     render() {
         return (
-            <form className='col-xs-10 col-sm-4' style={styles.form}>
-                <h3 style={{marginBottom: 20}}>Password Reset</h3>
+            <div>
+                <h3  className='col-xs-12' >Password Reset - {this.props.user.email}</h3>
+                <form className='col-xs-10 col-sm-4' style={styles.form}>
+                    {this.renderError()}
 
-                {this.renderError()}
+                    <div className='form-group'>
+                        <label className='form-label'>New password:</label>
+                        <input className='form-control' type='password' onChange={(e) => this.setState({password: e.target.value})} />
+                    </div>
+                    <div className='form-group'>
+                        <label>Confirm password:</label>
+                        <input className='form-control' type='password' onChange={(e) => this.setState({password_confirm: e.target.value})} />
+                    </div>
 
-                <div className='form-group'>
-                    <label className='form-label'>New password:</label>
-                    <input className='form-control' type='password' onChange={(e) => this.setState({password: e.target.value})} />
-                </div>
-                <div className='form-group'>
-                    <label>Confirm password:</label>
-                    <input className='form-control' type='password' onChange={(e) => this.setState({password_confirm: e.target.value})} />
-                </div>
-
-                <button className='btn btn-primary' style={{width: 100}} onClick={this.handleSubmit}>SAVE</button>
-            </form>
+                    <button className='btn btn-primary' style={{width: 100}} onClick={this.handleSubmit}>SAVE</button>
+                </form>
+            </div>
         );
     }
     renderError() {
@@ -39,6 +40,12 @@ class PasswordResetForm extends Component {
     }
     handleSubmit(e) {
         e.preventDefault();
+        if (!this.state.password) {
+            return this.setState({
+                error: 'Please fill out the form'
+            });
+        }
+
         if (this.state.password !== this.state.password_confirm) {
             this.setState({
                 error: 'Password does not match'
@@ -47,6 +54,7 @@ class PasswordResetForm extends Component {
             this.setState({
                 error: null
             });
+            this.props.reset(this.state.password);
         }
     }
 }
