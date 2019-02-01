@@ -10,6 +10,9 @@ const Variant = require('../models/variant.model');
 const Book = require('../models/book.model');
 const Newsfeed = require('../models/newsfeed.model');
 
+const fetch = require("node-fetch");
+const GOOGLE_BOOK_API_KEY = process.env.GOOGLE_BOOK_API_KEY;
+
 //*********** API ****************/
 
 // get all book variants belonging to a user
@@ -290,17 +293,13 @@ router.post('/community/search', auth.optional, (req, res) => {
 // get all friend's variant
 router.get('/friend/:id', auth.required, (req, res) => {
 
-    Variant.find({user: req.params.id})
+    Variant.find({
+        $and: [
+            { user: req.params.id },
+            { status: {$ne: 'Recommended'} }
+        ]
+    })
         .populate('book')
-        .populate({
-            path: 'friend',
-            model: 'User',
-            select: 'first_name last_name avatar',
-            populate: {
-                path: 'avatar',
-                model: 'Avatar'
-            }
-        })
         .exec()
         .then(variants => {
             res.status(200).json(variants);
@@ -309,5 +308,19 @@ router.get('/friend/:id', auth.required, (req, res) => {
             res.status(500).json({error: 'something went wrong'});
         })
 });
+
+// ***************** GOOGLE book API ***************
+router.post('/search', auth.optional, (req, res) => {
+    const { body: { query } } = req;
+
+    fetch(`https://www.googleapis.com/books/v1/volumes?q=${query}&key=${GOOGLE_BOOK_API_KEY}`)
+        .then(res => res.json())
+        .then(resJson => {
+            res.status(200).json(resJson);
+        }).catch(err => {
+            console.error(err);
+        });
+})
+
 
 module.exports = router;
