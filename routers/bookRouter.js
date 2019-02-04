@@ -300,6 +300,15 @@ router.get('/friend/:id', auth.required, (req, res) => {
         ]
     })
         .populate('book')
+        .populate({
+            path: 'user',
+            model: 'User',
+            select: 'first_name last_name avatar',
+            populate: {
+                path: 'avatar',
+                model: 'Avatar'
+            }
+        })
         .exec()
         .then(variants => {
             res.status(200).json(variants);
