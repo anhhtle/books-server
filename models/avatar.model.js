@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const avatarSchema = mongoose.Schema({
     name: {type: String, required: true},
     image: {type: String, required: true},
+    order: {type: Number, required: true},
     quote: {type: String, required: true},
     quote_author: {type: String, required: true},
     lock: {type: String, required: true},

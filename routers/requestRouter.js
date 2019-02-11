@@ -7,6 +7,8 @@ const auth = require('./auth');
 const User = require('../models/user.model');
 const Variant = require('../models/variant.model');
 const Request = require('../models/request.model');
+const Newsfeed = require('../models/newsfeed.model');
+const Notification = require('../models/notification.model');
 
 
 //*********** API ****************/
@@ -160,7 +162,35 @@ router.put('/', auth.required, (req, res) => {
                 User.findById(request.original_owner).exec()
                     .then(user => {
                         user.bookmarks.gold = ++user.bookmarks.gold;
+                        user.books_shared = ++user.books_shared
+
+
+                        // check for avatar The Giver
+                        if (user.books_shared === 10) {
+                            let newAvatarsUnlocked = user.avatars_unlocked;
+                            newAvatarsUnlocked.push('50e9c24bb89e18e943c51239');
+                            user.avatars_unlocked = newAvatarsUnlocked;
+
+                            // newsfeed
+                            const newNewsfeedObj = {
+                                type: 'Friend: avatar',
+                                friend: request.original_owner,
+                                avatar: '50e9c24bb89e18e943c51239'
+                            }
+                            Newsfeed.create(newNewsfeedObj);
+
+                            // notification
+                            const createNotificationObj = {
+                                type: 'Avatar',
+                                user: request.original_owner,
+                                avatar: '50e9c24bb89e18e943c51239'
+                            }
+                            Notification.create(createNotificationObj);
+
+                        }
+                            
                         user.save();
+
                     });
                 res.status(200).json(request);
 

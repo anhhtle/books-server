@@ -7,6 +7,8 @@ const auth = require('./auth');
 const User = require('../models/user.model');
 const FriendRequest = require('../models/friendRequest.model');
 const Notification = require('../models/notification.model');
+const Newsfeed = require('../models/newsfeed.model');
+
 
 //*********** API ****************/
 
@@ -117,12 +119,70 @@ router.put('/accept', auth.required, (req, res) => {
         .then(request => {
 
             // add self to friend's list
-            User.findByIdAndUpdate(request.requester, { "$push": { "friends": id } }, {new: true})
-                .exec();
+            User.findById(request.requester).exec()
+                .then(user => {
+                    let friendsArr = user.friends;
+                    friendsArr.push(id);
+                    user.friends = friendsArr;
+
+                    // check avatar The Fellowship
+                    if (user.friends.length === 7) {
+                        let newAvatarsUnlocked = user.avatars_unlocked;
+                        newAvatarsUnlocked.push('18a4af4927a1fbfeefaf846b');
+                        user.avatars_unlocked = newAvatarsUnlocked;
+
+                        // newsfeed
+                        const newNewsfeedObj = {
+                            type: 'Friend: avatar',
+                            friend: user._id,
+                            avatar: '18a4af4927a1fbfeefaf846b'
+                        }
+                        Newsfeed.create(newNewsfeedObj);
+
+                        // notification
+                        const createNotificationObj = {
+                            type: 'Avatar',
+                            user: user._id,
+                            avatar: '18a4af4927a1fbfeefaf846b'
+                        }
+                        Notification.create(createNotificationObj);
+                    }
+
+                    user.save();
+                });
 
             // add friend to self's list
-            User.findByIdAndUpdate(id, { "$push": { "friends": request.requester } }, {new: true})
-                .exec();
+
+            User.findById(id).exec()
+                .then(user => {
+                    let friendsArr = user.friends;
+                    friendsArr.push(request.requester);
+                    user.friends = friendsArr;
+
+                    if (user.friends.length === 7) {
+                        let newAvatarsUnlocked = user.avatars_unlocked;
+                        newAvatarsUnlocked.push('18a4af4927a1fbfeefaf846b');
+                        user.avatars_unlocked = newAvatarsUnlocked;
+
+                        // newsfeed
+                        const newNewsfeedObj = {
+                            type: 'Friend: avatar',
+                            friend: user._id,
+                            avatar: '18a4af4927a1fbfeefaf846b'
+                        }
+                        Newsfeed.create(newNewsfeedObj);
+
+                        // notification
+                        const createNotificationObj = {
+                            type: 'Avatar',
+                            user: user._id,
+                            avatar: '18a4af4927a1fbfeefaf846b'
+                        }
+                        Notification.create(createNotificationObj);
+                    }
+
+                    user.save();
+                });
 
             // create notification
             const createNotificationObj = {

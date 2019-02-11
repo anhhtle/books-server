@@ -152,7 +152,7 @@ router.delete('/:id', auth.required, (req, res) => {
 
     Variant.findById(req.params.id).exec()
         .then(variant => {
-            variant.delete()
+            variant.remove()
                 .then(deletedVar => res.status(200).json(deletedVar))
         })
         .catch(err => res.status(500).json(err));

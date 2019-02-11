@@ -36,6 +36,7 @@ const userSchema = mongoose.Schema({
         silver: {type: Number, default: 2},
         gold: {type: Number, default: 0}
     },
+    books_shared: {type: Number, default: 0},
     setting: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Setting'

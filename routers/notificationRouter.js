@@ -14,6 +14,7 @@ router.get('/', auth.required, (req, res) => {
     const { payload: { id } } = req;
 
     Notification.find({user: id})
+        .sort('createdAt')
         .populate('book')
         .populate('avatar')
         .populate({
