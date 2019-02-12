@@ -1,11 +1,13 @@
 const nodemailer = require('nodemailer');
-const { reminderEmailTemplate } = require('./emailTemplates');
+const { reminderEmailTemplate, bookRequestEmailTemplate } = require('./emailTemplates');
+const EMAIL = process.env.EMAIL;
+const EMAIL_PASSWORD = process.env.EMAIL_PASSWORD;
 
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: 'anh.ht.le@gmail.com',
-        pass: 'Anhleash1!'
+        user: EMAIL,
+        pass: EMAIL_PASSWORD
     }
 });
 
@@ -14,7 +16,7 @@ const sendPasswordResetEmail = (mailData) => {
     var mailOptions = {
         from: 'anh.ht.le@gmail.com',
         to: mailData.to,
-        subject: `Password Reset - The Book's Journey`,
+        subject: `The Book's Journey - Password Reset`,
         html: reminderEmailTemplate(mailData)
     };
     
@@ -25,7 +27,24 @@ const sendPasswordResetEmail = (mailData) => {
             console.log('Email sent: ' + info.response);
         }
     });
-
 };
 
-module.exports = {sendPasswordResetEmail};
+const sendBookRequestEmail = (mailData) => {
+
+    var mailOptions = {
+        from: 'anh.ht.le@gmail.com',
+        to: mailData.to,
+        subject: `The Book's Journey - Book Request`,
+        html: bookRequestEmailTemplate(mailData)
+    };
+    
+    transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+            console.log(error);
+        } else {
+            console.log('Email sent: ' + info.response);
+        }
+    });
+};
+
+module.exports = {sendPasswordResetEmail, sendBookRequestEmail};

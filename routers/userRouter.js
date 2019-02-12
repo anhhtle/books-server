@@ -252,8 +252,6 @@ router.put('/password-reset-key', auth.optional, (req, res) => {
     
     let key = Math.random().toString(36).substr(2, 7);
     
-    // sendPasswordResetEmail({to: email, key, name: 'Anh'});
-    
     User.findOneAndUpdate({email}, {password_reset_key: key}, {new: true})
     .exec()
     .then(user => {

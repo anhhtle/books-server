@@ -10,6 +10,9 @@ const Request = require('../models/request.model');
 const Newsfeed = require('../models/newsfeed.model');
 const Notification = require('../models/notification.model');
 
+// email
+const {sendBookRequestEmail} = require('../email/nodeMailer');
+
 
 //*********** API ****************/
 // get current user's requests
@@ -57,7 +60,9 @@ router.get('/', auth.required, (req, res) => {
 router.post('/', auth.required, (req, res) => {
     const { payload: {id}, body: {variant_id} } = req;
 
-    Variant.findById(variant_id).exec()
+    Variant.findById(variant_id)
+        .populate('book')
+        .exec()
         .then(variant => {
             if (!variant.available_for_share || variant.share_requested ) {
                 res.status(501).json({message: 'Book is no longer available'})
@@ -74,6 +79,17 @@ router.post('/', auth.required, (req, res) => {
                         }
                         user.save();
                     })
+
+                // send email to book owner
+                User.findById(variant.user)
+                .populate('setting')
+                .exec()
+                    .then(owner => {
+                        if (owner.setting.email_notifications.book_requests) {
+                            sendBookRequestEmail({to: owner.email, name: owner.first_name, title: variant.book.title});
+                        }
+                    })
+
 
                 variant.share_requested = true;
                 variant.save()
@@ -138,7 +154,7 @@ router.put('/', auth.required, (req, res) => {
                         res.status(200).json(request)
                     })  
             } else if (status ===  'Cancelled') {
-                const updateVariantObj = {available_for_share: false, share_requested: false}
+                const updateVariantObj = {share_requested: false}
         
                 // return bookmark to user
                 User.findById(request.requester).exec()
