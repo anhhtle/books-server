@@ -11,7 +11,7 @@ const Newsfeed = require('../models/newsfeed.model');
 const Notification = require('../models/notification.model');
 
 // email
-const {sendBookRequestEmail} = require('../email/nodeMailer');
+const {sendBookRequestEmail, sendBookRequestCancelledEmail, bookSentEmail} = require('../email/nodeMailer');
 
 
 //*********** API ****************/
@@ -88,7 +88,7 @@ router.post('/', auth.required, (req, res) => {
                         if (owner.setting.email_notifications.book_requests) {
                             sendBookRequestEmail({to: owner.email, name: owner.first_name, title: variant.book.title});
                         }
-                    })
+                    });
 
 
                 variant.share_requested = true;
@@ -142,22 +142,46 @@ router.put('/', auth.required, (req, res) => {
     const updateObj = {status: status};
 
     Request.findByIdAndUpdate(request_id, updateObj, {new: true})
+        .populate({
+            path: 'variant',
+            model: 'Variant',
+            select: 'book',
+            populate: {
+                path: 'book',
+                model: 'Book',
+            }
+        })
         .exec()
         .then(request => {
 
             if (status === 'Sent') {
-                const updateVariantObj = {user: request.requester, available_for_share: false, share_requested: false, status: "Not read", progress: 0, user_rating: null, friend: null, recieved_at: new Date()}
+                const updateVariantObj = {user: request.requester, available_for_share: false, share_requested: false, status: "Not read", progress: 0, user_rating: null, friend: null, recieved_at: new Date()}                
         
                 Variant.findByIdAndUpdate(request.variant, updateVariantObj, {new: true})
                     .exec()
                     .then(() => {
                         res.status(200).json(request)
-                    })  
+                    });
+
+                    // send email to book owner
+                    User.findById(request.requester)
+                    .populate('setting')
+                    .exec()
+                        .then(requester => {
+                            if (requester.setting.email_notifications.book_requests) {
+                                bookSentEmail({to: requester.email, name: requester.first_name, title: request.variant.book.title});
+                            }
+                        });
+
+
+
             } else if (status ===  'Cancelled') {
                 const updateVariantObj = {share_requested: false}
         
-                // return bookmark to user
-                User.findById(request.requester).exec()
+                // return bookmark to user and send email
+                User.findById(request.requester)
+                .populate('setting')
+                .exec()
                     .then(user => {
                         if (user.bookmarks.silver < 2) {
                             user.bookmarks.silver = ++user.bookmarks.silver;
@@ -165,7 +189,11 @@ router.put('/', auth.required, (req, res) => {
                             user.bookmarks.gold = ++user.bookmarks.gold;
                         }
                         user.save();
-                    })
+
+                        if (user.setting.email_notifications.book_requests) {
+                            sendBookRequestCancelledEmail({to: user.email, name: user.first_name, title: request.variant.book.title});
+                        }
+                    });
 
                 Variant.findByIdAndUpdate(request.variant, updateVariantObj, {new: true})
                     .exec()
