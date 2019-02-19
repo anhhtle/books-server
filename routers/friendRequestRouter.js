@@ -79,8 +79,8 @@ router.post('/', auth.required, (req, res) => {
                         // create notification
                         const createNotificationObj = {
                             type: 'Friend request',
-                            user: id,
-                            friend: friend_id
+                            user: friend_id,
+                            friend: id
                         }
                         
                         Notification.create(createNotificationObj).then(() => {
