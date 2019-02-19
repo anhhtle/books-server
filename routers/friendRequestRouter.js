@@ -9,6 +9,9 @@ const FriendRequest = require('../models/friendRequest.model');
 const Notification = require('../models/notification.model');
 const Newsfeed = require('../models/newsfeed.model');
 
+// email
+const {friendRequestEmail} = require('../email/nodeMailer');
+
 
 //*********** API ****************/
 
@@ -43,6 +46,8 @@ router.get('/', auth.required, (req, res) => {
             model: 'Avatar'
         }
     })
+    .sort('createdAt')
+    .exec()
     .then(requests => {
         res.status(200).json(requests);
     })
@@ -54,9 +59,10 @@ router.post('/', auth.required, (req, res) => {
     const { payload: { id }, body: { friend_id } } = req;
 
     // check if there's an existing request
-    FriendRequest.findOne({requester: id, requestee: friend_id}).exec()
-        .then(user => {
-            if (user) {
+    FriendRequest.findOne({requester: id, requestee: friend_id})
+    .exec()
+        .then(request => {
+            if (request) {
                 res.status(409).json({message: 'Already sent friend request to this user'})
             } else {
                 const createObj = {
@@ -92,15 +98,28 @@ router.post('/', auth.required, (req, res) => {
                                 .populate({
                                     path: 'requestee',
                                     model: 'User',
-                                    select: 'first_name last_name avatar alias job',
+                                    select: 'first_name last_name avatar alias job, email',
                                     populate: {
                                         path: 'avatar',
                                         model: 'Avatar',
                                         select: 'image'
+                                    },
+                                    populate: {
+                                        path: 'setting',
+                                        model: 'Setting'
                                     }
                                 })
                                 .exec()
                                 .then((newFriendRequestPopulated) => {
+
+                                    // send friend request email
+                                    if (newFriendRequestPopulated.requestee.setting.email_notifications.friend_requests) {
+                                        friendRequestEmail({
+                                            to: newFriendRequestPopulated.requestee.email, 
+                                            name: newFriendRequestPopulated.requestee.first_name, 
+                                            friend: `${newFriendRequestPopulated.requester.first_name} ${newFriendRequestPopulated.requester.last_name}`});
+                                    }
+
                                     res.status(201).json(newFriendRequestPopulated)       
                                 })
                         })

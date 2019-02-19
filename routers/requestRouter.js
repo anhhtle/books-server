@@ -49,6 +49,7 @@ router.get('/', auth.required, (req, res) => {
                 select: 'image'
             }
         })
+        .sort('updatedAt')
         .exec()
         .then(requests => {
             res.status(200).json(requests);
@@ -182,16 +183,16 @@ router.put('/', auth.required, (req, res) => {
                 User.findById(request.requester)
                 .populate('setting')
                 .exec()
-                    .then(user => {
-                        if (user.bookmarks.silver < 2) {
-                            user.bookmarks.silver = ++user.bookmarks.silver;
+                    .then(requester => {
+                        if (requester.bookmarks.silver < 2) {
+                            requester.bookmarks.silver = ++requester.bookmarks.silver;
                         } else {
-                            user.bookmarks.gold = ++user.bookmarks.gold;
+                            requester.bookmarks.gold = ++requester.bookmarks.gold;
                         }
-                        user.save();
+                        requester.save();
 
-                        if (user.setting.email_notifications.book_requests) {
-                            sendBookRequestCancelledEmail({to: user.email, name: user.first_name, title: request.variant.book.title});
+                        if (requester.setting.email_notifications.book_requests) {
+                            sendBookRequestCancelledEmail({to: requester.email, name: requester.first_name, title: request.variant.book.title});
                         }
                     });
 

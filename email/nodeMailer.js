@@ -1,5 +1,5 @@
 const nodemailer = require('nodemailer');
-const { reminderEmailTemplate, bookRequestEmailTemplate, bookRequestCancelledEmailTemplate, bookSentEmailTemplate } = require('./emailTemplates');
+const { reminderEmailTemplate, bookRequestEmailTemplate, bookRequestCancelledEmailTemplate, bookSentEmailTemplate, friendRequestEmailTemplate } = require('./emailTemplates');
 const EMAIL = process.env.EMAIL;
 const EMAIL_PASSWORD = process.env.EMAIL_PASSWORD;
 
@@ -32,7 +32,7 @@ const sendPasswordResetEmail = (mailData) => {
 const sendBookRequestEmail = (mailData) => {
 
     var mailOptions = {
-        from: 'anh.ht.le@gmail.com',
+        from: EMAIL,
         to: mailData.to,
         subject: `The Book's Journey - Book Request`,
         html: bookRequestEmailTemplate(mailData)
@@ -50,7 +50,7 @@ const sendBookRequestEmail = (mailData) => {
 const sendBookRequestCancelledEmail = (mailData) => {
 
     var mailOptions = {
-        from: 'anh.ht.le@gmail.com',
+        from: EMAIL,
         to: mailData.to,
         subject: `The Book's Journey - Book Request Cancelled`,
         html: bookRequestCancelledEmailTemplate(mailData)
@@ -68,7 +68,7 @@ const sendBookRequestCancelledEmail = (mailData) => {
 const bookSentEmail = (mailData) => {
 
     var mailOptions = {
-        from: 'anh.ht.le@gmail.com',
+        from: EMAIL,
         to: mailData.to,
         subject: `The Book's Journey - Book Sent`,
         html: bookSentEmailTemplate(mailData)
@@ -83,4 +83,24 @@ const bookSentEmail = (mailData) => {
     });
 };
 
-module.exports = {sendPasswordResetEmail, sendBookRequestEmail, sendBookRequestCancelledEmail, bookSentEmail};
+const friendRequestEmail = (mailData) => {
+
+    var mailOptions = {
+        from: EMAIL,
+        to: mailData.to,
+        subject: `The Book's Journey - Friend Request`,
+        html: friendRequestEmailTemplate(mailData)
+    };
+    
+    transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+            console.log(error);
+        } else {
+            console.log('Email sent: Friend Request' + info.response);
+        }
+    });
+};
+
+module.exports = {sendPasswordResetEmail, sendBookRequestEmail, sendBookRequestCancelledEmail, bookSentEmail,
+        friendRequestEmail
+    };

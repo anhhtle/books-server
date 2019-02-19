@@ -8,6 +8,7 @@ const settingSchema = mongoose.Schema({
         book_recommendations: {type: Boolean, default: true}
     },
     email_notifications: {
+        friend_requests: {type: Boolean, default: true},
         book_requests: {type: Boolean, default: true},
         news: {type: Boolean, default: true}
     }
