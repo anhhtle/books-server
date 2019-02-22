@@ -22,10 +22,13 @@ router.get('/', auth.required, (req, res) => {
     const { payload: { id } } = req;
 
     FriendRequest.find({
-        $or: [
-            {requestee: id},
-            {requester: id}
-        ],
+        $and: [
+            {status: 'Requesting'},
+            {$or: [
+                {requestee: id},
+                {requester: id}
+            ]},
+        ]
 
     })
     .populate({
@@ -171,13 +174,13 @@ router.put('/accept', auth.required, (req, res) => {
                 });
 
             // add friend to self's list
-
             User.findById(id).exec()
                 .then(user => {
                     let friendsArr = user.friends;
                     friendsArr.push(request.requester);
                     user.friends = friendsArr;
 
+                    // check avatar The Fellowship
                     if (user.friends.length === 7) {
                         let newAvatarsUnlocked = user.avatars_unlocked;
                         newAvatarsUnlocked.push('18a4af4927a1fbfeefaf846b');
@@ -203,19 +206,26 @@ router.put('/accept', auth.required, (req, res) => {
                     user.save();
                 });
 
-            // create notification
+            // create notifications
             const createNotificationObj = {
                 type: 'New friend',
-                user: id,
-                friend: friend_id
+                user: request.requestee,
+                friend: request.requester
             }
 
-            Notification.create(createNotificationObj).then(() => {
-                res.status(201).json(request)       
-            })
+            Notification.create(createNotificationObj).catch(err => res.status(500).json(err));;
+
+            const createNotificationObj2 = {
+                type: 'New friend',
+                user: request.requester,
+                friend: request.requestee
+            }
+
+            Notification.create(createNotificationObj2).catch(err => res.status(500).json(err));;
 
             request.delete()
                 .then(requestDeleted => res.status(201).json(requestDeleted))
+                .catch(err => res.status(500).json(err));
         })
         .catch(err => res.status(500).json(err));
 });

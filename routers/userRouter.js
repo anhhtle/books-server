@@ -105,7 +105,7 @@ router.get('/current', auth.required, (req, res, next) => {
         .populate({
             path: 'friends',
             model: 'User',
-            select: 'first_name last_name avatar',
+            select: 'first_name last_name avatar avatars_unlocked',
             populate: {
                 path: 'avatar',
                 model: 'Avatar',

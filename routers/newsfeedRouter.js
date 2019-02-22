@@ -24,7 +24,7 @@ router.get('/', auth.required, (req, res) => {
                         {admin: true}
                     ]
                 })
-                .sort('createdAt')
+                .sort('-createdAt')
                 .populate('book')
                 .populate('avatar')
                 .populate({
