@@ -23,7 +23,7 @@ run in command line from root directory:
 
 
 
-#H eroku deployment
+#Heroku deployment
 1) in terminal: heroku create
 2) git push heroku master
 3) heroku ps:scale web=1
@@ -42,116 +42,15 @@ run in command line from root directory:
     "mongoimport -h ds121163.mlab.com:21163 -d books-app -c friend-requests --drop -u <user> -p <password> --file ./seeds/friendRequests.json"
     careful with the "--drop" as it will drop the database first instead of inserting
 
+# Production update - google cloud
+https://console.cloud.google.com/home/dashboard?project=book-app-218116&pli=1
+
+In cloud shell, run:
+1) cd thebooksjourney-server
+2) git pull
+3) npm run build
+4) gcloud app deploy
 
 # endpoint
-https://books-app-server-dev.herokuapp.com/api/v1/
+http://thebooksjourney.com/api/v1/
 most request requires: - header: Authorization - Token (get from login or create user)
-
-## create new user
-POST /users/
-{
-    user: {
-        email,
-        password
-    }
-}
-
-## login user
-POST /user/login
-{
-    user: {
-        email,
-        password
-    }
-}
-
-## Get current user
-GET /user/current
-
-## Get a user's public profile
-GET /user/:id
-
-## Get current user's books
-GET /books/
-
-## Create new book and variant
-POST /books/
-{
-	book: {
-		google_id,
-		title,
-		authors: [],
-        categories (optional): []
-        description (optional),
-        image (optional)
-	}
-}
-
-## Get books available for share (excluding current user's)
-POST /books/community
-{
-    page: 1
-}
-
-## Search books available for share by title or author (excluding current user's)
-POST /books/community/search
-{
-    query: 'title or author',
-    page: 1
-}
-
-## Update a variant
-{
-	variant_id,
-	update (optional): {
-		status,
-		progress,
-        user_rating,
-        friend,
-        book_condition,
-        available_for_share,
-        share_requested
-	}
-}
-
-## Get all avatars
-GET /avatars/
-
-## Get current user's newsfeed
-GET /newsfeeds/
-
-## Get current user's book requests
-GET /requests/
-
-## Create new request for current user
-POST /requests/
-{
-    variant_id
-}
-
-## Update a request
-{
-	request_id (string id),
-	status (string),
-	hide_request (boolean),
-	thanked_owner (boolean)
-}
-
-## find user
-POST /user/search
-{ query }
-
-## Get user's friend requests
-GET /friend-requests/
-
-## Create friend request
-POST /friend-requests/
-{ friend_id }
-
-## Accept friend request
-PUT /friend-requests/accept
-{ request_id }
-
-### NOTIFICATIONS
-## Get user's notifications
-GET /notifications
