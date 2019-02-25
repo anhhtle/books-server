@@ -198,6 +198,7 @@ router.post('/community', auth.optional, (req, res) => {
                 }
             }
         ],
+        sort: '-createdAt',
         page: req.body.page
     };
 

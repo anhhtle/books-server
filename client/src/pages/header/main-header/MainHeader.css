@@ -2,8 +2,17 @@
     background-color: #f9f6ef;
     padding: 10px;
 }
-
+.logo-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+#logo-img {
+    width: 40px;
+    margin-right: 10px;
+}
 .logo-text {
+    display: inline;
     margin: 5px 0;
     color: #000;
 }

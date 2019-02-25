@@ -110,6 +110,9 @@ router.get('/current', auth.required, (req, res, next) => {
                 path: 'avatar',
                 model: 'Avatar',
                 select: 'image'
+            },
+            options: { 
+                sort: { 'first_name': 1 } 
             }
         })
         .select('-salt -hash')
