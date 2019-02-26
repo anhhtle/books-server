@@ -79,13 +79,24 @@ router.post('/', auth.required, (req, res) => {
                             user.bookmarks.gold = --user.bookmarks.gold;
                         }
                         user.save();
+
                     })
+
 
                 // send email to book owner
                 User.findById(variant.user)
                 .populate('setting')
                 .exec()
                     .then(owner => {
+
+                        // create notification
+                        const newRequestNotificationObj = {
+                            type: 'Request: share book',
+                            user: variant.user,
+                            book: variant.book
+                        }
+                        Notification.create(newRequestNotificationObj);
+
                         if (owner.setting.email_notifications.book_requests) {
                             sendBookRequestEmail({to: owner.email, name: owner.first_name, title: variant.book.title});
                         }
@@ -155,12 +166,29 @@ router.put('/', auth.required, (req, res) => {
         .exec()
         .then(request => {
 
-            if (status === 'Sent') {
+            if (status === 'Accepted') {
+                // create notification for requester
+                const requestCancelledNotificationObj = {
+                    type: 'Request: accepted',
+                    user: request.requester,
+                    book: request.variant.book
+                }
+                Notification.create(requestCancelledNotificationObj)
+                    .then(() => res.status(200).json(request));
+            } else if (status === 'Sent') {
                 const updateVariantObj = {user: request.requester, available_for_share: false, share_requested: false, status: "Not read", progress: 0, user_rating: null, friend: null, recieved_at: new Date()}                
         
+                // create notification for requester
+                const requestCancelledNotificationObj = {
+                    type: 'Request: sent',
+                    user: request.requester,
+                    book: request.variant.book
+                }
+                Notification.create(requestCancelledNotificationObj);
+
                 Variant.findByIdAndUpdate(request.variant, updateVariantObj, {new: true})
                     .exec()
-                    .then(() => {
+                    .then((variant) => {
                         res.status(200).json(request)
                     });
 
@@ -174,9 +202,16 @@ router.put('/', auth.required, (req, res) => {
                             }
                         });
 
-
-
             } else if (status ===  'Cancelled') {
+
+                // create notification
+                const requestCancelledNotificationObj = {
+                    type: 'Request: cancelled',
+                    user: request.requester,
+                    book: request.variant.book._id
+                }
+                Notification.create(requestCancelledNotificationObj);
+
                 const updateVariantObj = {share_requested: false}
         
                 // return bookmark to user and send email
@@ -203,12 +238,20 @@ router.put('/', auth.required, (req, res) => {
                     });
             
             } else if (status === 'Received') {
+                // create newsfeed for requester
+                const newsfeedReceivedObj = {
+                    type: 'Friend: received book',
+                    friend: request.requester,
+                    community_member: request.original_owner,
+                    book: request.variant.book._id
+                }
+                Newsfeed.create(newsfeedReceivedObj);
+
                 // give bookowner a token
                 User.findById(request.original_owner).exec()
-                    .then(user => {
+                    .then(user => {    
                         user.bookmarks.gold = ++user.bookmarks.gold;
                         user.books_shared = ++user.books_shared
-
 
                         // check for avatar The Giver
                         if (user.books_shared === 10) {

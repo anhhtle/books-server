@@ -48,7 +48,7 @@ https://console.cloud.google.com/home/dashboard?project=book-app-218116&pli=1
 In cloud shell, run:
 1) cd thebooksjourney-server
 2) git pull
-3) npm run build
+3) cd client && npm run build
 4) gcloud app deploy
 
 # endpoint

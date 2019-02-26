@@ -21,7 +21,10 @@ router.get('/', auth.required, (req, res) => {
             Newsfeed.find({ 
                     $or: [
                         {friend: { $in: user.friends } },
-                        {admin: true}
+                        {$and: [
+                            {admin: true},
+                            {type: 'Friend: sharing book'}
+                        ]}
                     ]
                 })
                 .sort('-createdAt')
