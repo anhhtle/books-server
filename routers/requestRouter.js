@@ -176,23 +176,23 @@ router.put('/', auth.required, (req, res) => {
                 Notification.create(requestCancelledNotificationObj)
                     .then(() => res.status(200).json(request));
             } else if (status === 'Sent') {
-                const updateVariantObj = {user: request.requester, available_for_share: false, share_requested: false, status: "Not read", progress: 0, user_rating: null, friend: null, recieved_at: new Date()}                
+                const updateVariantObj = {user: null, available_for_share: false, share_requested: false, status: "Not read", progress: 0, user_rating: null, friend: null, recieved_at: new Date()}                
         
                 // create notification for requester
-                const requestCancelledNotificationObj = {
+                const requestSentNotificationObj = {
                     type: 'Request: sent',
                     user: request.requester,
                     book: request.variant.book
                 }
-                Notification.create(requestCancelledNotificationObj);
+                Notification.create(requestSentNotificationObj);
 
                 Variant.findByIdAndUpdate(request.variant, updateVariantObj, {new: true})
                     .exec()
-                    .then((variant) => {
+                    .then(() => {
                         res.status(200).json(request)
                     });
 
-                    // send email to book owner
+                    // send email to requester
                     User.findById(request.requester)
                     .populate('setting')
                     .exec()
@@ -247,6 +247,10 @@ router.put('/', auth.required, (req, res) => {
                 }
                 Newsfeed.create(newsfeedReceivedObj);
 
+                // add book to new owner
+                Variant.findByIdAndUpdate(request.variant, {user: request.requester}, {new: true})
+                    .exec();
+
                 // give bookowner a token
                 User.findById(request.original_owner).exec()
                     .then(user => {    
@@ -278,8 +282,8 @@ router.put('/', auth.required, (req, res) => {
                         }
                             
                         user.save();
-
                     });
+
                 res.status(200).json(request);
 
             } else {

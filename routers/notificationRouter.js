@@ -27,6 +27,7 @@ router.get('/', auth.required, (req, res) => {
                 select: 'image'
             }
         })
+        .limit(20)
         .exec()
         .then(notifications => {
             res.status(200).json(notifications);

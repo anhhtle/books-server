@@ -45,7 +45,7 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 mongoose.set('useFindAndModify', false);
 
 app.get('/api/v1', (req, res) => {
-    res.json({body: 'api v1'})
+    res.json({body: 'api v1 - 2/27/2019'})
 });
 
 app.use('/api/v1/user', userRouter);
@@ -67,8 +67,8 @@ app.get('*', (req, res) => {
 // ****************** cron job ***************************
 // pattern *(min) *(hr) *(d) *(m) *(d of w)
 
-// run every Friday
-const refreshBookmarksJob = new cronJob('* * * * 5', () => {
+// run every Friday at 8 AM
+const refreshBookmarksJob = new cronJob('0 8 * * 5', () => {
     User.find({'bookmarks.silver': {$lt: 2} }).exec()
         .then(users => {
             users.map(user => {

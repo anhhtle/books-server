@@ -561,11 +561,11 @@ const bookRequestEmailTemplate = (mailData) => {
                                     <table class="one-column" border="0" cellpadding="0" cellspacing="0" width="100%" style="padding-bottom: 30px; border-spacing:0; border-left:1px solid #e8e7e5; border-right:1px solid #e8e7e5; border-bottom:1px solid #e8e7e5" bgcolor="#FFFFFF">
                                         <tr>
                                             <td align="left" style="padding:0px 40px 40px 40px"><p style="padding: 0; color:#262626; font-size:32px; text-align:left; font-family: Verdana, Geneva, sans-serif">Hello ${mailData.name}</p>
-                                                <br style="color:#000000; font-size:16px; text-align:left; font-family: Verdana, Geneva, sans-serif; line-height:22px ">
-                                                A user requested your book: <b>${mailData.title}</b>.</br>
-                                                Please reply to the request in the app.</br>
-                                                <br />
-                                             </p></td>
+                                                <p style="color:#000000; font-size:16px; text-align:left; font-family: Verdana, Geneva, sans-serif; line-height:22px ">
+                                                A user requested your book: <b>${mailData.title}</b>.<br><br>
+                                                Please reply to the request in the app.<br><br>
+                                                </p>
+                                             </td>
                                         </tr>
                                     </table>
                                     <!-- ======= end hero article ======= -->
@@ -1151,10 +1151,11 @@ const bookSentEmailTemplate = (mailData) => {
                                             <td align="left" style="padding:0px 40px 40px 40px"><p style="padding: 0; color:#262626; font-size:32px; text-align:left; font-family: Verdana, Geneva, sans-serif">Hello ${mailData.name}</p>
                                                 <p style="color:#000000; font-size:16px; text-align:left; font-family: Verdana, Geneva, sans-serif; line-height:22px ">
                                                 <b>${mailData.title}</b> is on it's way.<br>
-                                                Please notify and/or thanks the book owner in the app when you received the book.<br><br><br>
-                                                Happy reading!
+                                                Please notify and/or thanks the book owner in the app when you received the book.<br><br>
+                                                Happy reading!<br><br>
+                                                If you are enjoying The Book's Journey, please give us a rating on <a href="https://play.google.com/store/apps/details?id=com.thebooksjourney&ah=plJgTJJafMLsWX2b7XYjskj4fS0" target="_blank">Google Play Store</a>. Your endorsement will help grow the community.
                                                 </p>
-                                             </p></td>
+                                            </td>
                                         </tr>
                                     </table>
                                     <!-- ======= end hero article ======= -->
@@ -1478,5 +1479,6 @@ const friendRequestEmailTemplate = (mailData) => {
     </html>
     `)
 }
+
 
 module.exports = {reminderEmailTemplate, bookRequestEmailTemplate, bookRequestCancelledEmailTemplate, bookSentEmailTemplate, friendRequestEmailTemplate};

@@ -50,7 +50,7 @@ router.get('/', auth.required, (req, res) => {
                         select: 'image'
                     }
                 })
-                .limit(20)
+                .limit(30)
                 .exec()
                 .then(newsfeeds => {
                     res.status(200).json(newsfeeds);
