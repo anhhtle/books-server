@@ -321,7 +321,7 @@ router.get('/friend/:id', auth.required, (req, res) => {
 
 // ***************** GOOGLE book API ***************
 router.post('/search', auth.optional, (req, res) => {
-    const { body: { query } } = req;
+    let { body: { query } } = req;
 
     if (query === null || query === undefined || query === '') {
         query = '*';
