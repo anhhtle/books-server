@@ -323,6 +323,10 @@ router.get('/friend/:id', auth.required, (req, res) => {
 router.post('/search', auth.optional, (req, res) => {
     const { body: { query } } = req;
 
+    if (query === null || query === undefined || query === '') {
+        query = '*';
+    }
+
     fetch(`https://www.googleapis.com/books/v1/volumes?q=${query}&key=${GOOGLE_BOOK_API_KEY}&country=US`)
         .then(res => res.json())
         .then(resJson => {
