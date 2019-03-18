@@ -16,3 +16,9 @@
     margin: 5px 0;
     color: #000;
 }
+#sign-in-form input {
+    margin-right: 5px;
+}
+#forgot-password-link {
+    margin-top: 5px;
+}

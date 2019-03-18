@@ -1,0 +1,67 @@
+#banner {
+    position: relative;
+    height: 300px;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.banner-overlay {
+    flex: 1;
+    height: 100%;
+    background-color: #000;
+    opacity: 0.35;
+}
+.slogan-container {
+    position: absolute;
+}
+.slogan {
+    color: #fff6aa;
+    font-size: 4em;
+    margin: 10px;
+}
+#headline {
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 10px;
+}
+#headline p {
+    font-size: 2em;
+    margin: 0 30px;
+}
+#headline i {
+    margin-right: 10px;
+    color: #8c1515;
+}
+#mission p {
+    font-size: 2em;
+    margin-top: 20px;
+}
+#availability {
+    margin-top: 20px;
+}
+#availability p {
+    text-align: center;
+    font-size: 1.3em;
+}
+
+@media only screen and (max-width: 768px) {
+    #banner {
+        height: 200px;
+    }
+    .slogan {
+        font-size: 2.5em;
+    }
+    #headline p {
+        font-size: 1.3em;
+        margin: 0 10px;
+    }
+    #headline i {
+        margin-right: 5px;
+    }
+    #mission p {
+        font-size: 1.3em;
+    }
+  }
