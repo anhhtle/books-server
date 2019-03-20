@@ -1,18 +1,22 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import Index from './pages/home/';
+import MainHeader from './components/header/main-header';
+import MainFooter from './components/footer/main-footer';
+import LandingPage from './components/landing-page';
 
-import PasswordReset from './pages/password-reset/';
+import PasswordReset from './components/password-reset/';
 
 class App extends Component {
   render() {
     const App = () => (
       <div>
+          <Route path='/' component={MainHeader}/>
           <Switch>
-            <Route exact path='/' component={Index}/>
-            <Route path='/password-reset/:key' component={PasswordReset}/>
+            <Route exact path='/' component={LandingPage}/>
+            <Route exact path='/password-reset/:key' component={PasswordReset}/>
           </Switch>
+          <Route path='*' component={MainFooter}/>
       </div>
     )
     return (

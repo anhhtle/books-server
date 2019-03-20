@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-import MainHeader from '../header/main-header';
-import MainFooter from '../footer/main-footer';
 import Dashboard from './dashboard';
-import Home from './home';
+import Landing from './landing';
 
-class Index extends Component {
+class LandingPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -13,25 +11,20 @@ class Index extends Component {
     }
 
     componentDidMount() {
-
     }
     renderBody() {
         if (this.state.signedIn) {
             return <Dashboard />;
         }
-        return <Home />;
+        return <Landing />;
     }
     render() {
         return (
-            <div id="Home">
-                <MainHeader />
-                
+            <div id="LandingPage">
                 {this.renderBody()}
-
-                <MainFooter />
             </div>
         );
     }
 }
 
-export default Index;
+export default LandingPage;

@@ -15,7 +15,7 @@ class PasswordResetForm extends Component {
     render() {
         return (
             <div>
-                <h3  className='col-xs-12' >Password Reset - {this.props.user.email}</h3>
+                <h3 className='col-xs-12' >Password Reset - {this.props.user.email}</h3>
                 <form className='col-xs-10 col-sm-4' style={styles.form}>
                     {this.renderError()}
 

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 
-import './Home.css';
+import './Landing.css';
 import banner_image from '../../../images/books-01.jpg';
 
-class Home extends Component {
+class Landing extends Component {
 
     render() {
         return (
@@ -50,4 +50,4 @@ const styles = {
     }
 }
 
-export default Home;
+export default Landing;

@@ -11,6 +11,9 @@ class MainHeader extends React.Component {
             email: '',
             password: ''
         }
+
+        this.handleInputChange = this.handleInputChange.bind(this);
+        this.handleLogin = this.handleLogin.bind(this);
     }
 
     render() {
@@ -29,9 +32,9 @@ class MainHeader extends React.Component {
                             <div className='pull-right'>
                                 <form id="sign-in-form" className='form-inline'>
                                     <div className='form-group'>
-                                        <input className='form-control' type='text' value={this.state.email} placeholder='Emai address' />
-                                        <input className='form-control' type='password' value={this.state.password} placeholder='Password' />
-                                        <button className='btn btn-primary'>SIGN IN</button>
+                                        <input className='form-control' type='email' name='email' value={this.state.email} onChange={this.handleInputChange} placeholder='Emai address' />
+                                        <input className='form-control' type='password' name='password' value={this.state.password} onChange={this.handleInputChange} placeholder='Password' />
+                                        <button className='btn btn-primary' onClick={this.handleLogin}>SIGN IN</button>
                                     </div>
                                 </form>
 
@@ -45,6 +48,15 @@ class MainHeader extends React.Component {
                 </div>
             </div>
         );
+    }
+
+    handleInputChange(e) {
+        let key = e.target.name;
+        this.setState({[key]: e.target.value})
+    }
+    handleLogin(e) {
+        e.preventDefault();
+        console.log(this.state);
     }
 }
 

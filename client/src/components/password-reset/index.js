@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-import MainHeader from '../header/main-header/';
 import PasswordResetForm from './PasswordResetForm';
-
 
 class PasswordReset extends Component {
     constructor(props){
@@ -24,10 +22,7 @@ class PasswordReset extends Component {
 
     render() {
         return (
-        <div className="App">
-            <MainHeader />
-
-            <div className='container'>
+            <div id="PasswordReset" className='container'>
                 <div className='row'>
                     <div className='col-sm-12' style={{paddingTop: 20}}>
 
@@ -36,8 +31,6 @@ class PasswordReset extends Component {
                     </div>
                 </div>
             </div>
-
-        </div>
         );
     }
     renderBody() {
@@ -57,12 +50,11 @@ class PasswordReset extends Component {
         this.getData();
     }
     getData() {
-        fetch(`/api/v1/user/password-reset/${this.props.match.params.key}`)
-            .then(data => data.json() )
+        axios(`/api/v1/user/password-reset/${this.props.match.params.key}`)
             .then(res => {
-                if (res) {
-                    if (res._id) {
-                        this.setState({user: res, showForm: true, dataLoaded: true});
+                if (res.data) {
+                    if (res.data._id) {
+                        this.setState({user: res.data, showForm: true, dataLoaded: true});
                     }
                 } else {
                     this.setState({dataLoaded: true});
