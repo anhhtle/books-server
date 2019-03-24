@@ -16,6 +16,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const path = require('path');
 const cronJob = require('cron').CronJob;
+const cors = require('cors');
 
 // routers
 const userRouter = require('./routers/userRouter');
@@ -37,6 +38,7 @@ const {sendBookRequestCancelledEmail} = require('./email/nodeMailer');
 mongoose.Promise = global.Promise;
 const app = express();
 app.use(bodyParser.json());
+app.use(cors());
 
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, 'client/build')));

@@ -16,9 +16,15 @@
     margin: 5px 0;
     color: #000;
 }
+.error-container {
+    margin-top: 5px;
+}
+.error-container span {
+    color: #8c1515;
+}
+.error-container a {
+    margin-top: 0;
+}
 #sign-in-form input {
     margin-right: 5px;
-}
-#forgot-password-link {
-    margin-top: 5px;
 }

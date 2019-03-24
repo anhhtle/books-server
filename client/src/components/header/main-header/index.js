@@ -1,6 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+// redux
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { getUserToken } from '../../../redux/actions/user'
+
 import logo from '../../../images/logo-bg.png';
 import './MainHeader.css';
 
@@ -8,8 +13,11 @@ class MainHeader extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            email: '',
-            password: ''
+            email: 'anh.ht.le@gmail.com',
+            password: 'password',
+
+            loading: false,
+            login_error: null,
         }
 
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -38,7 +46,10 @@ class MainHeader extends React.Component {
                                     </div>
                                 </form>
 
-                                <Link id='forgot-password-link' className='pull-right' to='/forgot-password'>Forgot password?</Link>
+                                <div className="error-container">
+                                    <span>{this.state.login_error}</span>
+                                    <Link id='forgot-password-link' className='pull-right' to='/forgot-password'>Forgot password?</Link>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -52,12 +63,53 @@ class MainHeader extends React.Component {
 
     handleInputChange(e) {
         let key = e.target.name;
-        this.setState({[key]: e.target.value})
+        this.setState({[key]: e.target.value});
     }
     handleLogin(e) {
         e.preventDefault();
-        console.log(this.state);
+
+        this.setState({loading: true});
+
+        const loginObj = {
+            user: {
+                email: this.state.email.toLowerCase(),
+                password: this.state.password
+            }
+        }
+
+        this.props.getUserToken(loginObj)
+        .then(() => {
+            this.setState({loading: false});
+            if (this.props.user.error) {
+                this.setState({login_error: this.props.user.error});
+            } else {
+                console.log(this.props.user);
+
+                // this.props.getCurrentUser(this.props.user.token)
+                //     .then(() => {
+                //         if (!this.props.user.error) {
+                //             this.setAsyncStorage(this.props.user.token);
+                //             this.props.navigation.navigate('Home');
+                //         }
+                //     })
+            }
+        })
+        .catch(err => {
+            console.log(err);
+            this.setState({loading: false});
+        });
     }
 }
 
-export default MainHeader;
+const mapStateToProps = (state) => {
+    const  { user } = state;
+    return { user }
+}
+
+const mapDispatchToProps = dispatch => (
+    bindActionCreators({
+        getUserToken
+    }, dispatch)
+);
+
+export default connect(mapStateToProps, mapDispatchToProps)(MainHeader)
