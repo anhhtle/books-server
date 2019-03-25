@@ -13,7 +13,7 @@ class Dashboard extends Component {
     }
 
     componentDidMount() {
-        console.log(this.props.user);
+        console.log('Dashboard');
     }
 
     render() {

@@ -14,9 +14,12 @@ import LandingPage from './components/landing-page';
 import DashboardPage from './components/dashboard';
 import PasswordReset from './components/password-reset/';
 
+import PrivateRoute from './components/auth/PrivateRoute.js';
+
 const store = createStore(combineReducer, applyMiddleware(thunk));
 
 class App extends Component {
+
   render() {
     const App = () => (
       <Provider store={ store } >
@@ -24,7 +27,8 @@ class App extends Component {
             <Route path='/' component={MainHeader}/>
             <Switch>
               <Route exact path='/' component={LandingPage}/>
-              <Route exact path='/dashboard' component={DashboardPage}/>
+              {/* <Route path='/dashboard' component={DashboardPage} /> */}
+              <PrivateRoute path='/dashboard' component={DashboardPage} />
               <Route exact path='/password-reset/:key' component={PasswordReset}/>
             </Switch>
             <Route path='*' component={MainFooter}/>

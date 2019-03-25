@@ -48,7 +48,8 @@ const INITIAL_STATE = {
     },
     token: '',
     error: false,
-    loading: false
+    loading: false,
+    signed_in: false
 }
 
 export default function userReducer(state = INITIAL_STATE, action) {
@@ -81,9 +82,9 @@ export default function userReducer(state = INITIAL_STATE, action) {
 
         case 'GET_CURRENT_USER_SUCCESS':
             if (action.payload.user.error) {
-                return {...state, error: true, loading: false};
+                return {...state, error: true, loading: false, signed_in: false};
             } else {
-                return {...action.payload.user, token: action.payload.token, error: false, loading: false};
+                return {...action.payload.user, token: action.payload.token, error: false, loading: false, signed_in: true};
             }
 
         // delete a friend
