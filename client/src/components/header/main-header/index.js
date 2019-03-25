@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 // redux
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getUserToken } from '../../../redux/actions/user'
+import { getUserToken, getCurrentUser } from '../../../redux/actions/user'
 
 import logo from '../../../images/logo-bg.png';
 import './MainHeader.css';
@@ -83,15 +83,13 @@ class MainHeader extends React.Component {
             if (this.props.user.error) {
                 this.setState({login_error: this.props.user.error});
             } else {
-                console.log(this.props.user);
-
-                // this.props.getCurrentUser(this.props.user.token)
-                //     .then(() => {
-                //         if (!this.props.user.error) {
-                //             this.setAsyncStorage(this.props.user.token);
-                //             this.props.navigation.navigate('Home');
-                //         }
-                //     })
+                this.props.getCurrentUser(this.props.user.token)
+                    .then(() => {
+                        if (!this.props.user.error) {
+                            localStorage.setItem('thebooksjourney-token', this.props.user.token);
+                            this.props.history.push(`/dashboard`);
+                        }
+                    });
             }
         })
         .catch(err => {
@@ -101,14 +99,16 @@ class MainHeader extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    const  { user } = state;
-    return { user }
+const mapStateToProps = (state, props) => {
+    return {
+        history: props.history,
+        user: state.user
+    }
 }
 
 const mapDispatchToProps = dispatch => (
     bindActionCreators({
-        getUserToken
+        getUserToken, getCurrentUser
     }, dispatch)
 );
 

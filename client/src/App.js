@@ -11,6 +11,7 @@ import combineReducer from './redux/reducers/combineReducer';
 import MainHeader from './components/header/main-header';
 import MainFooter from './components/footer/main-footer';
 import LandingPage from './components/landing-page';
+import DashboardPage from './components/dashboard';
 import PasswordReset from './components/password-reset/';
 
 const store = createStore(combineReducer, applyMiddleware(thunk));
@@ -23,6 +24,7 @@ class App extends Component {
             <Route path='/' component={MainHeader}/>
             <Switch>
               <Route exact path='/' component={LandingPage}/>
+              <Route exact path='/dashboard' component={DashboardPage}/>
               <Route exact path='/password-reset/:key' component={PasswordReset}/>
             </Switch>
             <Route path='*' component={MainFooter}/>

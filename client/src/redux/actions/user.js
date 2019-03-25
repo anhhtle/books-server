@@ -1,3 +1,5 @@
+import {API_BASE_URL} from '../../utility.js';
+
 // *********************** user ****************************
 // create new user
 // export const createNewUser = (createObj) => dispatch => {
@@ -37,7 +39,7 @@
 export const getUserToken = (loginObj) => dispatch => {
     dispatch(getUserTokenRequest());
 
-    return fetch(`/api/v1/user/login`, 
+    return fetch(`${API_BASE_URL}/user/login`, 
         {
             method: 'POST',
             headers: {
@@ -49,7 +51,6 @@ export const getUserToken = (loginObj) => dispatch => {
     ).then(res => {
         return res.json();
     }).then(token => {
-        console.log(token);
         dispatch(getUserTokenSuccess(token));
     }).catch(err => {
         dispatch(userError(err));
@@ -70,42 +71,41 @@ export const getUserTokenSuccess = (token) => (
 );
 
 // get current user
-// export const getCurrentUser = (token) => dispatch => {
-//     dispatch(getCurrentUserRequest());
+export const getCurrentUser = (token) => dispatch => {
+    dispatch(getCurrentUserRequest());
 
-//     return fetch(`${API_BASE_URL}/user/current`, 
-//     {
-//         method: 'GET',
-//         headers: {
-//             'Authorization': `Token ${token}`,
-//             "Accept": "application/json"
-//         }
-//     }
-//     ).then(res => {
-//         if( res.status === 401) {
-//             return {error: true}
-//         } else {
-//             return res.json();
-//         }
-//     }).then(user => {
-//         dispatch(getCurrentUserSuccess(user, token));
-//     }).catch(err => {
-//         dispatch(userError(err));
-//     });
-// }
+    return fetch(`${API_BASE_URL}/user/current`, 
+    {
+        method: 'GET',
+        headers: {
+            'Authorization': `Token ${token}`,
+            "Accept": "application/json"
+        }
+    }
+    ).then(res => {
+        if( res.status === 401) {
+            return {error: true}
+        }
+        return res.json();
+    }).then(user => {
+        dispatch(getCurrentUserSuccess(user, token));
+    }).catch(err => {
+        dispatch(userError(err));
+    });
+}
 
-// export const getCurrentUserRequest = () => (
-//     {
-//         type: 'GET_CURRENT_USER_REQUEST'
-//     }
-// );
+export const getCurrentUserRequest = () => (
+    {
+        type: 'GET_CURRENT_USER_REQUEST'
+    }
+);
 
-// export const getCurrentUserSuccess = (user, token) => (
-//     {
-//         type: 'GET_CURRENT_USER_SUCCESS',
-//         payload: {user, token}
-//     }
-// );
+export const getCurrentUserSuccess = (user, token) => (
+    {
+        type: 'GET_CURRENT_USER_SUCCESS',
+        payload: {user, token}
+    }
+);
 
 // delete a friend
 // export const deleteFriend = (token, updateObj, index) => dispatch => {
