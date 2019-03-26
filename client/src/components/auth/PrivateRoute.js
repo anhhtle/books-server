@@ -1,37 +1,16 @@
-import React, { Component } from 'react';
-import {withRouter} from "react-router-dom";
+import React from 'react';
+import { Route, Redirect } from 'react-router-dom';
 
-// redux
-import { connect } from 'react-redux';
+const PrivateRoute = ({ component: Component, ...rest }) => (
+    <Route {...rest} 
+        render={(props) => (
+            localStorage.getItem('thebooksjourney-token') ? 
+            <Component {...props} />
+            : <Redirect to={{
+                pathname: '/',
+                state: { from: props.location }
+            }} />
+    )} />
+)
 
-class PrivateRoute extends Component {
-    componentWillMount() {
-        if (!this.props.user.signed_in) {
-            this.props.history.push(`/`);
-        }
-    }
-
-    render() {
-        return (
-            this.renderComponent()
-        )
-    }
-    renderComponent() {
-        if (!this.props.user.signed_in) {
-            return (
-                <div></div>
-            )
-        }
-        let Component = this.props.component;
-        return <Component />
-    }
-}
-
-const mapStateToProps = (state, props) => {
-    return {
-        history: props.history,
-        user: state.user
-    }
-}
-
-export default withRouter(connect(mapStateToProps)(PrivateRoute));
+export default PrivateRoute;

@@ -20,6 +20,8 @@ class Landing extends Component {
             .then(() => {
                 if (!this.props.user.error) {
                     this.props.history.push(`/dashboard`);
+                } else {
+                    localStorage.removeItem('thebooksjourney-token');
                 }
             });
         }
