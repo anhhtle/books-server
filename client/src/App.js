@@ -9,6 +9,7 @@ import combineReducer from './redux/reducers/combineReducer';
 
 // components
 import MainHeader from './components/header/main-header';
+import DashboardHeader from './components/header/dashboard-header';
 import MainFooter from './components/footer/main-footer';
 import LandingPage from './components/landing-page';
 import DashboardPage from './components/dashboard';
@@ -26,7 +27,10 @@ class App extends Component {
     const App = () => (
       <Provider store={ store } >
         <div>
-            <Route path='/' component={MainHeader}/>
+            <Switch>
+              <Route exact path='/' component={MainHeader}/>
+              <Route path='/dashboard' component={DashboardHeader}/>
+            </Switch>
             <Switch>
               <Route exact path='/' component={LandingPage}/>
               <PrivateRoute exact path='/dashboard' component={DashboardPage} />
