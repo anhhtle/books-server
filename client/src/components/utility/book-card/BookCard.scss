@@ -1,0 +1,24 @@
+.book-card {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 20%;
+    padding: 5px;
+    img {
+        height: 175px;
+        width: auto;
+    }
+    p {
+        width: 100%;
+        text-align: center;
+        margin: 0;
+    }
+    .title {
+        font-size: 0.9em;
+        margin-top: 5px;
+        font-weight: bold;
+    }
+    .author {
+        font-size: 0.8em;
+    }
+}

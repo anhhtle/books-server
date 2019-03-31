@@ -4,23 +4,40 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getCurrentUser } from '../../redux/actions/user';
+import { getVariantsShare } from '../../redux/actions/variantShare';
+
+// components
+import ShareSection from './share-section'
 
 import './Dashboard.css';
 
 class Dashboard extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     componentDidMount() {
-        console.log('Dashboard');
+        this.load();
+    }
+    load() {
+        const token = localStorage.getItem('thebooksjourney-token');
+        this.props.getCurrentUser(token).then(() => {
+            console.log(this.props.user)
+            this.props.getVariantsShare(this.props.user.token, {page: 1}).then(() => console.log(this.props.variantsShare));
+        });
     }
 
     render() {
         return (
-        <div id="Dashboard">
-            <p>dashboard</p>
+        <div id="Dashboard" className="page-container">
+            <div className='container'>
+                <div className='row'>
+                    <div className='col-sm-12'>
 
+                        <div className="col-sm-9">
+                            <ShareSection />
+                        </div>
+                        
+
+                    </div>
+                </div>
+            </div>
         </div>
         );
     }
@@ -29,13 +46,14 @@ class Dashboard extends Component {
 const mapStateToProps = (state, props) => {
     return {
         history: props.history,
-        user: state.user
+        user: state.user,
+        variantsShare: state.variantsShare
     }
 }
 
 const mapDispatchToProps = dispatch => (
     bindActionCreators({
-        getCurrentUser
+        getCurrentUser, getVariantsShare
     }, dispatch)
 );
 

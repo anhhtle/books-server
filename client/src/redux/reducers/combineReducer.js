@@ -8,7 +8,7 @@ import { combineReducers } from 'redux';
 // import settingssReducer from './settings';
 import userReducer from './user';
 // import variantReducer from './variant';
-// import variantShareReducer from './variantShare';
+import variantShareReducer from './variantShare';
 // import variantFriendReducer from './variantFriend';
 
 export default combineReducers({
@@ -21,6 +21,6 @@ export default combineReducers({
     // settings: settingssReducer,
     user: userReducer,
     // variants: variantReducer,
-    // variantsShare: variantShareReducer,
+    variantsShare: variantShareReducer,
     // variantsFriend: variantFriendReducer,
 });

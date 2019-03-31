@@ -10,9 +10,9 @@ import './DashboardHeader.scss';
 const DashboardHeader = (props) => {
     return (
         <div id='DashboardHeader' className='box-shadow'>
-            <div className='container-fluid'>
+            <div className='container'>
                 <div className='row'>
-                    <div className='offset-sm-1 col-sm-10'>
+                    <div className='col-sm-12'>
 
                         <nav className='navbar navbar-expand-lg navbar-light'>
                             <div id='nav-left-side' className="col-sm-8">
@@ -21,7 +21,7 @@ const DashboardHeader = (props) => {
                                 </Link>
 
                                 <form className='form-inline my-2 my-lg-0' onSubmit={(e) => handleSubmit(e, props)}>
-                                    <input id="search-box" className='form-control mr-sm-2 col-md-6 col-sm-8' type='search' placeholder='Search available books' aria-label='Search' />
+                                    <input id="search-box" className='form-control mr-sm-2 col-md-6 col-sm-8' type='search' placeholder='Which books do you own?' aria-label='Search' />
                                     <button id='search-btn' className='btn my-2 my-sm-0' type='submit'><i className='fa fa-search'></i></button>
                                 </form>
                             </div>
