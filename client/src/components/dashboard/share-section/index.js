@@ -5,11 +5,17 @@ import {Link} from 'react-router-dom';
 import { connect } from 'react-redux';
 
 // components
-import BookCard from '../../utility/book-card'
+import BookCard from './book-card'
 
 import './ShareSection.scss';
 
 class ShareSection extends Component {
+    constructor(props) {
+        super(props);
+
+        this.handleRequestBook = this.handleRequestBook.bind(this);
+    }
+
     render() {
         return (
         <div id="ShareSection" className="section-container">
@@ -23,15 +29,17 @@ class ShareSection extends Component {
         </div>
         );
     }
-
     renderBooks() {
-        let arr = [];
-        this.props.variantsShare.variants_share.map((item, index) => {
+        let arr = this.props.variantsShare.variants_share.map((item, index) => {
             if (index < 10) {
-                arr.push(<BookCard book={item.book} key={item._id} />)
+                return <BookCard variant={item} key={item._id} requestBook={() => this.handleRequestBook(item)}/>
             }
-        })
+            return null;
+        });
         return arr;
+    }
+    handleRequestBook(variant) {
+        console.log(variant);
     }
 }
 

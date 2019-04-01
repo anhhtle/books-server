@@ -190,7 +190,7 @@ router.post('/community', auth.optional, (req, res) => {
             {
                 path: 'user',
                 model: 'User',
-                select: 'first_name last_name avatar',
+                select: 'first_name last_name avatar books_shared alias job',
                 populate: {
                     path: 'avatar',
                     model: 'Avatar',

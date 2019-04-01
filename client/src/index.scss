@@ -48,6 +48,48 @@ a:hover {
   }
 }
 
+// book detail modal
+.Modal {
+  .title {
+    background-color: #8c1515;
+    color: #fff;
+    padding: 5px 10px;
+    font-size: 1.2em;
+    font-weight: bold;
+    .x-btn {
+      float: right;
+      cursor: pointer;
+    }
+  }
+  .categories {
+    color: #0076de;
+  }
+  .condition {
+    color: #409D69;
+    font-weight: bold;
+  }
+  .modal-header {
+    padding: 0;
+    border: none;
+    .book-details {
+      padding-left: 20px;
+      p {
+          margin-bottom: 5px;
+      }
+      .rating {
+          margin-left: 5px;
+          font-size: 0.9em;
+      }
+    }
+  }
+  .request-btn {
+    background-color: #ffe451;
+    margin-top: 20px;
+    font-size: 0.8em;
+    border: 1px solid gold;
+  }
+}
+
 // utility
 .box-shadow {
   box-shadow: 0 0 10px rgba(0,0,0,.15), 0 3px 3px rgba(0,0,0,.15)

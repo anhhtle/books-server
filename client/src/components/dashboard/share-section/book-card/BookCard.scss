@@ -4,6 +4,9 @@
     justify-content: center;
     width: 20%;
     padding: 5px;
+    :hover {
+        cursor: pointer;
+    }
     img {
         height: 175px;
         width: auto;
