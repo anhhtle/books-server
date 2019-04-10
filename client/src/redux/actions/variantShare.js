@@ -1,4 +1,4 @@
-import {API_BASE_URL} from '../../utility.js';
+import {API_BASE_URL} from '../../components/utility/helperFunctions';
 
 // get books available for share
 export const getVariantsShare = (token, pageObj) => dispatch => {

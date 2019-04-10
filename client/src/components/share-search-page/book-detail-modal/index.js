@@ -93,7 +93,7 @@ export default class BookDetailModal extends Component {
     }
     renderAlias() {
         if (this.props.variant.user.alias) {
-            return <span style={{color: '#8c1515', fontWeight: 'bold'}}>{this.props.item.user.alias}</span>
+            return <span style={{color: '#8c1515', fontWeight: 'bold'}}>{this.props.variant.user.alias}</span>
         }
     }
     renderJob() {
