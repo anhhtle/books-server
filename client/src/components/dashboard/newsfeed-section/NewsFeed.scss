@@ -4,6 +4,7 @@
 .newsfeed-card-container {
     border: 1px solid #dddfe2;
     background-color: #fff;
+    margin-bottom: 15px;
     .card-heading {
         padding: 10px;
         display: flex;
@@ -11,7 +12,6 @@
         border-bottom: 1px solid #dddfe2;
         align-items: center;
         a {
-            flex: 0.1;
             img {
                 width: 40px;
                 height: 40px;
@@ -21,7 +21,7 @@
         }
         .name-date-container {
             display: flex;
-            flex: 0.9;
+            flex: 1;
             flex-direction: row;
             justify-content: space-between;
             align-items: center;
@@ -42,6 +42,7 @@
         img {
             flex: 0.15;
             height: auto;
+            max-height: 180px;
             background-color: lightgrey;
             margin-right: 15px;
         }
@@ -57,6 +58,11 @@
         .book-description {
             margin-top: 10px;
             font-family: 'Vollkorn', serif;
+            text-overflow: ellipsis;
+            word-wrap: break-word;
+            overflow: hidden;
+            max-height: 7em;
+            line-height: 1.4em;
         }
     }
 }

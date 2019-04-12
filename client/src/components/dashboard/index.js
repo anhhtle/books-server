@@ -36,8 +36,7 @@ class Dashboard extends Component {
                             <ShareSection />
                             <NewsFeedSection />
                         </div>
-                        
-
+                    
                     </div>
                 </div>
             </div>

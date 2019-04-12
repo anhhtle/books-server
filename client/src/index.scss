@@ -1,7 +1,6 @@
-html, body, #root {
+html, body {
   height: 100%;
 }
-
 #root {
   background-color: #f7f7f7;
 }
@@ -30,6 +29,7 @@ a:hover {
 }
 
 .page-container {
+  min-height: 83vh;
   margin-top: 30px;
 }
 

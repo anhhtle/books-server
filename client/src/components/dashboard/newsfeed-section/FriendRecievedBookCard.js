@@ -2,7 +2,7 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import {renderLongDate, renderRatingStars} from '../../utility/helperFunctions';
 
-export default function FriendCurrentReadingCard (props) {
+export default function FriendRecievedBookCard (props) {
     return (
         <div className="newsfeed-card-container">
             <div className="card-heading">
@@ -10,7 +10,7 @@ export default function FriendCurrentReadingCard (props) {
                     <img src={props.friend.avatar.image} alt="user avatar"/>
                 </Link>
                 <div className="name-date-container">
-                    <p className="name"><strong>{props.friend.first_name + ' ' + props.friend.last_name}</strong> started reading a new book</p>
+                    <p className="name"><strong>{props.friend.first_name + ' ' + props.friend.last_name}</strong> recieved a new book courtesy of <span className="name"><strong>{props.community_member.first_name + ' ' + props.community_member.last_name}</strong></span></p>
                     <p className="date">{renderLongDate(props.date)}</p>
                 </div>
             </div>

@@ -26,7 +26,7 @@ class App extends Component {
   render() {
     const App = () => (
       <Provider store={ store } >
-        <div>
+        <div id="App">
             <Switch>
               <Route exact path='/' component={MainHeader}/>
               <Route path='/dashboard' component={DashboardHeader}/>
