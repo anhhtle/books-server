@@ -52,3 +52,28 @@ img {
 .dropdown-toggle::after {
     display: none;
 }
+.notification.dropdown-menu {
+    width: 350px;
+    font-size: 0.9em;
+    .notification-card-container {
+        display: flex;
+        padding: 5px;
+        align-items: center;
+        border-top: 1px solid lightgrey;
+        border-bottom: 1px solid lightgrey;
+        img {
+            margin-right: 10px;
+            border-radius: 50%;
+        }
+    }
+    .notification-card-body {
+        flex: 1;
+        color: #000;
+        p {
+            margin: 0;
+        }
+        i {
+            margin-right: 10px;
+        }
+    }
+}

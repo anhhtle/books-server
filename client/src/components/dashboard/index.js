@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux';
 import { getCurrentUser } from '../../redux/actions/user';
 import { getVariantsShare } from '../../redux/actions/variantShare';
 import { getNewsfeeds } from '../../redux/actions/newsfeed';
+import { getNotifications } from '../../redux/actions/notification';
 
 // components
 import ShareSection from './share-section';
@@ -21,7 +22,8 @@ class Dashboard extends Component {
         const token = localStorage.getItem('thebooksjourney-token');
         this.props.getCurrentUser(token).then(() => {
             this.props.getVariantsShare(this.props.user.token, {page: 1})
-            this.props.getNewsfeeds(this.props.user.token).then(() => console.log(this.props.newsfeeds))
+            this.props.getNewsfeeds(this.props.user.token);
+            this.props.getNotifications(this.props.user.token).then(() => console.log(this.props.notifications))
         });
     }
 
@@ -48,15 +50,16 @@ class Dashboard extends Component {
 const mapStateToProps = (state, props) => {
     return {
         history: props.history,
+        newsfeeds: state.newsfeeds,
+        notifications: state.notifications,
         user: state.user,
         variantsShare: state.variantsShare,
-        newsfeeds: state.newsfeeds
     }
 }
 
 const mapDispatchToProps = dispatch => (
     bindActionCreators({
-        getCurrentUser, getVariantsShare, getNewsfeeds
+        getCurrentUser, getVariantsShare, getNewsfeeds, getNotifications
     }, dispatch)
 );
 

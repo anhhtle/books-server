@@ -3,6 +3,7 @@ import Modal from 'react-modal';
 
 import './BookDetailModal.scss';
 import { renderRatingStars } from '../../utility/helperFunctions.js';
+import placeholder from '../../../images/book-placeholder.png';
 
 Modal.setAppElement('#root')
 
@@ -61,7 +62,7 @@ export default class BookDetailModal extends Component {
         if (this.props.variant.book.image) {
             return <img className="cover-image" src={this.props.variant.book.image} alt="Book cover" />
         } else {
-            return <img src='https://www.edsportrallysupplies.ie/media/catalog/product/cache/1/image/256x256/9df78eab33525d08d6e5fb8d27136e95/i/m/image-placeholder-alt_2_1.jpg' alt="No book cover"/>
+            return <img src={placeholder} alt="No book cover"/>
         }
     }
     renderAuthor() {
@@ -77,7 +78,7 @@ export default class BookDetailModal extends Component {
     renderCategories() {
         if (this.props.variant.book.categories) {
             let str = '';
-            this.props.variant.book.categories.map((cat, index) => {
+            Array.prototype.forEach.call(this.props.variant.book.categories, (cat, index) => {
                 if (index < 2) {
                     if (index > 0) {
                         str += ', '

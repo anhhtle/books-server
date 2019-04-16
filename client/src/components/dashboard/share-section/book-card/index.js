@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { renderRatingStars } from '../../../utility/helperFunctions';
 import './BookCard.scss';
 import BookDetailModal from '../../../share-search-page/book-detail-modal/index.js';
+import placeholder from '../../../../images/book-placeholder.png';
 
 export default class bookCard extends Component {
     constructor(props) {
@@ -42,7 +43,7 @@ export default class bookCard extends Component {
         if (this.props.variant.book.image) {
             return <img src={this.props.variant.book.image} alt="Book cover" />
         } else {
-            return <img src='https://www.edsportrallysupplies.ie/media/catalog/product/cache/1/image/256x256/9df78eab33525d08d6e5fb8d27136e95/i/m/image-placeholder-alt_2_1.jpg' alt="No book cover"/>
+            return <img src={placeholder} alt="No book cover"/>
         }
     }
     handleCloseModal(e) {
