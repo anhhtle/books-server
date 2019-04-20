@@ -9,8 +9,9 @@ import { getNewsfeeds } from '../../redux/actions/newsfeed';
 import { getNotifications } from '../../redux/actions/notification';
 
 // components
-import ShareSection from './share-section';
 import NewsFeedSection from './newsfeed-section';
+import ShareSection from './share-section';
+import ShareRequestSection from './share-request-section';
 
 import './Dashboard.css';
 
@@ -32,13 +33,13 @@ class Dashboard extends Component {
         <div id="Dashboard" className="page-container">
             <div className='container'>
                 <div className='row'>
-                    <div className='col-sm-12'>
+                    <div className="col-sm-9">
+                        <ShareSection />
+                        <NewsFeedSection />
+                    </div>
 
-                        <div className="col-sm-9">
-                            <ShareSection />
-                            <NewsFeedSection />
-                        </div>
-                    
+                    <div className="col-sm-3">
+                        <ShareRequestSection />
                     </div>
                 </div>
             </div>

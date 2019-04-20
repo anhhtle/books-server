@@ -2,15 +2,14 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import {renderDate} from '../utility/helperFunctions';
 
-export default function FriendRequestCard (props) {
+export default function NewAvatarCard (props) {
     return (
         <Link className="notification-card-container" to="#">
-            <img src={props.notification.friend.avatar.image} alt="user avatar"/>
+            <img src={props.notification.avatar.image} alt="user avatar"/>
 
             <div className="notification-card-body">
                 <p>
-                    <strong> {props.notification.friend.first_name} {props.notification.friend.last_name} </strong> 
-                    sent you a friend request
+                    You earned the <strong>{props.notification.avatar.name}</strong> avatar!
                 </p>
 
                 <p className="date-container">

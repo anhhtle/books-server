@@ -1,4 +1,5 @@
 #DashboardHeader {
+    font-size: 16px;
     background-color: #f9f6ef;
     padding: 10px;
 }
@@ -53,7 +54,7 @@ img {
     display: none;
 }
 .notification.dropdown-menu {
-    width: 350px;
+    width: 380px;
     font-size: 0.9em;
     .notification-card-container {
         display: flex;

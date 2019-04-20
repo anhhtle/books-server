@@ -7,6 +7,8 @@ import { bindActionCreators } from 'redux';
 
 // components
 import FriendRequestCard from '../../notification/FriendRequestCard';
+import NewAvatarCard from '../../notification/NewAvatarCard';
+import NewFriendCard from '../../notification/NewFriendCard';
 
 // utilities
 import logo from '../../../images/logo-bg.png';
@@ -94,8 +96,12 @@ class DashboardHeader extends React.Component {
             return <p className="dropdown-item">No notification</p>
         }
         let arr = this.props.notifications.notifications.map(n => {
-            if (n.type === 'Friend request') {
+            if (n.type === 'Avatar') {
+                return <NewAvatarCard className="dropdown-item" key={n._id} notification={n} />
+            } else if (n.type === 'Friend request') {
                 return <FriendRequestCard className="dropdown-item" key={n._id} notification={n} />
+            } else if (n.type === 'New friend') {
+                return <NewFriendCard className="dropdown-item" key={n._id} notification={n} />
             }
             return null;
         });
