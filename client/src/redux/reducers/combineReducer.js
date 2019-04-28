@@ -4,7 +4,7 @@ import { combineReducers } from 'redux';
 // import friendRequestsReducer from './friendRequest';
 import newsfeedReducer from './newsfeed';
 import notificationReducer from './notification';
-// import requestsReducer from './requests';
+import requestsReducer from './request';
 // import settingssReducer from './settings';
 import userReducer from './user';
 // import variantReducer from './variant';
@@ -17,7 +17,7 @@ export default combineReducers({
     // friendRequests: friendRequestsReducer,
     newsfeeds: newsfeedReducer,
     notifications: notificationReducer,
-    // requests: requestsReducer,
+    requests: requestsReducer,
     // settings: settingssReducer,
     user: userReducer,
     // variants: variantReducer,

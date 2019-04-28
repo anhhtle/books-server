@@ -1,12 +1,40 @@
-.share-request-container {
-    background-color: #fff;
-    border: 1px solid #dddfe2;
-    .share-request-header {
-        padding: 5px 10px;
-        border-bottom: 1px solid #dddfe2;
-        margin: 0;
+#ShareRequestSection {
+    .share-request-container {
+        background-color: #fff;
+        border: 1px solid #dddfe2;
+        margin-bottom: 10px;
+        .share-request-header {
+            padding: 5px 10px;
+            border-bottom: 1px solid #dddfe2;
+            margin: 0;
+        }
+        .share-request-body {
+            padding: 10px;
+        }
+        .request-link {
+            padding: 5px;
+            color: #000;
+            display: block;
+            background-color: #d7eeff;
+        }
     }
-    .share-request-body {
-        padding: 10px;
+    i {
+        font-size: 1.3em;
+        margin-right: 5px;
+        color: #8c1515;
+    }
+    .bookmark-container {
+        display: flex;
+        justify-content: center;
+        font-size: 1.5em;
+        span {
+            margin: 0 10px;
+        }
+        .silver {
+            color: silver;
+          }
+        .gold {
+            color: gold;
+        }
     }
 }

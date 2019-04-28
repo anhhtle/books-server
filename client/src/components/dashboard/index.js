@@ -4,9 +4,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getCurrentUser } from '../../redux/actions/user';
-import { getVariantsShare } from '../../redux/actions/variantShare';
 import { getNewsfeeds } from '../../redux/actions/newsfeed';
 import { getNotifications } from '../../redux/actions/notification';
+import { getBookRequests } from '../../redux/actions/request';
+import { getVariantsShare } from '../../redux/actions/variantShare';
 
 // components
 import NewsFeedSection from './newsfeed-section';
@@ -17,15 +18,16 @@ import './Dashboard.css';
 
 class Dashboard extends Component {
     componentDidMount() {
-        this.load();
-    }
-    load() {
         const token = localStorage.getItem('thebooksjourney-token');
         this.props.getCurrentUser(token).then(() => {
-            this.props.getVariantsShare(this.props.user.token, {page: 1})
-            this.props.getNewsfeeds(this.props.user.token);
-            this.props.getNotifications(this.props.user.token).then(() => console.log(this.props.notifications))
+            this.load();
         });
+    }
+    load() {
+        this.props.getNewsfeeds(this.props.user.token);
+        this.props.getNotifications(this.props.user.token);
+        this.props.getBookRequests(this.props.user.token).then(() => console.log(this.props.requests));
+        this.props.getVariantsShare(this.props.user.token, {page: 1});
     }
 
     render() {
@@ -39,7 +41,7 @@ class Dashboard extends Component {
                     </div>
 
                     <div className="col-sm-3">
-                        <ShareRequestSection />
+                        <ShareRequestSection user={this.props.user} requests={this.props.requests}/>
                     </div>
                 </div>
             </div>
@@ -53,6 +55,7 @@ const mapStateToProps = (state, props) => {
         history: props.history,
         newsfeeds: state.newsfeeds,
         notifications: state.notifications,
+        requests: state.requests,
         user: state.user,
         variantsShare: state.variantsShare,
     }
@@ -60,7 +63,7 @@ const mapStateToProps = (state, props) => {
 
 const mapDispatchToProps = dispatch => (
     bindActionCreators({
-        getCurrentUser, getVariantsShare, getNewsfeeds, getNotifications
+        getCurrentUser, getVariantsShare, getNewsfeeds, getNotifications, getBookRequests
     }, dispatch)
 );
 
