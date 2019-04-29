@@ -11,7 +11,6 @@ import banner_image from '../../images/books-01.jpg';
 class Landing extends Component {
     componentDidMount() {
         this.checkUserIsLogin();
-        console.log('LandingPage');
     }
     checkUserIsLogin() {
         const token = localStorage.getItem('thebooksjourney-token');

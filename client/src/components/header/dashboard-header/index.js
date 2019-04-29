@@ -13,6 +13,8 @@ import NewFriendCard from '../../notification/NewFriendCard';
 // utilities
 import logo from '../../../images/logo-bg.png';
 import './DashboardHeader.scss';
+import {API_BASE_URL} from '../../utility/helperFunctions';
+
 
 class DashboardHeader extends React.Component {
     constructor(props) {
@@ -116,7 +118,24 @@ class DashboardHeader extends React.Component {
     }
     handleSubmit(e) {
         e.preventDefault();
-        console.log(this.state);
+
+        fetch(`${API_BASE_URL}/books/search`, 
+        {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({query: this.state.search_term})
+        }
+        ).then(res => res.json())
+        .then(resJson => {
+            this.props.history.push({
+                pathname: '/book-search',
+                state: { data: resJson }
+            });
+        }).catch(err => {
+            console.error(err);
+        });
     }
 }
 

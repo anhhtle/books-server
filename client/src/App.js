@@ -9,10 +9,11 @@ import combineReducer from './redux/reducers/combineReducer';
 
 // components
 import MainHeader from './components/header/main-header';
+import BookSearchPage from './components/book-search-page';
 import DashboardHeader from './components/header/dashboard-header';
+import DashboardPage from './components/dashboard';
 import MainFooter from './components/footer/main-footer';
 import LandingPage from './components/landing-page';
-import DashboardPage from './components/dashboard';
 import PasswordReset from './components/password-reset/';
 
 import TestPage from './components/test';
@@ -30,9 +31,11 @@ class App extends Component {
             <Switch>
               <Route exact path='/' component={MainHeader}/>
               <Route path='/dashboard' component={DashboardHeader}/>
+              <Route path='/book-search' component={DashboardHeader}/>
             </Switch>
             <Switch>
               <Route exact path='/' component={LandingPage}/>
+              <PrivateRoute exact path='/book-search' component={BookSearchPage} />
               <PrivateRoute exact path='/dashboard' component={DashboardPage} />
               <PrivateRoute exact path='/test' component={TestPage} />
               <Route exact path='/password-reset/:key' component={PasswordReset}/>
