@@ -3,6 +3,8 @@ import React from 'react';
 // redux
 import { connect } from 'react-redux';
 
+import BookCard from './BookCard';
+
 import './BookSearchPage.scss';
 
 class BookSearchPage extends React.Component {
@@ -33,9 +35,7 @@ class BookSearchPage extends React.Component {
             <div id="BookSearchPage" className="page-container">
                 <div className="container">
                     <div className='row'>
-                        <div className="col-12">
-                            { this.renderResultCards() }
-                        </div>
+                        { this.renderResultCards() }
                     </div>
                 </div>
             </div>
@@ -45,7 +45,7 @@ class BookSearchPage extends React.Component {
         console.log(this.state.data);
         let arr = [];
         Array.prototype.forEach.call(this.state.data.items, (item) => {
-            arr.push(<p key={item.id}>{item.volumeInfo.title}</p>);
+            arr.push(<BookCard key={item.id} item={item} />);
         });
         return arr;
     }

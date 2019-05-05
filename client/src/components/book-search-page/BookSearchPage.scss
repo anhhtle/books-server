@@ -1,2 +1,37 @@
 #BookSearchPage {
 }
+
+.search-book-card {
+    display: flex;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #dddfe2;
+    margin-bottom: 10px;
+    font-size: 14px;
+    img {
+        width: auto;
+        height: 150px;
+        margin-right: 20px;
+    }
+    .card-body {
+        padding: 0;
+        .book-title {
+            font-size: 1em;
+            margin: 0 0 5px;
+        }
+        .author {
+            margin: 0 0 5px;
+        }
+        .btn-container {
+            margin-top: 20px;
+            .bookcase-btn {
+                background-color: #95cff9;
+                margin-right: 15px;
+            }
+            .want-to-read-btn {
+                background-color: #409D69;
+                color: #fff;
+            }
+        }
+    }
+}

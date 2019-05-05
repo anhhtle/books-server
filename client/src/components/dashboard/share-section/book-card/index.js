@@ -19,7 +19,7 @@ export default class bookCard extends Component {
         return (
             <div className="book-card" onClick={() => this.setState({showModal: true})}>
                 {this.renderImage()}
-                <p className="title">{book.title}</p>
+                <p className="book-title">{book.title}</p>
                 {this.renderAuthor()}
                 <div>
                     {renderRatingStars(book.ratings)}
