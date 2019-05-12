@@ -7,7 +7,7 @@ import notificationReducer from './notification';
 import requestsReducer from './request';
 // import settingssReducer from './settings';
 import userReducer from './user';
-// import variantReducer from './variant';
+import variantReducer from './variant';
 import variantShareReducer from './variantShare';
 // import variantFriendReducer from './variantFriend';
 
@@ -20,7 +20,7 @@ export default combineReducers({
     requests: requestsReducer,
     // settings: settingssReducer,
     user: userReducer,
-    // variants: variantReducer,
+    variants: variantReducer,
     variantsShare: variantShareReducer,
     // variantsFriend: variantFriendReducer,
 });

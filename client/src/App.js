@@ -9,6 +9,7 @@ import combineReducer from './redux/reducers/combineReducer';
 
 // components
 import MainHeader from './components/header/main-header';
+import BookcasePage from './components/bookcase-page';
 import BookSearchPage from './components/book-search-page';
 import DashboardHeader from './components/header/dashboard-header';
 import DashboardPage from './components/dashboard';
@@ -31,10 +32,12 @@ class App extends Component {
             <Switch>
               <Route exact path='/' component={MainHeader}/>
               <Route path='/dashboard' component={DashboardHeader}/>
+              <Route path='/bookcase' component={DashboardHeader}/>
               <Route path='/book-search' component={DashboardHeader}/>
             </Switch>
             <Switch>
               <Route exact path='/' component={LandingPage}/>
+              <PrivateRoute exact path='/bookcase' component={BookcasePage} />
               <PrivateRoute exact path='/book-search' component={BookSearchPage} />
               <PrivateRoute exact path='/dashboard' component={DashboardPage} />
               <PrivateRoute exact path='/test' component={TestPage} />

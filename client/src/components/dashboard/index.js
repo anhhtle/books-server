@@ -26,7 +26,7 @@ class Dashboard extends Component {
     load() {
         this.props.getNewsfeeds(this.props.user.token);
         this.props.getNotifications(this.props.user.token);
-        this.props.getBookRequests(this.props.user.token).then(() => console.log(this.props.requests));
+        this.props.getBookRequests(this.props.user.token);
         this.props.getVariantsShare(this.props.user.token, {page: 1});
     }
 
@@ -63,7 +63,7 @@ const mapStateToProps = (state, props) => {
 
 const mapDispatchToProps = dispatch => (
     bindActionCreators({
-        getCurrentUser, getVariantsShare, getNewsfeeds, getNotifications, getBookRequests
+        getCurrentUser, getNewsfeeds, getNotifications, getBookRequests, getVariantsShare
     }, dispatch)
 );
 
