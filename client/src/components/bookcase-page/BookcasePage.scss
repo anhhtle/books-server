@@ -1,0 +1,18 @@
+.MyBooksSection.BookDetailModal {
+    .book-details {
+        p {
+            margin-bottom: 5px;
+        }
+        .user-rating i {
+            color: orangered !important;
+        }
+    }
+    .select-div {
+        margin-bottom: 5px;
+        select {
+            background-color: #409D69;
+            color: #fff;
+            padding: 1px 6px;
+        }
+    }
+}

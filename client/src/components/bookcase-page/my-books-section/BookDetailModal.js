@@ -5,11 +5,22 @@ import { renderRatingStars } from '../../utility/helperFunctions';
 import placeholder from '../../../images/book-placeholder.png';
 
 export default class BookDetailModal extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            available_for_share: this.props.variant.available_for_share,
+            book_condition: this.props.variant.book_condition,
+            progress: this.props.variant.progress,
+            status: this.props.variant.status,
+            user_rating: this.props.variant.user_rating,
+        }
+    }
+
     render () { 
         const book = this.props.variant.book;
         return (
             <Modal
-                className="BookDetailModal Modal col-11 col-sm-5 container"
+                className="MyBooksSection BookDetailModal Modal col-11 col-sm-5 container"
                 overlayClassName="Overlay"
                 isOpen={this.props.isVisible}
                 onRequestClose={this.props.closeModal}
@@ -22,24 +33,82 @@ export default class BookDetailModal extends Component {
                         <div className="col-3">
                             <div className="left-side-container">
                                 {this.renderImage()}
-                                <button className="btn request-btn">Button</button>
+
                             </div>
                         </div>
 
                         <div className="col-9">
-                            <div className="modal-header">
-                                <div className="book-details">
+                            <div className="modal-header col-12">
+                                <div className="book-details col-sm-5">
                                     {this.renderAuthor()}
                                     {this.renderCategories()}
-                                    <p>{renderRatingStars(book.ratings)}<span className="rating">{book.ratings}</span></p>
-                                    <p>Book condition: <span className="condition">{this.renderBookCondition()}</span></p>
+                                    <p>Average rating: {renderRatingStars(book.ratings)}</p>
+                                    {/* user rating */}
+                                    <p className="user-rating">My rating: 
+                                        <a href="#" className="dropdown-toggle" id="user-rating-dropdown" data-toggle="dropdown"  aria-expanded="false"> {renderRatingStars(this.state.user_rating)}
+                                        </a>
+                                        <div className="dropdown-menu" aria-labelledby="user-rating-dropdown">
+                                            <a className="dropdown-item" href="#">{renderRatingStars(1)}</a>
+                                            <a className="dropdown-item" href="#">{renderRatingStars(2)}</a>
+                                            <a className="dropdown-item" href="#">{renderRatingStars(3)}</a>
+                                            <a className="dropdown-item" href="#">{renderRatingStars(4)}</a>
+                                            <a className="dropdown-item" href="#">{renderRatingStars(5)}</a>
+                                        </div>
+                                    </p>
+                                </div>
+                                <div className="col-sm-7">
+                                    {/* book condition */}
+                                    <div className="select-div">
+                                        <span>Book condition: </span>
+                                        <select value={this.state.book_condition}>
+                                            <option value="New">New</option>
+                                            <option value="Like new">Like new</option>
+                                            <option value="Fair">Fair</option>
+                                            <option value="Used">Used</option>
+                                        </select>
+                                    </div>
+
+                                    {/* variant statuses */}
+                                    <div className="select-div">
+                                        <span>Status: </span>
+                                        <select value={this.state.status}>
+                                            <option value="Read">Read</option>
+                                            <option value="Reading">Reading</option>
+                                            <option value="Watchlist">Want to read</option>
+                                        </select>
+                                    </div>
+
+                                    {/* variant statuses */}
+                                    <div className="select-div">
+                                        <span>Progress: </span>
+                                        <select value={this.state.progress}>
+                                            <option value={0}>0%</option>
+                                            <option value={10}>10%</option>
+                                            <option value={20}>20%</option>
+                                            <option value={30}>30%</option>
+                                            <option value={40}>40%</option>
+                                            <option value={50}>50%</option>
+                                            <option value={60}>60%</option>
+                                            <option value={70}>70%</option>
+                                            <option value={80}>80%</option>
+                                            <option value={90}>90%</option>
+                                            <option value={100}>100%</option>
+                                        </select>
+                                    </div>
+
+                                    {/* variant statuses */}
+                                    <div className="select-div">
+                                        <span>Share with community: </span>
+                                        <select value={this.state.available_for_share}>
+                                            <option value={true}>Yes</option>
+                                            <option value={false}>No</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
 
                             <div className="modal-body">
                                 <p className="description">{book.description}</p>
-
-
                             </div>
                         </div>
                     </div>
@@ -78,9 +147,6 @@ export default class BookDetailModal extends Component {
             });
             return (<p className="categories">{str}</p>);
         }
-    }
-    renderBookCondition() {
-        return this.props.variant.book_condition.toUpperCase();
     }
 }
 

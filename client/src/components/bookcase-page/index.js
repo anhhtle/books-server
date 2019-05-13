@@ -8,7 +8,7 @@ import { bindActionCreators } from 'redux';
 import { getCurrentUser } from '../../redux/actions/user';
 import { getVariants } from '../../redux/actions/variant';
 
-import './BookcasePage.scss'
+import './BookcasePage.scss';
 
 class BookcasePage extends React.Component {
     componentDidMount() {
